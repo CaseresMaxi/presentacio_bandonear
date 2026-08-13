@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BandoneAR — Presentación comercial</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --bg:#0d0d0f;
+      --panel:#151518;
+      --panel-2:#1b1b20;
+      --text:#f4f1eb;
+      --muted:#b7b1a7;
+      --gold:#d7a54a;
+      --red:#9d2f2f;
+      --line:#2b2b31;
+      --green:#62c18e;
+      --shadow:0 22px 70px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth; overflow-x:clip}
+    body{
+      margin:0;
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(157,47,47,.15), transparent 28%),
+        radial-gradient(circle at bottom left, rgba(215,165,74,.10), transparent 24%),
+        var(--bg);
+      color:var(--text);
+      overflow-x:clip;
+    }
+    button{font:inherit}
+    button:focus-visible{
+      outline:2px solid var(--gold);
+      outline-offset:2px;
+    }
+    .app{min-height:100vh; display:grid; grid-template-columns:290px 1fr}
+    .sidebar{
+      position:sticky; top:0; height:100vh; border-right:1px solid var(--line);
+      padding:24px 18px; background:rgba(13,13,15,.86); backdrop-filter:blur(16px);
+      display:flex; flex-direction:column; z-index:10; min-height:0;
+    }
+    .brand{display:flex; gap:12px; align-items:center; padding:4px 6px 22px; flex-shrink:0}
+    .mark{width:42px;height:42px;border:1px solid rgba(215,165,74,.45);border-radius:12px;
+      display:grid;place-items:center;color:var(--gold);font-size:20px;font-weight:800}
+    .brand h1{margin:0;font-size:18px;letter-spacing:.2px}
+    .brand p{margin:2px 0 0;color:var(--muted);font-size:12px}
+    .nav{display:flex;flex-direction:column;gap:7px;overflow:auto;padding-right:4px;min-height:0}
+    .nav button{
+      border:0;background:transparent;color:var(--muted);text-align:left;padding:11px 12px;
+      border-radius:10px;cursor:pointer;transition:.2s;font-size:14px
+    }
+    .nav button:hover,.nav button.active{background:var(--panel-2);color:#fff}
+    .nav button.active{box-shadow:inset 3px 0 0 var(--gold)}
+    .side-foot{flex-shrink:0;padding:16px 8px 2px;color:var(--muted);font-size:12px;border-top:1px solid var(--line);margin-top:12px}
+    .timer{font-size:20px;color:#fff;font-weight:750;margin-top:3px}
+    .timer-btn{
+      display:block;width:100%;border:0;background:transparent;color:inherit;
+      text-align:left;cursor:pointer;padding:0;font:inherit;
+    }
+    .timer-hint{margin-top:4px;font-size:11px;color:var(--muted)}
+    .script-box{
+      margin-top:14px;max-height:160px;overflow:auto;padding-right:4px;
+      font-size:12px;line-height:1.55;color:#d8d2c8;
+    }
+    .script-box b{
+      display:block;color:var(--gold);font-size:11px;letter-spacing:1.1px;
+      text-transform:uppercase;margin-bottom:6px;
+    }
+    main{min-width:0}
+    .slide{
+      min-height:100vh; padding:64px clamp(28px,5vw,74px); display:grid; align-items:center;
+      border-bottom:1px solid rgba(255,255,255,.03); position:relative;
+    }
+    .slide-inner{max-width:1280px;margin:auto;width:100%}
+    .slide-script{display:none}
+    .eyebrow{color:var(--gold);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:1.4px}
+    h2{font-size:clamp(40px,6vw,76px);line-height:.98;margin:10px 0 20px;letter-spacing:-2px;font-style:normal}
+    h3{font-size:clamp(24px,3vw,36px);margin:0 0 12px;font-style:normal}
+    p{line-height:1.6}
+    .lead{font-size:clamp(18px,2vw,25px);color:#e8e3db;max-width:820px}
+    .pull{font-size:clamp(15px,1.4vw,18px);color:var(--muted);max-width:640px;margin:0 0 4px;line-height:1.55}
+    .muted{color:var(--muted)}
+    .grid-2{display:grid;grid-template-columns:1.05fr .95fr;gap:34px;align-items:center}
+    .grid-visual{display:grid;grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr);gap:28px;align-items:stretch}
+    .grid-visual.flip{grid-template-columns:minmax(0,1.28fr) minmax(0,.72fr)}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{
+      background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.015));
+      border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow)
+    }
+    .card strong{color:#fff}
+    .img{
+      width:100%;
+      height:100%;
+      min-height:min(64vh,560px);
+      object-fit:cover;
+      object-position:center;
+      border-radius:22px;
+      border:1px solid #34343a;
+      box-shadow:var(--shadow);
+      display:block;
+      background:var(--panel);
+    }
+    .hero-card{position:relative; min-width:0; height:100%}
+    .photo-stage{
+      position:relative;
+      border-radius:24px;
+      overflow:hidden;
+      min-height:min(78vh,720px);
+      border:1px solid #34343a;
+      box-shadow:var(--shadow);
+      background:var(--panel);
+    }
+    .photo-stage > img{
+      position:absolute; inset:0; width:100%; height:100%;
+      object-fit:cover; object-position:center; display:block;
+    }
+    .photo-copy{
+      position:relative; z-index:1;
+      min-height:min(78vh,720px);
+      max-width:620px;
+      padding:48px 44px 40px;
+      display:flex; flex-direction:column; justify-content:flex-end;
+      background:linear-gradient(90deg, rgba(13,13,15,.88) 0%, rgba(13,13,15,.55) 58%, transparent 100%);
+    }
+    .photo-stage.compact,.photo-stage.compact .photo-copy{min-height:min(42vh,380px)}
+    .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+    .chip{border:1px solid var(--line);background:var(--panel);padding:9px 12px;border-radius:999px;color:#ddd7cd;font-size:13px}
+    .problem{font-size:clamp(24px,3.5vw,44px);line-height:1.12;max-width:960px}
+    .accent{color:var(--gold)}
+    .danger{color:#e77d74}
+    .success{color:var(--green)}
+    .metric{font-size:42px;font-weight:800;line-height:1;color:var(--gold);margin:4px 0 8px}
+    .flow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:20px}
+    .flow span{padding:11px 13px;border-radius:10px;background:var(--panel-2);border:1px solid var(--line)}
+    .flow i{color:var(--gold);font-style:normal}
+    .timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:26px}
+    .step{padding:18px;border-radius:15px;background:var(--panel);border:1px solid var(--line)}
+    .step b{display:block;color:var(--gold);margin-bottom:8px}
+    .video-box{
+      aspect-ratio:16/9;border-radius:20px;border:1px solid var(--line);overflow:hidden;
+      position:relative;background:#111
+    }
+    .video-box video,.video-box img{width:100%;height:100%;object-fit:cover;display:block}
+    .video-fallback{
+      position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:24px;
+      background:linear-gradient(180deg,rgba(0,0,0,.15),rgba(0,0,0,.55));
+    }
+    .video-fallback.hidden{display:none}
+    .play{
+      width:84px;height:84px;border-radius:50%;display:grid;place-items:center;margin:0 auto 16px;
+      background:rgba(215,165,74,.94);color:#111;font-size:32px;padding-left:5px;box-shadow:0 12px 40px rgba(0,0,0,.3)
+    }
+    .demo{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    .demo .card{min-height:120px}
+    .img-mid{min-height:min(42vh,380px)}
+    .spec{margin:16px 0 0;padding-left:18px}
+    .spec li{margin:8px 0;color:var(--muted)}
+    .spec strong{color:#fff}
+    .progress{position:fixed;left:290px;right:0;top:0;height:3px;background:transparent;z-index:30}
+    .progress > div{height:100%;width:0;background:linear-gradient(90deg,var(--gold),#e1c685);transition:.15s}
+    .mobile-top{display:none}
+    .presenter{
+      position:fixed;right:18px;bottom:18px;z-index:40;border:1px solid var(--line);
+      background:rgba(15,15,18,.9);backdrop-filter:blur(15px);border-radius:14px;padding:10px 13px;
+      display:flex;gap:10px;align-items:center;box-shadow:var(--shadow)
+    }
+    .presenter button{border:0;background:#24242a;color:#fff;border-radius:9px;padding:8px 11px;cursor:pointer;min-width:44px;min-height:44px}
+    .presenter button:hover{background:#2e2e36}
+    .presenter .num{font-size:12px;color:var(--muted);min-width:56px;text-align:center}
+    ul{padding-left:20px;line-height:1.7}
+    li{margin:4px 0}
+    .center-inner{text-align:center;display:grid;place-items:center}
+    .center-inner h2{margin-left:auto;margin-right:auto}
+    .center-inner .lead{margin-left:auto;margin-right:auto}
+    .names-line{margin-top:28px;color:var(--muted);font-size:16px;letter-spacing:.2px}
+    .compare-col h3{margin-bottom:8px}
+    .compare-col .flow{margin-top:18px}
+    body:fullscreen .sidebar,
+    body:fullscreen .mobile-top,
+    body:fullscreen .presenter{
+      display:none !important;
+    }
+    :fullscreen .sidebar,
+    :fullscreen .mobile-top{
+      display:none !important;
+    }
+    :fullscreen .app{
+      display:block;
+    }
+    :fullscreen .progress{
+      left:0;
+    }
+    :fullscreen .slide{
+      min-height:100vh;
+      height:100vh;
+      padding-top:48px;
+      padding-bottom:48px;
+    }
+
+    @media(max-width:920px){
+      .app{grid-template-columns:1fr}
+      .sidebar{display:none}
+      .mobile-top{display:flex;position:fixed;top:0;left:0;right:0;height:54px;z-index:50;background:rgba(13,13,15,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);align-items:center;justify-content:space-between;padding:0 14px}
+      .mobile-top b{font-size:14px}.mobile-top span{color:var(--muted);font-size:12px}
+      .progress{left:0;top:54px}
+      .slide{padding-top:92px}
+      .grid-2,.grid-3,.timeline,.demo,.grid-visual,.grid-visual.flip{grid-template-columns:1fr}
+      h2{letter-spacing:-1px;overflow-wrap:anywhere}
+      .img{min-height:280px;height:auto}
+      .img-mid{min-height:220px}
+      .photo-stage,.photo-copy{min-height:420px}
+      .photo-stage.compact,.photo-stage.compact .photo-copy{min-height:240px}
+      .photo-copy{
+        max-width:none;
+        padding:28px 22px 22px;
+        background:linear-gradient(180deg, transparent 0%, rgba(13,13,15,.55) 28%, rgba(13,13,15,.9) 100%);
+        justify-content:flex-end;
+      }
+      .presenter{bottom:10px;right:10px}
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      html{scroll-behavior:auto}
+      .nav button,.progress > div{transition:none}
+    }
+  </style>
+</head>
+<body>
+  <div class="mobile-top"><b>BandoneAR</b><span>Presentación comercial · 15 min</span></div>
+  <div class="progress"><div id="progressBar"></div></div>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="mark">B</div>
+        <div><h1>BandoneAR</h1><p>Presentación comercial</p></div>
+      </div>
+      <div class="nav" id="nav"></div>
+      <div class="side-foot">
+        <button class="timer-btn" id="timerBtn" type="button" aria-label="Iniciar o pausar cronómetro">
+          Tiempo de escena
+          <div class="timer" id="clock">00:00</div>
+        </button>
+        <div class="timer-hint" id="timerHint">Clic para iniciar · 15 min total</div>
+        <div class="script-box" id="scriptBox">
+          <b>Guión</b>
+          <span id="scriptText"></span>
+        </div>
+      </div>
+    </aside>
+
+    <main id="slides">
+      <section class="slide" data-title="Portada" data-time="0:30">
+        <p class="slide-script">Buenas tardes a todos. Somos [nombres] y venimos a presentarles BandoneAR, un proyecto que busca traer de vuelta uno de los instrumentos más emblemáticos de nuestra cultura: el bandoneón. Democratizar el bandoneón es democratizar el tango: que más personas puedan aprenderlo, tocarlo y sostenerlo. En los próximos minutos les vamos a contar de dónde viene este instrumento, qué problema estamos resolviendo y cómo lo estamos haciendo.</p>
+        <div class="slide-inner">
+          <div class="photo-stage">
+            <img src="assetes/hero-bandoneon.png" alt="Bandoneón sobre mesa, iluminación cinematográfica" onerror="this.onerror=null;this.src='hero.png'">
+            <div class="photo-copy">
+              <div class="eyebrow">Presentación comercial · 15 min</div>
+              <h2>Bandone<span class="accent">AR</span></h2>
+              <p class="lead">Democratizar el bandoneón para que el tango no quede en pocas manos.</p>
+              <p class="pull">Un instrumento digital y accesible, para aprender, tocar y sostener una cultura viva.</p>
+              <p class="names-line">Nombres de los presentadores</p>
+              <div class="chips">
+                <span class="chip">Cultura para más gente</span>
+                <span class="chip">71 botones</span>
+                <span class="chip">Fuelle físico</span>
+                <span class="chip">USB-MIDI</span>
+                <span class="chip">Aprendizaje transferible</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="¿Qué es el bandoneón?" data-time="1:00">
+        <p class="slide-script">El bandoneón es un instrumento de viento libre, de la familia de las concertinas, inventado en Alemania a mediados del siglo XIX. Originalmente se pensó como un instrumento de uso religioso y popular en Europa, portátil y económico. Llegó a Argentina y Uruguay de la mano de inmigrantes europeos hacia fines del siglo XIX, y acá encontró un destino completamente distinto al que tuvo en su lugar de origen: se convirtió en el alma del tango. Nació para ser tocado por mucha gente. Esa es la idea que queremos recuperar.</p>
+        <div class="slide-inner">
+          <div class="grid-visual">
+            <div>
+              <div class="eyebrow">Alemania → Río de la Plata</div>
+              <h2>¿Qué es el <span class="accent">bandoneón</span>?</h2>
+              <p class="lead">Instrumento de viento libre, de la familia de las concertinas. Nació popular y portátil; acá se volvió el alma del tango.</p>
+              <p class="pull">Si el bandoneón se encarece y desaparece, se achica también quién puede tocar y transmitir esa cultura.</p>
+            </div>
+            <img src="assetes/fuelle.png" class="img" alt="Detalle del fuelle de un bandoneón" onerror="this.onerror=null;this.src='historia.png'">
+          </div>
+          <div class="timeline">
+            <div class="step"><b>Alemania · s. XIX</b>Inventado a mediados de siglo. Portátil, económico, de uso religioso y popular.</div>
+            <div class="step"><b>Inmigración</b>Llega a Argentina y Uruguay hacia fines del siglo XIX.</div>
+            <div class="step"><b>Río de la Plata</b>Encuentra un destino distinto al de su origen.</div>
+            <div class="step"><b>El tango</b>Se convierte en el alma del género y en identidad cultural.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Impacto cultural" data-time="0:30">
+        <p class="slide-script">Con el correr de las décadas, el bandoneón dejó de ser un instrumento importado para transformarse en un símbolo de identidad rioplatense. No se concibe una orquesta típica de tango sin bandoneón: es el instrumento que le da ese carácter melancólico y profundo tan característico del género. Cuidar el bandoneón es cuidar el tango como cultura viva, no como pieza de museo.</p>
+        <div class="slide-inner">
+          <div class="photo-stage">
+            <img src="assetes/orquesta.png" alt="Orquesta típica de tango, con bandoneones en primera fila" onerror="this.onerror=null;this.src='tango.png'">
+            <div class="photo-copy">
+              <div class="eyebrow">Identidad rioplatense</div>
+              <h2>La voz del <span class="accent">tango</span>.</h2>
+              <p class="lead">Sin bandoneón no hay orquesta típica. Es el carácter melancólico y profundo del género.</p>
+              <p class="pull">Dejó de ser un instrumento importado para volverse símbolo. Si se vuelve exclusivo, la cultura también.</p>
+              <div class="chips">
+                <span class="chip">Orquestas típicas</span>
+                <span class="chip">Milongas</span>
+                <span class="chip">Cultura viva</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Gardel y el tango" data-time="0:30">
+        <p class="slide-script">Es imposible hablar de tango sin mencionar a Carlos Gardel, quien lo llevó a la fama mundial, y a los grandes bandoneonistas como Aníbal Troilo o Ástor Piazzolla, que llevaron el instrumento a otro nivel. El tango recorrió el mundo. El contraste es que el instrumento que le da identidad hoy es cada vez más difícil de tocar. Esta breve introducción histórica nos sirve para entender ese contraste con la situación actual.</p>
+        <div class="slide-inner grid-visual">
+          <div>
+            <div class="eyebrow">El género en el mundo</div>
+            <h2>Gardel, Troilo, <span class="accent">Piazzolla</span>.</h2>
+            <p class="lead">El tango se hizo universal. El bandoneón, su instrumento, hoy es cada vez más exclusivo.</p>
+            <p class="pull">Una cultura que recorrió el mundo no puede depender de un objeto inalcanzable.</p>
+            <div class="chips">
+              <span class="chip">Carlos Gardel</span>
+              <span class="chip">Aníbal Troilo</span>
+              <span class="chip">Ástor Piazzolla</span>
+            </div>
+          </div>
+          <img src="assetes/milonga.png" class="img" alt="Milonga porteña, ambiente de tango" onerror="this.onerror=null;this.src='video_intro.png'">
+        </div>
+      </section>
+
+      <section class="slide" data-title="Situación actual" data-time="1:30">
+        <p class="slide-script">Hoy el bandoneón está en crisis. Es un instrumento cada vez menos popular, sobre todo entre los más jóvenes. Y esto no es casualidad: hay barreras muy concretas. Primero, el acceso: conseguir un bandoneón hoy es muy difícil, ya casi no se fabrican, y los que existen son en su mayoría instrumentos antiguos, importados o de colección. Segundo, el costo: un bandoneón en buen estado puede costar varios miles de dólares, un precio que lo pone fuera del alcance de la gran mayoría de las personas interesadas en aprender. Y tercero, el aprendizaje: hay muy pocos profesores especializados, y sin instrumento propio para practicar, es prácticamente imposible sostener un proceso de aprendizaje. Cuando tocar se vuelve privilegio, el tango deja de circular.</p>
+        <div class="slide-inner">
+          <div class="photo-stage compact">
+            <img src="assetes/hero-bandoneon.png" alt="Bandoneón tradicional, cada vez más difícil de conseguir" onerror="this.onerror=null;this.src='hero.png'">
+            <div class="photo-copy">
+              <div class="eyebrow">Tres barreras concretas</div>
+              <h2>Hoy tocar es un <span class="danger">privilegio</span>.</h2>
+              <p class="lead">El interés existe. Lo que falta es acceso, sobre todo entre quienes recién quieren empezar.</p>
+            </div>
+          </div>
+          <div class="grid-3" style="margin-top:18px">
+            <div class="card"><div class="metric">Acceso</div><strong>Casi no se fabrican</strong><p class="muted">Los que existen son, en su mayoría, antiguos, importados o de colección.</p></div>
+            <div class="card"><div class="metric">Costo</div><strong>Miles de dólares</strong><p class="muted">Un instrumento en buen estado queda fuera del alcance de quien quiere empezar.</p></div>
+            <div class="card"><div class="metric">Aprendizaje</div><strong>Pocos profesores</strong><p class="muted">Y sin instrumento propio para practicar, el proceso no se sostiene.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="El problema" data-time="2:00">
+        <p class="slide-script">Entonces el problema que identificamos es claro: existe una demanda genuina de personas que quieren aprender a tocar el bandoneón —ya sea por herencia cultural, por curiosidad musical o por amor al tango— pero se encuentran con un instrumento inaccesible, caro, y sin la estructura de enseñanza necesaria para aprenderlo. Democratizar el bandoneón es abrir la puerta al tango. Nuestro cliente ideal es esa persona: alguien con interés genuino en el tango o la música popular rioplatense, que quizás alguna vez soñó con tocar el bandoneón pero se frenó al ver el precio o al no saber por dónde empezar. BandoneAR nace para resolver exactamente eso: un bandoneón digital, más accesible en costo, más fácil de conseguir, y pensado para facilitar el aprendizaje incluso sin un profesor presencial.</p>
+        <div class="slide-inner grid-visual">
+          <div>
+            <div class="eyebrow">Problema · cliente ideal</div>
+            <div class="problem">Quieren aprender tango. El bandoneón es <span class="danger">inaccesible</span>.</div>
+            <p class="pull" style="margin-top:18px">Hay demanda genuina: herencia cultural, curiosidad musical, amor al género. Lo que frena no es el deseo, es el precio y la falta de un camino para empezar.</p>
+            <div class="grid-2" style="margin-top:22px;align-items:stretch;grid-template-columns:1fr 1fr">
+              <div class="card">
+                <strong>Cliente ideal</strong>
+                <p class="muted">Alguien que soñó con tocar el bandoneón y se detuvo al ver el costo, o al no saber por dónde empezar.</p>
+              </div>
+              <div class="card">
+                <strong>Democratizar el acceso</strong>
+                <p class="muted">Un bandoneón digital: más barato, más fácil de conseguir, y pensado para aprender incluso sin profesor presencial. Lo aprendido se puede llevar al instrumento tradicional.</p>
+              </div>
+            </div>
+          </div>
+          <img src="assetes/milonga.png" class="img" alt="Milonga, la cultura que queremos abrir a más personas" onerror="this.onerror=null;this.src='video_intro.png'">
+        </div>
+      </section>
+
+      <section class="slide" data-title="El video" data-time="0:15">
+        <p class="slide-script">Para que se entienda mejor esta idea, les preparamos un pequeño video.</p>
+        <div class="slide-inner">
+          <div class="photo-stage">
+            <img src="assetes/orquesta.png" alt="Orquesta de tango" onerror="this.onerror=null;this.src='tango.png'">
+            <div class="photo-copy">
+              <div class="eyebrow">Transición</div>
+              <h2>Cómo se abre esa <span class="accent">puerta</span>.</h2>
+              <p class="lead">Un video corto sobre el camino hacia BandoneAR.</p>
+              <p class="pull">De la barrera del precio a un instrumento con el que se puede empezar.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Video" data-time="3:00">
+        <p class="slide-script">Reproducir el video. Hasta 3 minutos. No hablar por encima, salvo una frase de cierre al terminar.</p>
+        <div class="slide-inner">
+          <div class="eyebrow">Video · hasta 3 min</div>
+          <h2>La cultura, más <span class="accent">cerca</span>.</h2>
+          <div class="video-box">
+            <video id="pitchVideo" controls playsinline poster="video_intro.png" preload="metadata">
+              <source src="assetes/video.mp4" type="video/mp4" />
+            </video>
+            <div class="video-fallback" id="videoFallback">
+              <div>
+                <div class="play">▶</div>
+                <p class="lead" style="max-width:420px;margin:0 auto">Colocá el archivo <span class="accent">assetes/video.mp4</span> para reproducirlo acá.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="El instrumento" data-time="1:00">
+        <p class="slide-script">Este es BandoneAR. Mostrar el instrumento físicamente. Conserva la disposición tradicional de 71 botones, el fuelle físico y el comportamiento bisonoro: una nota al abrir y otra al cerrar. Funciona de forma autónoma y también como USB-MIDI. No es un sintetizador con forma de bandoneón: es una puerta de entrada al instrumento real. Lo aprendido se puede transferir al bandoneón tradicional.</p>
+        <div class="slide-inner">
+          <div class="grid-visual">
+            <div>
+              <div class="eyebrow">Presentación física · el producto</div>
+              <h2>Este es <span class="accent">BandoneAR</span>.</h2>
+              <p class="lead">Misma esencia visual y física. Por dentro, otra lógica. El gesto se conserva para que lo aprendido se pueda llevar al bandoneón real.</p>
+              <p class="pull">No reemplaza la tradición: acerca a más personas a ella.</p>
+              <ul class="spec">
+                <li>Disposición tradicional de <strong>71 botones</strong>: 38 a la derecha y 33 a la izquierda.</li>
+                <li>Comportamiento <strong>bisonoro</strong>: una nota al abrir y otra al cerrar el fuelle.</li>
+                <li><strong>Fuelle físico</strong> como control expresivo, no un teclado disfrazado.</li>
+                <li>Funciona solo o como <strong>USB-MIDI</strong>.</li>
+              </ul>
+            </div>
+            <img src="assetes/hero-bandoneon.png" class="img img-mid" alt="BandoneAR, el instrumento" onerror="this.onerror=null;this.src='hero.png'">
+          </div>
+          <div class="timeline">
+            <div class="step"><b>1. Forma</b>Dos cajas laterales unidas por el fuelle. La lógica de ejecución del bandoneón rioplatense.</div>
+            <div class="step"><b>2. Botonera</b>71 botones: 38 en la mano derecha y 33 en la izquierda.</div>
+            <div class="step"><b>3. Fuelle</b>El sentido del movimiento cambia la nota asociada a cada botón.</div>
+            <div class="step"><b>4. Sonido</b>Demostración breve. Priorizar claridad sobre virtuosismo.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Cómo funciona" data-time="1:30">
+        <p class="slide-script">En un bandoneón tradicional, el sonido se genera por aire que pasa a través de lengüetas metálicas al abrir y cerrar el fuelle, combinado con la presión de los botones. En BandoneAR emulamos ese mismo comportamiento de forma digital: sensores detectan el movimiento, la dirección y la dinámica del fuelle, y la combinación de botones presionados. Esa información se traduce en sonido mediante síntesis digital. Botón, más dirección del fuelle, más velocidad, igual a sonido. Esto baja el costo de fabricación y habilita guías visuales o sonoras para quien empieza.</p>
+        <div class="slide-inner">
+          <div class="grid-visual" style="margin-bottom:22px">
+            <div>
+              <div class="eyebrow">Tradicional vs. digital</div>
+              <h2>Mismo gesto. <span class="accent">Otro corazón.</span></h2>
+              <p class="lead">Conservamos la lógica del bandoneón. Cambiamos lo que encarece fabricarlo y lo que traba el aprendizaje.</p>
+              <p class="pull">Menos costo, más personas tocando, misma cultura en las manos.</p>
+            </div>
+            <img src="assetes/fuelle.png" class="img img-mid" alt="Fuelle del bandoneón, el gesto que se conserva" onerror="this.onerror=null;this.src='historia.png'">
+          </div>
+          <div class="grid-2" style="align-items:stretch">
+            <div class="card compare-col">
+              <h3>Tradicional</h3>
+              <p class="muted">Aire del fuelle a través de lengüetas metálicas, más la presión de los botones.</p>
+              <div class="flow">
+                <span>Fuelle</span><i>→</i><span>Aire</span><i>→</i><span>Lengüetas</span><i>→</i><span>Sonido</span>
+              </div>
+            </div>
+            <div class="card compare-col">
+              <h3>BandoneAR</h3>
+              <p class="muted">Sensores leen movimiento, dirección y dinámica. La síntesis digital reproduce el timbre y habilita guías para quien empieza.</p>
+              <div class="flow">
+                <span>Botón</span><i>+</i><span>Dirección</span><i>+</i><span>Velocidad</span><i>→</i><span class="success">Sonido</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Propuesta de valor" data-time="1:10">
+        <p class="slide-script">BandoneAR no es un sintetizador con forma de bandoneón. Es una puerta de entrada al bandoneón real: más accesible para empezar, serio para aprender, y con posibilidades extra como práctica silenciosa, audio integrado, portabilidad e integración MIDI. Si logramos que una persona que hoy no puede acceder a un bandoneón pueda empezar a aprender mañana, la tecnología está cumpliendo su función.</p>
+        <div class="slide-inner">
+          <div class="photo-stage compact">
+            <img src="assetes/orquesta.png" alt="El tango como cultura a la que se puede entrar" onerror="this.onerror=null;this.src='tango.png'">
+            <div class="photo-copy">
+              <div class="eyebrow">Por qué tiene sentido</div>
+              <h2>Accesible para empezar. <span class="accent">Serio para aprender.</span></h2>
+              <p class="lead">No digitalizamos una tradición. Facilitamos el camino hacia ella.</p>
+            </div>
+          </div>
+          <div class="grid-3" style="margin-top:18px">
+            <div class="card"><strong>Menor barrera económica</strong><p class="muted">Muy por debajo del costo de un bandoneón tradicional, para que más gente pueda empezar.</p></div>
+            <div class="card"><strong>Transferencia pedagógica</strong><p class="muted">La disposición y la lógica de ejecución apuntan a que el aprendizaje se pueda trasladar a un bandoneón real.</p></div>
+            <div class="card"><strong>Más posibilidades</strong><p class="muted">Práctica silenciosa, audio integrado, portabilidad e integración con producción musical digital vía USB-MIDI.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Cierre" data-time="0:30">
+        <p class="slide-script">Con esto creemos que BandoneAR puede devolverle vida a un instrumento que corre riesgo de perderse, haciéndolo accesible para una nueva generación. Democratizar el bandoneón es cuidar el tango como cultura que se toca, no que se contempla. No queremos digitalizar una tradición: queremos facilitar el camino hacia ella. Muchas gracias por su atención, quedamos abiertos a sus preguntas.</p>
+        <div class="slide-inner">
+          <div class="photo-stage">
+            <img src="assetes/milonga.png" alt="Milonga, cultura viva del tango" onerror="this.onerror=null;this.src='video_intro.png'">
+            <div class="photo-copy">
+              <div class="eyebrow">Gracias</div>
+              <h2>Que el tango no quede en una <span class="accent">vitrina</span>.</h2>
+              <p class="lead">Democratizar el bandoneón es devolverle la cultura a una nueva generación.</p>
+              <p class="pull">No queremos digitalizar una tradición. Queremos facilitar el camino hacia ella.</p>
+              <div class="chips">
+                <span class="chip">Costo</span>
+                <span class="chip">Fuelle</span>
+                <span class="chip">Botonera</span>
+                <span class="chip">Latencia</span>
+                <span class="chip">USB-MIDI</span>
+                <span class="chip">Preguntas</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="presenter">
+    <button id="prevBtn" type="button" title="Anterior" aria-label="Diapositiva anterior">←</button>
+    <div class="num" id="slideNum">1 / 12</div>
+    <button id="nextBtn" type="button" title="Siguiente" aria-label="Diapositiva siguiente">→</button>
+    <button id="fullscreenBtn" type="button" title="Pantalla completa" aria-label="Pantalla completa">⛶</button>
+  </div>
+
+  <script>
+    const slides = [...document.querySelectorAll('.slide')];
+    const nav = document.getElementById('nav');
+    const progress = document.getElementById('progressBar');
+    const slideNum = document.getElementById('slideNum');
+    const scriptText = document.getElementById('scriptText');
+    const video = document.getElementById('pitchVideo');
+    const videoFallback = document.getElementById('videoFallback');
+    const clock = document.getElementById('clock');
+    const timerBtn = document.getElementById('timerBtn');
+    const timerHint = document.getElementById('timerHint');
+
+    slides.forEach((s, i) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = `${String(i+1).padStart(2,'0')} · ${s.dataset.title}  ${s.dataset.time ? '· '+s.dataset.time : ''}`;
+      b.onclick = () => s.scrollIntoView({behavior:'smooth'});
+      nav.appendChild(b);
+    });
+    const navBtns = [...nav.children];
+
+    function currentIndex(){
+      let best = 0, bestD = Infinity;
+      slides.forEach((s,i)=>{
+        const d = Math.abs(s.getBoundingClientRect().top - window.innerHeight*.15);
+        if(d < bestD){bestD = d; best = i}
+      });
+      return best;
+    }
+
+    function pauseVideoIfNeeded(i){
+      if(!video) return;
+      const onVideo = slides[i] && slides[i].contains(video);
+      if(!onVideo && !video.paused) video.pause();
+    }
+
+    function update(){
+      const i = currentIndex();
+      navBtns.forEach((b,j)=>b.classList.toggle('active', j===i));
+      progress.style.width = `${((i+1)/slides.length)*100}%`;
+      slideNum.textContent = `${i+1} / ${slides.length}`;
+      const script = slides[i].querySelector('.slide-script');
+      scriptText.textContent = script ? script.textContent.trim() : '';
+      pauseVideoIfNeeded(i);
+    }
+    window.addEventListener('scroll', update, {passive:true});
+    update();
+
+    function go(delta){
+      const i = Math.min(slides.length-1, Math.max(0, currentIndex()+delta));
+      slides[i].scrollIntoView({behavior:'smooth'});
+    }
+    document.getElementById('prevBtn').onclick = ()=>go(-1);
+    document.getElementById('nextBtn').onclick = ()=>go(1);
+
+    async function toggleFullscreen(){
+      try{
+        if(!document.fullscreenElement){
+          await document.documentElement.requestFullscreen();
+        }else{
+          await document.exitFullscreen();
+        }
+      }catch(err){
+        console.warn('No se pudo activar pantalla completa:', err);
+      }
+    }
+
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    fullscreenBtn.onclick = toggleFullscreen;
+
+    document.addEventListener('fullscreenchange', ()=>{
+      fullscreenBtn.textContent = document.fullscreenElement ? '✕' : '⛶';
+      fullscreenBtn.title = document.fullscreenElement ? 'Salir de pantalla completa' : 'Pantalla completa';
+      fullscreenBtn.setAttribute('aria-label', fullscreenBtn.title);
+    });
+
+    document.addEventListener('keydown', e=>{
+      if(['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)){
+        if(e.key === ' ' && e.target && e.target.closest && e.target.closest('video')) return;
+        e.preventDefault();
+        go(1);
+      }
+      if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();go(-1)}
+      if(e.key==='Home'){slides[0].scrollIntoView({behavior:'smooth'})}
+      if(e.key==='End'){slides.at(-1).scrollIntoView({behavior:'smooth'})}
+      if(e.key.toLowerCase()==='f'){toggleFullscreen()}
+      if(e.key==='Escape' && document.fullscreenElement){document.exitFullscreen()}
+    });
+
+    let elapsed = 0;
+    let ticking = null;
+    function formatTime(s){
+      const m = Math.floor(s/60);
+      const r = s%60;
+      return `${String(m).padStart(2,'0')}:${String(r).padStart(2,'0')}`;
+    }
+    function paintClock(){
+      clock.textContent = formatTime(elapsed);
+      clock.style.color = elapsed >= 15*60 ? '#e77d74' : elapsed >= 12*60 ? 'var(--gold)' : '#fff';
+    }
+    timerBtn.onclick = ()=>{
+      if(ticking){
+        clearInterval(ticking);
+        ticking = null;
+        timerHint.textContent = 'Pausado · clic para continuar';
+        return;
+      }
+      ticking = setInterval(()=>{
+        elapsed += 1;
+        paintClock();
+      }, 1000);
+      timerHint.textContent = 'En curso · clic para pausar';
+    };
+
+    if(video){
+      const hideFallback = ()=> videoFallback.classList.add('hidden');
+      video.addEventListener('loadeddata', ()=>{
+        if(video.videoWidth > 0) hideFallback();
+      });
+      video.addEventListener('play', hideFallback);
+      video.addEventListener('error', ()=> videoFallback.classList.remove('hidden'));
+    }
+  </script>
+</body>
+</html>
