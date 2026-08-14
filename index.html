@@ -313,9 +313,6 @@
     .names-line{margin-top:28px;color:var(--muted);font-size:16px;letter-spacing:.2px}
     .compare-col h3{margin-bottom:8px}
     .compare-col .flow{margin-top:18px}
-    .slide.is-current h2{view-transition-name:slide-title}
-    .slide.is-current .eyebrow{view-transition-name:slide-kicker}
-    .slide.is-current .lead{view-transition-name:slide-lead}
     .slide.is-current .photo-stage > img,
     .slide.is-current img.img,
     .slide.is-current .video-box{view-transition-name:slide-visual}
@@ -342,14 +339,98 @@
       overflow:hidden;
       border-radius:22px;
     }
-    ::view-transition-old(slide-title),
-    ::view-transition-new(slide-title),
-    ::view-transition-old(slide-lead),
-    ::view-transition-new(slide-lead),
-    ::view-transition-old(slide-kicker),
-    ::view-transition-new(slide-kicker){
-      height:auto;
-      overflow:clip;
+    @keyframes enter-copy{
+      from{opacity:0;transform:translate3d(0,22px,0);filter:blur(6px)}
+      to{opacity:1;transform:none;filter:none}
+    }
+    @keyframes enter-copy-back{
+      from{opacity:0;transform:translate3d(0,-16px,0);filter:blur(6px)}
+      to{opacity:1;transform:none;filter:none}
+    }
+    .slide.is-current.is-revealed .eyebrow,
+    .slide.is-current.is-revealed h2,
+    .slide.is-current.is-revealed .lead,
+    .slide.is-current.is-revealed .pull,
+    .slide.is-current.is-revealed .names-line,
+    .slide.is-current.is-revealed .problem,
+    .slide.is-current.is-revealed .spec,
+    .slide.is-current.is-revealed .chips,
+    .slide.is-current.is-revealed h3,
+    .slide.is-current.is-revealed .metric,
+    .slide.is-current.is-revealed .card,
+    .slide.is-current.is-revealed .step,
+    .slide.is-current.is-revealed .flow{
+      animation-name:enter-copy;
+      animation-duration:.72s;
+      animation-timing-function:cubic-bezier(.22,1,.36,1);
+      animation-fill-mode:both;
+    }
+    html[data-dir="prev"] .slide.is-current.is-revealed .eyebrow,
+    html[data-dir="prev"] .slide.is-current.is-revealed h2,
+    html[data-dir="prev"] .slide.is-current.is-revealed .lead,
+    html[data-dir="prev"] .slide.is-current.is-revealed .pull,
+    html[data-dir="prev"] .slide.is-current.is-revealed .names-line,
+    html[data-dir="prev"] .slide.is-current.is-revealed .problem,
+    html[data-dir="prev"] .slide.is-current.is-revealed .spec,
+    html[data-dir="prev"] .slide.is-current.is-revealed .chips,
+    html[data-dir="prev"] .slide.is-current.is-revealed h3,
+    html[data-dir="prev"] .slide.is-current.is-revealed .metric,
+    html[data-dir="prev"] .slide.is-current.is-revealed .card,
+    html[data-dir="prev"] .slide.is-current.is-revealed .step,
+    html[data-dir="prev"] .slide.is-current.is-revealed .flow{
+      animation-name:enter-copy-back;
+    }
+    .slide.is-current.is-revealed .eyebrow{animation-delay:.04s}
+    .slide.is-current.is-revealed h2,
+    .slide.is-current.is-revealed .problem{animation-delay:.12s}
+    .slide.is-current.is-revealed .lead{animation-delay:.22s}
+    .slide.is-current.is-revealed .pull,
+    .slide.is-current.is-revealed .names-line{animation-delay:.3s}
+    .slide.is-current.is-revealed .spec,
+    .slide.is-current.is-revealed h3,
+    .slide.is-current.is-revealed .metric{animation-delay:.34s}
+    .slide.is-current.is-revealed .chips{animation-delay:.38s}
+    .slide.is-current.is-revealed .flow{animation-delay:.4s}
+    .slide.is-current.is-revealed .card:nth-child(1),
+    .slide.is-current.is-revealed .step:nth-child(1){animation-delay:.32s}
+    .slide.is-current.is-revealed .card:nth-child(2),
+    .slide.is-current.is-revealed .step:nth-child(2){animation-delay:.4s}
+    .slide.is-current.is-revealed .card:nth-child(3),
+    .slide.is-current.is-revealed .step:nth-child(3){animation-delay:.48s}
+    .slide.is-current.is-revealed .card:nth-child(4),
+    .slide.is-current.is-revealed .step:nth-child(4){animation-delay:.56s}
+    html:not(.anim-off) .slide.is-current:not(.is-revealed) .eyebrow,
+    html:not(.anim-off) .slide.is-current:not(.is-revealed) h2,
+    html:not(.anim-off) .slide.is-current:not(.is-revealed) .lead,
+    html:not(.anim-off) .slide.is-current:not(.is-revealed) .pull,
+    html:not(.anim-off) .slide.is-current:not(.is-revealed) .names-line,
+    html:not(.anim-off) .slide.is-current:not(.is-revealed) .problem,
+    html:not(.anim-off) .slide.is-current:not(.is-revealed) .spec,
+    html:not(.anim-off) .slide.is-current:not(.is-revealed) .chips,
+    html:not(.anim-off) .slide.is-current:not(.is-revealed) h3,
+    html:not(.anim-off) .slide.is-current:not(.is-revealed) .metric,
+    html:not(.anim-off) .slide.is-current:not(.is-revealed) .card,
+    html:not(.anim-off) .slide.is-current:not(.is-revealed) .step,
+    html:not(.anim-off) .slide.is-current:not(.is-revealed) .flow{
+      opacity:0;
+    }
+    html.anim-off .slide .eyebrow,
+    html.anim-off .slide h2,
+    html.anim-off .slide .lead,
+    html.anim-off .slide .pull,
+    html.anim-off .slide .names-line,
+    html.anim-off .slide .problem,
+    html.anim-off .slide .spec,
+    html.anim-off .slide .chips,
+    html.anim-off .slide h3,
+    html.anim-off .slide .metric,
+    html.anim-off .slide .card,
+    html.anim-off .slide .step,
+    html.anim-off .slide .flow{
+      opacity:1 !important;
+      transform:none !important;
+      filter:none !important;
+      animation:none !important;
     }
     html.no-vt .slide{
       visibility:visible;
@@ -532,8 +613,24 @@
       .nav button,.progress > div,html.no-vt .slide{transition:none}
       ::view-transition-group(*),
       ::view-transition-old(*),
-      ::view-transition-new(*){
+      ::view-transition-new(*),
+      .slide.is-current.is-revealed .eyebrow,
+      .slide.is-current.is-revealed h2,
+      .slide.is-current.is-revealed .lead,
+      .slide.is-current.is-revealed .pull,
+      .slide.is-current.is-revealed .names-line,
+      .slide.is-current.is-revealed .problem,
+      .slide.is-current.is-revealed .spec,
+      .slide.is-current.is-revealed .chips,
+      .slide.is-current.is-revealed h3,
+      .slide.is-current.is-revealed .metric,
+      .slide.is-current.is-revealed .card,
+      .slide.is-current.is-revealed .step,
+      .slide.is-current.is-revealed .flow{
         animation:none !important;
+        opacity:1 !important;
+        transform:none !important;
+        filter:none !important;
       }
     }
   </style>
@@ -896,15 +993,25 @@
       if(!onVideo && !video.paused) video.pause();
     }
 
-    function applySlide(i){
+    function applySlide(i, reveal){
       index = i;
-      slides.forEach((s,j)=> s.classList.toggle('is-current', j===i));
+      slides.forEach((s,j)=>{
+        s.classList.toggle('is-current', j===i);
+        s.classList.remove('is-revealed');
+      });
       navBtns.forEach((b,j)=> b.classList.toggle('active', j===i));
       progress.style.width = `${((i+1)/slides.length)*100}%`;
       slideNum.textContent = `${i+1} / ${slides.length}`;
       const script = slides[i].querySelector('.slide-script');
       scriptText.textContent = script ? script.textContent.trim() : '';
       pauseVideoIfNeeded(i);
+      if(reveal === false) return;
+      const current = slides[i];
+      if(animOn && !reducedMotion()){
+        requestAnimationFrame(()=> current.classList.add('is-revealed'));
+        return;
+      }
+      current.classList.add('is-revealed');
     }
 
     function reducedMotion(){
@@ -934,18 +1041,18 @@
       i = Math.min(slides.length-1, Math.max(0, i));
       if(i === index || busy) return;
       document.documentElement.dataset.dir = i > index ? 'next' : 'prev';
-      const run = () => applySlide(i);
       if(animOn && !reducedMotion() && document.startViewTransition){
         busy = true;
         try{
-          await document.startViewTransition(run).finished;
+          await document.startViewTransition(()=> applySlide(i, false)).finished;
+          requestAnimationFrame(()=> slides[i].classList.add('is-revealed'));
         }catch(err){
-          run();
+          applySlide(i, true);
         }
         busy = false;
         return;
       }
-      run();
+      applySlide(i, true);
     }
 
     function go(delta){
