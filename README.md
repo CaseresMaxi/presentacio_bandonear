@@ -15,6 +15,9 @@ el navegador: `index.html`. No requiere servidor ni build.
     │   ├── fuelle.webp           Detalle del fuelle
     │   ├── orquesta.webp         Orquesta típica de tango
     │   ├── milonga.webp          Milonga porteña, parejas bailando
+    │   ├── gardel.webp           Carlos Gardel
+    │   ├── troilo.webp           Aníbal Troilo tocando el bandoneón
+    │   ├── piazzolla.webp        Ástor Piazzolla tocando el bandoneón
     │   ├── bandoneon-plano.jpg   Los dos teclados y el fuelle, lámina explicativa
     │   ├── bandonear-mesa.jpg    BandoneAR, foto del producto
     │   ├── logo-mark.png         Isotipo, fondo transparente
@@ -29,9 +32,9 @@ agregás imágenes nuevas, convertilas igual:
 `magick entrada.png -quality 82 -define webp:method=6 assets/img/nombre.webp`
 
 > **Pendiente:** `bandoneon-plano.jpg` y `bandonear-mesa.jpg` entraron en JPEG sin
-> pasar por esa conversión y pesan ~2,2 MB cada una, más que las otras seis juntas.
-> Conviene pasarlas a WebP con el comando de arriba y actualizar las rutas en
-> `index.html`.
+> pasar por esa conversión y pesan ~2,2 MB cada una, más que el resto de las
+> imágenes juntas. Conviene pasarlas a WebP con el comando de arriba y actualizar
+> las rutas en `index.html`.
 
 `logo-mark.png` es el isotipo con el fondo gris recortado a transparencia, que es
 lo que usa el deck. Se conserva `logo-mark-original.png` por si hay que rehacer el
@@ -52,7 +55,7 @@ instrucciones en pantalla y el resto de la presentación funciona normalmente.
 | 1 | Portada | `hero-bandoneon.webp` + `logo-mark.png` |
 | 2 | ¿Qué es el bandoneón? | `bandoneon-plano.jpg` |
 | 3 | Impacto cultural | `orquesta.webp` + `fuelle.webp` + `milonga.webp` |
-| 4 | El tango | `milonga.webp` + `orquesta.webp` + `hero-bandoneon.webp` |
+| 4 | El tango | `gardel.webp` + `troilo.webp` + `piazzolla.webp` |
 | 5 | Situación actual | `hero-bandoneon.webp` |
 | 6 | El problema | `milonga.webp` |
 | 7 | El video | `orquesta.webp` |
