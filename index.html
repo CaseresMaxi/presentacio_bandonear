@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>BandoneAR — Presentación comercial</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='8 18 62 60'%3E%3Cpolygon points='12,30 30,22 42,30 42,64 26,73 12,64' fill='%2317171c' stroke='%23efe3d0' stroke-width='3.4' stroke-linejoin='round'/%3E%3Cg fill='%23efe3d0'%3E%3Ccircle cx='20' cy='44' r='1.7'/%3E%3Ccircle cx='20' cy='51' r='1.7'/%3E%3Ccircle cx='20' cy='58' r='1.7'/%3E%3Ccircle cx='26' cy='41' r='1.7'/%3E%3Ccircle cx='26' cy='48' r='1.7'/%3E%3Ccircle cx='26' cy='55' r='1.7'/%3E%3Ccircle cx='31' cy='38' r='1.7'/%3E%3Ccircle cx='31' cy='45' r='1.7'/%3E%3C/g%3E%3Cpolygon points='46,68 52,68 58,26 52,26' fill='%23c9a67f'/%3E%3Cpolygon points='58,66 64,66 70,26 64,26' fill='%236f8598'/%3E%3C/svg%3E" />
   <style>
     /* Fuentes servidas desde el proyecto: el deck no depende de internet.
        Playfair Display para titulos (serif de alto contraste, aire de imprenta
@@ -157,8 +158,21 @@
       display:flex; flex-direction:column; z-index:10; min-height:0;
     }
     .brand{display:flex; gap:12px; align-items:center; padding:4px 6px 16px; flex-shrink:0}
-    .mark{width:42px;height:42px;border:1px solid color-mix(in srgb, var(--gold) 45%, transparent);border-radius:12px;
-      display:grid;place-items:center;color:var(--gold);font-size:20px;font-weight:800}
+    /* Chip del isotipo. Va sobre fondo oscuro en las tres paletas: el logo
+       tiene contorno y laminas en crema que se lavarian contra el sidebar
+       claro de la paleta "programa". */
+    .mark{width:54px;height:42px;border:1px solid color-mix(in srgb, var(--gold) 45%, transparent);border-radius:12px;
+      display:grid;place-items:center;flex-shrink:0;background:#26262b;padding:4px}
+    .mark img{width:100%;height:100%;object-fit:contain;display:block}
+    /* Lockup de portada: isotipo + wordmark. La portada corre sobre el
+       overlay oscuro de .photo-copy en las tres paletas, asi que aca el
+       logo no necesita fondo propio. */
+    .logo-lockup{display:flex;align-items:center;gap:18px;margin:0 0 6px}
+    .logo-lockup h2{margin:0}
+    .logo-lockup img{width:128px;height:auto;flex-shrink:0;filter:drop-shadow(0 6px 18px rgba(0,0,0,.35))}
+    @media (max-width:900px){
+      .logo-lockup img{width:88px}
+    }
     .brand h1{margin:0;font-family:var(--font-display);font-size:20px;font-weight:700;letter-spacing:.2px}
     .brand p{margin:2px 0 0;color:var(--muted);font-size:12px}
     .palettes{flex-shrink:0;padding:0 6px 16px}
@@ -351,6 +365,17 @@
     .demo{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
     .demo .card{min-height:120px}
     .img-mid{min-height:380px}
+    /* Lamina explicativa (los dos teclados y el fuelle). A diferencia de las
+       fotos de ambiente, aca recortar pierde justo lo que la imagen explica:
+       la caja toma el aspecto del archivo y la imagen va contenida, no cover. */
+    .img-flat{
+      object-fit:contain;
+      aspect-ratio:2448/1728;
+      height:auto;
+      min-height:0;
+      max-height:640px;
+      background:#e7e0d7;
+    }
     /* Columnas sin caja: quita el marco cuadrado y deja respirar el texto. */
     .grid-2.bare, .grid-3.bare{gap:52px}
     .grid-2.bare > div, .grid-3.bare > div{padding:0}
@@ -602,7 +627,7 @@
   <div class="app">
     <aside class="sidebar">
       <div class="brand">
-        <div class="mark">B</div>
+        <div class="mark"><img src="assets/img/logo-mark.png" alt="" /></div>
         <div><h1>BandoneAR</h1><p>Presentación comercial</p></div>
       </div>
       <div class="palettes">
@@ -645,7 +670,10 @@
             <img src="assets/img/hero-bandoneon.webp" alt="Bandoneón sobre mesa, iluminación cinematográfica">
             <div class="photo-copy">
               <div class="eyebrow">Presentación comercial</div>
-              <h2>Bandone<span class="accent">AR</span></h2>
+              <div class="logo-lockup">
+                <img src="assets/img/logo-mark.png" alt="" />
+                <h2>Bandone<span class="accent">AR</span></h2>
+              </div>
               <p class="lead">Un instrumento digital y accesible, para aprender.</p>
               <p class="names-line">Brenda · Maxi · Antonio · Leo · Franco</p>
             </div>
@@ -665,7 +693,7 @@
                 <li>Los dos lados son <b>distintos entre sí</b></li>
               </ul>
             </div>
-            <img src="assets/img/fuelle.webp" class="img img-mid" alt="Detalle del fuelle de un bandoneón">
+            <img src="assets/img/bandoneon-plano.jpg" class="img img-flat" alt="Bandoneón desarmado: los dos teclados, izquierdo y derecho, sobre el fuelle abierto">
           </div>
           <ul class="blist two tight" style="margin-top:34px">
             <li><b>1846 · Alemania.</b> Heinrich Band</li>
@@ -778,12 +806,12 @@
           <h2>Nuestra <span class="accent">propuesta</span>.</h2>
           <div class="video-box">
             <video id="pitchVideo" controls playsinline poster="assets/img/milonga.webp" preload="metadata">
-              <source src="assets/video/video.mp4" type="video/mp4" />
+              <source src="assets/video/proyecto_video_final.mp4" type="video/mp4" />
             </video>
             <div class="video-fallback" id="videoFallback">
               <div>
                 <div class="play">▶</div>
-                <p class="muted" style="max-width:520px;margin:0 auto">Colocá el archivo <span class="accent">assets/video/video.mp4</span> para reproducirlo acá.</p>
+                <p class="muted" style="max-width:520px;margin:0 auto">Colocá el archivo <span class="accent">assets/video/proyecto_video_final.mp4</span> para reproducirlo acá.</p>
               </div>
             </div>
           </div>
@@ -803,7 +831,7 @@
                 <li><b>Fuelle</b> inicial, ampliable a uno de luthier</li>
               </ul>
             </div>
-            <img src="assets/img/hero-bandoneon.webp" class="img img-mid" alt="BandoneAR, el instrumento">
+            <img src="assets/img/bandonear-mesa.jpg" class="img img-mid" alt="BandoneAR sobre una mesa de milonga: cabezales impresos en 3D, botones a medida y fuelle">
         </div>
       </section>
       <section class="slide" data-title="Cómo funciona" data-time="1:00">
