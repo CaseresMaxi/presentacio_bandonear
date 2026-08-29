@@ -330,11 +330,20 @@
     .blist.tight li{font-size:28px;padding-left:48px}
     .blist.tight li::before{width:11px;height:11px;left:6px;box-shadow:0 0 0 6px color-mix(in srgb, var(--gold) 15%, transparent)}
     .blist.two{grid-template-columns:1fr 1fr;column-gap:64px;row-gap:26px}
+    /* Los cuatro items de "Cómo funciona" describen a BandoneAR, pero .blist.two
+       arma dos columnas del mismo ancho que la comparacion de arriba y la de la
+       izquierda parecia colgar de "Tradicional". El titulo a lo ancho los
+       encuadra y la linea corta la lectura en columna. */
+    .detail-block{margin-top:30px;border-top:1px solid var(--line);padding-top:26px}
     /* Tira de imagenes de apoyo, sin marco cuadrado dominante. */
     .imgrow{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:20px;margin-top:28px}
     .imgrow img{width:100%;height:300px;object-fit:cover;border-radius:200px 200px 12px 12px;border:1px solid var(--img-line);display:block}
     .imgrow.figures{display:flex;justify-content:center;gap:32px}
     .imgrow.figures img{width:400px;height:500px;flex:none}
+    /* Pacho es bastante mas angosto que la caja, asi que cover recorta arriba
+       y abajo: se sube el encuadre para no cortarle la cara. Greco no lleva
+       clase porque su proporcion casi coincide con la caja y no se recorta. */
+    .imgrow .pos-pacho{object-position:center 30%}
     .imgrow .pos-gardel{object-position:center 8%}
     .imgrow .pos-troilo{object-position:center 18%}
     .imgrow .pos-piazzolla{object-position:center 32%}
@@ -381,10 +390,42 @@
       max-height:640px;
       background:#e7e0d7;
     }
+    /* Foto de detalle donde importa ver la pieza entera y el recorte pierde el
+       punto. La caja se ajusta a la imagen en vez de al reves, asi el borde la
+       abraza y no quedan franjas de panel a los costados. */
+    .img-contain{
+      object-fit:contain;
+      width:auto;
+      max-width:100%;
+      height:auto;
+      min-height:0;
+      max-height:660px;
+      margin:0 auto;
+    }
     /* Columnas sin caja: quita el marco cuadrado y deja respirar el texto. */
     .grid-2.bare, .grid-3.bare{gap:52px}
     .grid-2.bare > div, .grid-3.bare > div{padding:0}
     /* Slide de cierre. */
+    /* Variante centrada de .photo-copy, para el cierre. El velo de la portada
+       es lateral porque el texto va a la izquierda; aca va al medio, asi que
+       cubre todo el alto. Reusa .photo-copy y no una caja nueva para heredar
+       las correcciones de color de la paleta clara, donde el texto por defecto
+       es oscuro y quedaria ilegible sobre la foto. */
+    .photo-copy.is-centered{
+      max-width:100%;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      background:linear-gradient(180deg,
+        var(--overlay-mid) 0%, var(--overlay) 38%, var(--overlay) 62%, var(--overlay-mid) 100%);
+    }
+    /* El slot es mucho mas apaisado que la foto y cover recorta 213 px de alto:
+       subir el encuadre deja adentro las dos caras y el instrumento. */
+    .pos-abuelo{object-position:center 25%}
+    /* Calificadas con .photo-stage > img porque esa regla ya fija
+       object-position:center y le gana a una clase suelta. */
+    .photo-stage > img.pos-alumnos{object-position:center 45%}
+    .photo-stage > img.pos-orquesta{object-position:center 42%}
     .closing{text-align:center}
     .closing .eyebrow{letter-spacing:5px}
     .closing h2{font-size:150px;margin:20px 0 10px;letter-spacing:-3px}
@@ -422,6 +463,19 @@
     .center-inner h2{margin-left:auto;margin-right:auto}
     .center-inner .lead{margin-left:auto;margin-right:auto}
     .names-line{margin-top:34px;color:var(--muted);font-size:26px;letter-spacing:.4px}
+    /* Di Sarli y Pugliese al pie de la portada, a modo de amuleto: chicos, en
+       circulo y atenuados, para que acompanen sin competir con el logo ni con
+       los nombres del equipo. */
+    .amuleto{display:flex;align-items:center;gap:12px;margin-top:22px}
+    .amuleto img{
+      width:62px;height:62px;border-radius:50%;object-fit:cover;display:block;flex:none;
+      border:1px solid color-mix(in srgb, var(--gold) 50%, transparent);
+      filter:grayscale(.4);opacity:.9;
+    }
+    /* Encuadres calculados sobre cada archivo: Di Sarli es vertical y la cara
+       queda alta; Pugliese es apaisado y la tiene corrida a la derecha. */
+    .amuleto .pos-disarli{object-position:center 0%}
+    .amuleto .pos-pugliese{object-position:65% center}
     .compare-col h3{margin-bottom:8px}
     .compare-col .flow{margin-top:18px}
     .slide.is-current .photo-stage > img,
@@ -574,8 +628,48 @@
     :fullscreen .mobile-top{
       display:none !important;
     }
-    :fullscreen .palette-dock{
+    /* En pantalla completa el chrome distrae: el dock de paletas (colores +
+       Animar) queda invisible y solo se revela al pasar el mouse por su
+       esquina. Va con opacity y no con display:none porque un elemento que no
+       se renderiza tampoco recibe hover, y entonces no habria forma de traerlo
+       de vuelta. focus-within lo revela tambien al llegar tabulando. */
+    :fullscreen .palette-dock,
+    html:fullscreen .palette-dock{
       display:flex;
+      opacity:0;
+      transition:opacity .2s ease;
+    }
+    :fullscreen .palette-dock:hover,
+    :fullscreen .palette-dock:focus-within,
+    html:fullscreen .palette-dock:hover,
+    html:fullscreen .palette-dock:focus-within{
+      opacity:1;
+    }
+    html.anim-off:fullscreen .palette-dock{
+      transition:none;
+    }
+    /* Misma logica para la barra de navegacion: flechas, contador y el boton
+       de salir se van, y vuelven al acercar el mouse a su esquina. Si la
+       barra no aparece, Escape siempre sale de pantalla completa. */
+    :fullscreen .presenter,
+    html:fullscreen .presenter{
+      opacity:0;
+      transition:opacity .2s ease;
+    }
+    :fullscreen .presenter:hover,
+    :fullscreen .presenter:focus-within,
+    html:fullscreen .presenter:hover,
+    html:fullscreen .presenter:focus-within{
+      opacity:1;
+    }
+    html.anim-off:fullscreen .presenter{
+      transition:none;
+    }
+    /* El Animar del dock ya cubre la funcion (mas la tecla A), asi que el
+       duplicado de la barra inferior sale del todo. */
+    :fullscreen .presenter .anim-toggle,
+    html:fullscreen .presenter .anim-toggle{
+      display:none;
     }
     :fullscreen .app,
     html:fullscreen .app{
@@ -681,6 +775,10 @@
               </div>
               <p class="lead">Un instrumento digital y accesible, para aprender.</p>
               <p class="names-line">Brenda · Maxi · Antonio · Leo · Franco</p>
+              <div class="amuleto">
+                <img src="assets/img/di-sarli.jpg" class="pos-disarli" alt="Carlos Di Sarli">
+                <img src="assets/img/pugliese.jpg" class="pos-pugliese" alt="Osvaldo Pugliese">
+              </div>
             </div>
           </div>
         </div>
@@ -722,10 +820,9 @@
             <li><b>Pacho</b>, 1912: graba y lo populariza</li>
             <li><b>Greco</b>, 1910: nace la <b>orquesta típica</b></li>
           </ul>
-          <div class="imgrow">
-            <img src="assets/img/orquesta.webp" alt="Orquesta típica de tango">
-            <img src="assets/img/fuelle.webp" alt="Detalle del fuelle">
-            <img src="assets/img/milonga.webp" alt="Milonga porteña">
+          <div class="imgrow figures">
+            <img src="assets/img/pacho.jpg" class="pos-pacho" alt="Juan Maglio &quot;Pacho&quot;, retrato dedicado de 1931">
+            <img src="assets/img/greco.jpg" alt="Vicente Greco, retrato de época">
           </div>
         </div>
       </section>
@@ -839,13 +936,32 @@
             <img src="assets/img/bandonear-mesa.jpg" class="img img-mid" alt="BandoneAR sobre una mesa de milonga: cabezales impresos en 3D, botones a medida y fuelle">
         </div>
       </section>
+      <section class="slide" data-title="El tacto" data-time="0:35">
+        <p class="slide-script">Acá se ve por dentro. Cada botón es un switch mecánico lineal montado sobre un cabezal impreso en 3D que respeta la distribución exacta del instrumento tradicional: la misma curva, la misma distancia entre botones, la misma altura. Elegimos switches lineales porque el recorrido es parejo, sin el escalón de un switch táctil, y es lo que más se parece a la pulsación de un bandoneón real. La idea es que la memoria muscular sea transferible: quien aprende en BandoneAR después se sienta frente a uno tradicional y la mano ya sabe dónde está cada nota. ---</p>
+        <div class="slide-inner grid-visual">
+            <div>
+              <div class="eyebrow">El tacto</div>
+              <h2>Fiel al <span class="accent">tacto</span> del bandoneón.</h2>
+              <p class="lead">Lo que aprendés acá se siente igual allá: la mano encuentra los botones donde los espera.</p>
+              <ul class="blist tight">
+                <li>Botonera en la <b>distribución exacta</b> del instrumento real</li>
+                <li><b>Switches mecánicos lineales</b>: recorrido parejo, sin escalón</li>
+                <li>Teclas impresas a medida, misma <b>distancia y altura</b></li>
+              </ul>
+            </div>
+            <img src="assets/img/tacto-switches.webp" class="img img-contain" alt="Cabezales izquierdo y derecho abiertos: los switches mecánicos en la distribución del bandoneón y las tapas con los agujeros en la misma curva">
+        </div>
+      </section>
       <section class="slide" data-title="Cómo funciona" data-time="1:00">
         <p class="slide-script">A diferencia de un instrumento tradicional, BandoneAR no depende de la presión del aire: la generación del sonido es cien por ciento digital. Acá el fuelle cumple un rol estético, ergonómico y postural. El corazón del sistema es un encoder rotativo interno que captura el movimiento físico de apertura y cierre. (gesto: mostrar el mecanismo abriéndose y cerrándose) Por software leemos en tiempo real la dirección, la velocidad y la aceleración del gesto, y lo traducimos en la intensidad, el volumen y la dinámica del sonido. Además reproduce fielmente el comportamiento bisonoro: el mismo botón genera una nota distinta al abrir y al cerrar. ---</p>
         <div class="slide-inner">
-          <div>
-            <div class="eyebrow">Tradicional vs. digital</div>
-            <h2>Mismo gesto. <span class="accent">Otro corazón.</span></h2>
-            <p class="lead">El sonido es cien por ciento digital: no depende del aire.</p>
+          <div class="grid-visual">
+            <div>
+              <div class="eyebrow">Tradicional vs. digital</div>
+              <h2>Mismo gesto. <span class="accent">Otro corazón.</span></h2>
+              <p class="lead">El sonido es cien por ciento digital: no depende del aire.</p>
+            </div>
+            <img src="assets/img/abuelo.jpg" class="img img-mid pos-abuelo" alt="Un luthier mostrándole el BandoneAR a un joven en el taller">
           </div>
           <div class="grid-2 bare" style="margin-top:34px">
             <div>
@@ -857,12 +973,15 @@
               <div class="flow"><span>Botón</span><i>+</i><span>Dirección</span><i>+</i><span>Velocidad</span><i>→</i><span class="success">Sonido</span></div>
             </div>
           </div>
-          <ul class="blist two tight" style="margin-top:34px">
-            <li>Un <b>encoder</b> capta la apertura y el cierre</li>
-            <li>El software lee <b>dirección, velocidad y aceleración</b></li>
-            <li>Eso define <b>intensidad, volumen y dinámica</b></li>
-            <li>El fuelle controla el <b>gesto y la postura</b></li>
-          </ul>
+          <div class="detail-block">
+            <h3>Adentro de BandoneAR</h3>
+            <ul class="blist two tight" style="margin-top:18px">
+              <li>Un <b>encoder</b> capta la apertura y el cierre</li>
+              <li>El software lee <b>dirección, velocidad y aceleración</b></li>
+              <li>Eso define <b>intensidad, volumen y dinámica</b></li>
+              <li>El fuelle controla el <b>gesto y la postura</b></li>
+            </ul>
+          </div>
         </div>
       </section>
       <section class="slide" data-title="Modalidades de uso" data-time="0:45">
@@ -915,7 +1034,7 @@
         <p class="slide-script">Queremos democratizar el acceso a un pilar de nuestra identidad cultural: que aprender a tocar el bandoneón sea tan accesible y cotidiano como lo es hoy aprender flauta dulce en las escuelas.</p>
         <div class="slide-inner">
           <div class="photo-stage">
-            <img src="assets/img/milonga.webp" alt="Milonga, cultura viva del tango">
+            <img src="assets/img/nenesaprendiendo.jpg" class="pos-alumnos" alt="Chicos aprendiendo bandoneón en el aula, cada uno con un BandoneAR">
             <div class="photo-copy">
               <div class="eyebrow">Nuestra visión</div>
               <h2>Tan cotidiano como la <span class="accent">flauta dulce</span>.</h2>
@@ -926,10 +1045,13 @@
       <section class="slide" data-title="Gracias" data-time="0:10">
         <p class="slide-script">Muchas gracias por escucharnos. Quedamos abiertos a las preguntas que quieran hacernos. ---</p>
         <div class="slide-inner">
-          <div class="closing">
-            <div class="eyebrow">BandoneAR</div>
-            <h2>Gracias.</h2>
-            <p class="ask">¿Preguntas?</p>
+          <div class="photo-stage">
+            <img src="assets/img/orquestabandonear.jpg" class="pos-orquesta" alt="Orquesta típica tocando con BandoneAR en un salón de tango">
+            <div class="photo-copy is-centered closing">
+              <div class="eyebrow">BandoneAR</div>
+              <h2>Gracias.</h2>
+              <p class="ask">¿Preguntas?</p>
+            </div>
           </div>
         </div>
       </section>
@@ -1079,6 +1201,34 @@
 
     document.getElementById('prevBtn').onclick = ()=>go(-1);
     document.getElementById('nextBtn').onclick = ()=>go(1);
+
+    /* Click sobre la diapositiva para avanzar. Va sobre #stage y no sobre el
+       documento asi el dock, la barra y el sidebar quedan afuera solos. */
+    stage.addEventListener('click', (e)=>{
+      if(e.button !== 0) return;
+      // Si se esta seleccionando texto, el click cierra la seleccion, no navega.
+      const sel = window.getSelection();
+      if(sel && String(sel).length) return;
+      // Lo interactivo maneja su propio click.
+      if(e.target.closest('button, a, input, select, textarea, [contenteditable]')) return;
+
+      // En la slide del video el click reproduce en vez de pasar de diapositiva:
+      // que se te escape la slide justo cuando vas a darle play seria lo peor.
+      const box = e.target.closest('.video-box');
+      if(box){
+        if(!video) return;
+        const r = video.getBoundingClientRect();
+        /* La franja inferior son los controles nativos. Viven en shadow DOM, o
+           sea que e.target es el propio <video> y no se distinguen por target;
+           se descartan por geometria. El alto se corrige por la escala del
+           escenario, porque el rect ya viene escalado por --k. */
+        const k = parseFloat(getComputedStyle(stage).getPropertyValue('--k')) || 1;
+        if(e.clientY > r.bottom - 44 * k) return;
+        if(video.paused){ video.play().catch(()=>{}); } else { video.pause(); }
+        return;
+      }
+      go(1);
+    });
 
     async function toggleFullscreen(){
       try{

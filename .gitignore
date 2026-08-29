@@ -1,7 +1,3 @@
 .claude/
 .DS_Store
 *~
-
-# El video del pitch queda local: son ~58 MB y GitHub avisa a partir de 50.
-# Ver "Falta agregar" en el README.
-assets/video/*.mp4
