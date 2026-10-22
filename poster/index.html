@@ -102,7 +102,9 @@
       position:absolute; left:0; right:0; top:var(--lockup-top,560px);
       display:flex; align-items:center; justify-content:center; gap:44px;
     }
-    .lockup img{height:var(--logo-h,200px); width:auto}
+    /* Isotipo vectorial (assets/logo/): toma los colores de la paleta activa */
+    .iso{--iso-ink:var(--text-strong); --iso-acc:var(--gold); display:block}
+    .lockup .iso{height:var(--logo-h,260px); width:auto}
     .lockup h1{
       font-family:var(--font-display); font-weight:800; font-size:var(--title-size,290px);
       line-height:1; letter-spacing:-7px; color:var(--text-strong);
@@ -265,7 +267,16 @@
             <div class="unlam" role="img" aria-label="Universidad Nacional de La Matanza" data-part="Marco: sello UNLaM"></div>
 
             <div class="lockup" data-part="Logo BandoneAR" id="lockup">
-              <img id="logoMark" src="../assets/img/logo-mark.png" alt="">
+              <svg id="logoMark" class="iso" viewBox="0 0 120 80" aria-hidden="true">
+<path d="M6 17 L16 8 H30 L36 17 V63 L30 72 H16 L6 63 Z" fill="none" style="stroke:var(--iso-ink)" stroke-width="4" stroke-linejoin="round"/>
+<g style="fill:var(--iso-ink)"><circle cx="15" cy="27" r="2.4"/><circle cx="15" cy="37" r="2.4"/><circle cx="15" cy="47" r="2.4"/><circle cx="15" cy="57" r="2.4"/><circle cx="21.5" cy="32" r="2.4"/><circle cx="21.5" cy="42" r="2.4"/><circle cx="21.5" cy="52" r="2.4"/><circle cx="28" cy="27" r="2.4"/><circle cx="28" cy="37" r="2.4"/><circle cx="28" cy="47" r="2.4"/><circle cx="28" cy="57" r="2.4"/></g>
+<path style="fill:var(--iso-ink)" d="M41 12 L47 8 V72 L41 68Z"/>
+<path style="fill:color-mix(in srgb, var(--iso-acc) 33%, var(--iso-ink))" d="M51 12 L57 8 V72 L51 68Z"/>
+<path style="fill:color-mix(in srgb, var(--iso-acc) 67%, var(--iso-ink))" d="M61 12 L67 8 V72 L61 68Z"/>
+<path style="fill:var(--iso-acc)" d="M71 12 L77 8 V72 L71 68Z"/>
+<path d="M84 17 L94 8 H108 L114 17 V63 L108 72 H94 L84 63 Z" fill="none" style="stroke:var(--iso-acc)" stroke-width="4" stroke-linejoin="round"/>
+<g style="fill:var(--iso-acc)"><rect x="92" y="25" width="5" height="5" rx="1"/><rect x="101" y="25" width="5" height="5" rx="1"/><rect x="92" y="34" width="5" height="5" rx="1"/><rect x="101" y="34" width="5" height="5" rx="1"/><rect x="92" y="43" width="5" height="5" rx="1"/><rect x="101" y="43" width="5" height="5" rx="1"/><rect x="92" y="52" width="5" height="5" rx="1"/><rect x="101" y="52" width="5" height="5" rx="1"/></g>
+</svg>
               <h1 id="title">Bandone<span class="accent">AR</span></h1>
             </div>
 
@@ -380,7 +391,7 @@
       { group: 'Tamaños y posiciones' },
       { key: 'logoTop', label: 'Posición del logo', type: 'range', min: 470, max: 1000, step: 5, def: 560, css: '--lockup-top', unit: 'px' },
       { key: 'tituloSize', label: 'Tamaño del nombre', type: 'range', min: 150, max: 400, step: 2, def: 290, css: '--title-size', unit: 'px' },
-      { key: 'logoH', label: 'Tamaño del isotipo', type: 'range', min: 80, max: 340, step: 2, def: 200, css: '--logo-h', unit: 'px' },
+      { key: 'logoH', label: 'Tamaño del isotipo', type: 'range', min: 80, max: 340, step: 2, def: 260, css: '--logo-h', unit: 'px' },
       { key: 'fraseTop', label: 'Posición de la frase', type: 'range', min: 1200, max: 2700, step: 5, def: 2170, css: '--claim-top', unit: 'px' },
       { key: 'fraseSize', label: 'Tamaño de la frase', type: 'range', min: 80, max: 260, step: 2, def: 168, css: '--claim-size', unit: 'px' },
       { key: 'bajadaSize', label: 'Tamaño de la bajada', type: 'range', min: 30, max: 110, step: 1, def: 60, css: '--lead-size', unit: 'px' },

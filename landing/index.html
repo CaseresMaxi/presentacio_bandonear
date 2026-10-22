@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>BandoneAR — Un bandoneón digital y accesible, para aprender</title>
   <meta name="description" content="BandoneAR es un bandoneón digital con la ergonomía, la botonera y el tacto del instrumento real, a una fracción del costo." />
-  <link rel="icon" href="../assets/img/logo-mark.png" />
+  <link rel="icon" href="../assets/logo/favicon.svg" type="image/svg+xml" />
   <style>
     /* Mismas fuentes y paletas que el deck. */
     @font-face{
@@ -115,8 +115,9 @@
     .nav.hide{transform:translateY(-100%)}
     .nav .wrap{display:flex; align-items:center; justify-content:space-between; height:74px; gap:20px}
     .brand{display:flex; align-items:center; gap:12px; text-decoration:none; font-family:var(--font-display); font-weight:800; font-size:24px; color:var(--text-strong)}
-    .mark{width:48px; height:36px; border:1px solid var(--img-line); border-radius:10px; background:#17171c; display:grid; place-items:center}
-    .mark img{height:24px; width:auto}
+    /* Isotipo vectorial (assets/logo/): toma los colores de la paleta activa */
+    .iso{--iso-ink:var(--text-strong); --iso-acc:var(--gold); display:block}
+    .brand .iso{height:30px; width:auto}
     .nav ul{display:flex; gap:28px; list-style:none; margin:0; padding:0; font-size:15px}
     .nav ul a{text-decoration:none; color:var(--muted); transition:color .25s}
     .nav ul a:hover,.nav ul a.on{color:var(--text-strong)}
@@ -287,6 +288,7 @@
 
     /* ---------- Equipo y pie ---------- */
     .team{text-align:center}
+    .team-iso{height:clamp(90px, 12vw, 150px); width:auto; margin:0 auto 28px}
     .team h2{font-size:clamp(56px, 10vw, 150px)}
     .names{display:flex; justify-content:center; flex-wrap:wrap; gap:12px; margin-top:40px}
     .names span{padding:12px 22px; border:1px solid var(--line); border-radius:999px; font-weight:600; background:var(--panel)}
@@ -313,7 +315,16 @@
 
   <nav class="nav" id="nav">
     <div class="wrap">
-      <a class="brand" href="#inicio"><span class="mark"><img src="../assets/img/logo-mark.png" alt=""></span><span>Bandone<span class="accent">AR</span></span></a>
+      <a class="brand" href="#inicio"><svg class="iso" viewBox="0 0 120 80" aria-hidden="true">
+<path d="M6 17 L16 8 H30 L36 17 V63 L30 72 H16 L6 63 Z" fill="none" style="stroke:var(--iso-ink)" stroke-width="4" stroke-linejoin="round"/>
+<g style="fill:var(--iso-ink)"><circle cx="15" cy="27" r="2.4"/><circle cx="15" cy="37" r="2.4"/><circle cx="15" cy="47" r="2.4"/><circle cx="15" cy="57" r="2.4"/><circle cx="21.5" cy="32" r="2.4"/><circle cx="21.5" cy="42" r="2.4"/><circle cx="21.5" cy="52" r="2.4"/><circle cx="28" cy="27" r="2.4"/><circle cx="28" cy="37" r="2.4"/><circle cx="28" cy="47" r="2.4"/><circle cx="28" cy="57" r="2.4"/></g>
+<path style="fill:var(--iso-ink)" d="M41 12 L47 8 V72 L41 68Z"/>
+<path style="fill:color-mix(in srgb, var(--iso-acc) 33%, var(--iso-ink))" d="M51 12 L57 8 V72 L51 68Z"/>
+<path style="fill:color-mix(in srgb, var(--iso-acc) 67%, var(--iso-ink))" d="M61 12 L67 8 V72 L61 68Z"/>
+<path style="fill:var(--iso-acc)" d="M71 12 L77 8 V72 L71 68Z"/>
+<path d="M84 17 L94 8 H108 L114 17 V63 L108 72 H94 L84 63 Z" fill="none" style="stroke:var(--iso-acc)" stroke-width="4" stroke-linejoin="round"/>
+<g style="fill:var(--iso-acc)"><rect x="92" y="25" width="5" height="5" rx="1"/><rect x="101" y="25" width="5" height="5" rx="1"/><rect x="92" y="34" width="5" height="5" rx="1"/><rect x="101" y="34" width="5" height="5" rx="1"/><rect x="92" y="43" width="5" height="5" rx="1"/><rect x="101" y="43" width="5" height="5" rx="1"/><rect x="92" y="52" width="5" height="5" rx="1"/><rect x="101" y="52" width="5" height="5" rx="1"/></g>
+</svg><span>Bandone<span class="accent">AR</span></span></a>
       <ul>
         <li><a href="#problema">El problema</a></li>
         <li><a href="#instrumento">El instrumento</a></li>
@@ -580,6 +591,16 @@
   <section class="team" id="equipo">
     <div class="wrap">
       <div class="eyebrow reveal">El equipo</div>
+      <svg class="iso team-iso reveal zoom" viewBox="0 0 120 80" aria-hidden="true">
+<path d="M6 17 L16 8 H30 L36 17 V63 L30 72 H16 L6 63 Z" fill="none" style="stroke:var(--iso-ink)" stroke-width="4" stroke-linejoin="round"/>
+<g style="fill:var(--iso-ink)"><circle cx="15" cy="27" r="2.4"/><circle cx="15" cy="37" r="2.4"/><circle cx="15" cy="47" r="2.4"/><circle cx="15" cy="57" r="2.4"/><circle cx="21.5" cy="32" r="2.4"/><circle cx="21.5" cy="42" r="2.4"/><circle cx="21.5" cy="52" r="2.4"/><circle cx="28" cy="27" r="2.4"/><circle cx="28" cy="37" r="2.4"/><circle cx="28" cy="47" r="2.4"/><circle cx="28" cy="57" r="2.4"/></g>
+<path style="fill:var(--iso-ink)" d="M41 12 L47 8 V72 L41 68Z"/>
+<path style="fill:color-mix(in srgb, var(--iso-acc) 33%, var(--iso-ink))" d="M51 12 L57 8 V72 L51 68Z"/>
+<path style="fill:color-mix(in srgb, var(--iso-acc) 67%, var(--iso-ink))" d="M61 12 L67 8 V72 L61 68Z"/>
+<path style="fill:var(--iso-acc)" d="M71 12 L77 8 V72 L71 68Z"/>
+<path d="M84 17 L94 8 H108 L114 17 V63 L108 72 H94 L84 63 Z" fill="none" style="stroke:var(--iso-acc)" stroke-width="4" stroke-linejoin="round"/>
+<g style="fill:var(--iso-acc)"><rect x="92" y="25" width="5" height="5" rx="1"/><rect x="101" y="25" width="5" height="5" rx="1"/><rect x="92" y="34" width="5" height="5" rx="1"/><rect x="101" y="34" width="5" height="5" rx="1"/><rect x="92" y="43" width="5" height="5" rx="1"/><rect x="101" y="43" width="5" height="5" rx="1"/><rect x="92" y="52" width="5" height="5" rx="1"/><rect x="101" y="52" width="5" height="5" rx="1"/></g>
+</svg>
       <h2 class="reveal" style="--i:1">Bandone<span class="accent">AR</span></h2>
       <div class="names">
         <span class="reveal" style="--i:1">Brenda</span>

@@ -85,3 +85,16 @@ y el resto de la presentación funciona normalmente.
 El isotipo aparece además en el sidebar y como favicon. Si se suman imágenes
 nuevas, van en `assets/img/` con nombre descriptivo del contenido, en minúsculas
 y separado con guiones (sin espacios: obligan a escapar la URL).
+
+## Expo final: póster, landing y logo
+
+- `poster/index.html` — póster A1 de la Expo Proyecto, con panel de parámetros y
+  observaciones. `bash poster/exportar.sh` genera el PNG a 300 dpi y el PDF en
+  `poster/salida/` (ignorada por git).
+- `landing/index.html` — landing page del producto. Se abre directo, sin servidor.
+- `assets/logo/` — logo vectorial: isotipo, versiones horizontal y vertical en las
+  paletas noche, carmín y programa, monocromas y favicon. Se regeneran con
+  `python assets/logo/generar_logo.py` (necesita `fonttools` y `brotli`). El
+  póster y la landing llevan el isotipo inline para que tome los colores de la
+  paleta activa; si se cambia el dibujo, hay que actualizar también esas copias.
+  El deck (`index.html`) sigue usando `logo-mark.png`.
