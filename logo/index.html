@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BandoneAR — Editor del logo</title>
+  <link rel="icon" href="../assets/logo/favicon.svg" type="image/svg+xml" />
+  <style>
+    @font-face{
+      font-family:'Playfair Display';
+      src:url('../assets/fonts/playfair-latin.woff2') format('woff2');
+      font-weight:400 900; font-style:normal; font-display:swap;
+    }
+    @font-face{
+      font-family:'Inter';
+      src:url('../assets/fonts/inter-latin.woff2') format('woff2');
+      font-weight:100 900; font-style:normal; font-display:swap;
+    }
+    :root{
+      --bg:#0b0b0d; --ui:#16161a; --ui-2:#1b1b20; --line:#2b2b31;
+      --text:#f4f1eb; --muted:#b7b1a7; --gold:#d7a54a;
+      --font-body:'Inter',ui-sans-serif,system-ui,sans-serif;
+      --font-display:'Playfair Display',Georgia,serif;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0; height:100%; background:var(--bg); color:var(--text); font-family:var(--font-body); font-size:14px}
+    .layout{display:grid; grid-template-columns:1fr 380px; height:100vh}
+    @media (max-width:900px){ .layout{grid-template-columns:1fr; height:auto} }
+
+    /* ---------- Vista previa ---------- */
+    .preview{display:flex; flex-direction:column; min-height:0; min-width:0}
+    .stage{
+      flex:1; min-height:360px; display:grid; place-items:center; padding:48px;
+      border-bottom:1px solid var(--line); position:relative; overflow:hidden;
+    }
+    .stage svg{max-width:100%; max-height:62vh; width:auto; height:auto; display:block}
+    .stage .size{position:absolute; left:16px; bottom:12px; font-size:12px; color:var(--muted); background:rgba(0,0,0,.5); padding:4px 8px; border-radius:6px}
+    .tests{display:grid; grid-template-columns:repeat(4, 1fr); border-bottom:1px solid var(--line)}
+    .test{padding:18px; overflow:hidden; min-width:0; display:flex; flex-direction:column; gap:10px; align-items:center; justify-content:center; border-right:1px solid var(--line); min-height:130px}
+    .test:last-child{border-right:none}
+    .test small{font-size:11px; letter-spacing:.12em; text-transform:uppercase; opacity:.7}
+    .test .row{display:flex; flex-wrap:wrap; justify-content:center; gap:12px; align-items:center; max-width:100%}
+    .test svg{display:block; height:auto}
+    .test.dark{background:#0d0d0f; color:#b7b1a7}
+    .test.wine{background:#14090b; color:#c9b4b0}
+    .test.light{background:#f3eadc; color:#6b5e52}
+    .test.photo{background:url('../assets/img/bandonear-mesa.jpg') center/cover; color:#fff; text-shadow:0 1px 6px #000}
+    @media (max-width:900px){ .tests{grid-template-columns:1fr 1fr} }
+
+    /* ---------- Panel ---------- */
+    .panel{background:var(--ui); border-left:1px solid var(--line); display:flex; flex-direction:column; min-height:0}
+    .panel header{padding:18px; border-bottom:1px solid var(--line)}
+    .panel h1{font-family:var(--font-display); font-size:22px; margin:0 0 4px}
+    .panel header p{margin:0; color:var(--muted); line-height:1.45}
+    .presets{display:flex; flex-wrap:wrap; gap:6px; padding:12px 18px; border-bottom:1px solid var(--line)}
+    .preset{display:flex; align-items:center; gap:6px; padding:6px 10px 6px 6px; border-radius:999px; border:1px solid var(--line); background:var(--ui-2); color:var(--text); cursor:pointer; font:inherit; font-size:12px}
+    .preset i{width:18px; height:18px; border-radius:50%; border:1px solid rgba(255,255,255,.2)}
+    .preset:hover{border-color:var(--gold)}
+    .form{flex:1; overflow:auto; padding:4px 18px 18px}
+    .form h4{font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin:18px 0 8px}
+    .field{display:grid; gap:5px; margin-bottom:10px}
+    .field > span{color:var(--muted); font-size:12px; display:flex; justify-content:space-between}
+    .field > span output{color:var(--text)}
+    .field select{width:100%; background:#111114; color:var(--text); border:1px solid var(--line); border-radius:6px; padding:7px 8px; font:inherit}
+    .field input[type=range]{width:100%; accent-color:var(--gold)}
+    .field.color{grid-template-columns:1fr auto auto; align-items:center}
+    .field.color input[type=color]{width:46px; height:28px; border:1px solid var(--line); background:none; padding:0; border-radius:4px}
+    .field.color code{color:var(--muted); font-size:12px; width:62px}
+    .field.check{grid-template-columns:auto 1fr; align-items:center; gap:8px}
+    .field.check > span{color:var(--text); font-size:13px}
+    .actions{padding:12px 18px; border-top:1px solid var(--line); display:grid; gap:8px}
+    .actions .row{display:flex; gap:8px; flex-wrap:wrap}
+    .btn{background:#24242a; color:var(--text); border:1px solid var(--line); border-radius:8px; padding:8px 12px; cursor:pointer; font:inherit; font-size:13px}
+    .btn:hover{background:#2e2e36}
+    .btn.primary{background:var(--gold); color:#111; border-color:var(--gold); font-weight:600}
+    .actions select{background:#111114; color:var(--text); border:1px solid var(--line); border-radius:8px; padding:7px; font:inherit; font-size:13px}
+    .toast{position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:var(--gold); color:#111; padding:10px 16px; border-radius:8px; font-weight:600; opacity:0; transition:opacity .2s; pointer-events:none}
+    .toast.show{opacity:1}
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <div class="preview">
+      <div class="stage" id="stage"><span class="size" id="size"></span></div>
+      <div class="tests">
+        <div class="test dark"><div class="row" id="tDark"></div><small>Fondo noche</small></div>
+        <div class="test wine"><div class="row" id="tWine"></div><small>Fondo carmín</small></div>
+        <div class="test light"><div class="row" id="tLight"></div><small>Fondo programa</small></div>
+        <div class="test photo"><div class="row" id="tPhoto"></div><small>Sobre la foto</small></div>
+      </div>
+    </div>
+
+    <aside class="panel">
+      <header>
+        <h1>Editor del logo</h1>
+        <p>Elegí un punto de partida, ajustá y exportá en SVG o PNG. Abajo de la vista previa ves cómo queda sobre cada fondo y en tamaño favicon.</p>
+      </header>
+      <div class="presets" id="presets"></div>
+      <div class="form" id="form"></div>
+      <div class="actions">
+        <div class="row">
+          <button class="btn primary" id="dlSvg">Descargar SVG</button>
+          <button class="btn primary" id="dlPng">Descargar PNG</button>
+          <button class="btn" id="dlPngBoth">PNG con y sin fondo</button>
+          <select id="pngW" aria-label="Ancho del PNG">
+            <option value="512">512 px</option><option value="1024">1024 px</option>
+            <option value="2048" selected>2048 px</option><option value="4096">4096 px</option>
+          </select>
+        </div>
+        <div class="row">
+          <button class="btn" id="dlZip">Todas las variantes (.zip)</button>
+          <button class="btn" id="cpSvg">Copiar SVG</button>
+          <button class="btn" id="cpJson">Copiar ajustes</button>
+          <button class="btn" id="reset">Restaurar</button>
+        </div>
+      </div>
+    </aside>
+  </div>
+  <div class="toast" id="toast"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="glifos.js"></script>
+  <script src="logo.js"></script>
+  <script>
+    const { PRESETS, SCHEMA, FIELDS, DEFAULTS, sol, buildSVG } = BandoneARLogo;
+    const KEY = 'bandonear-logo-editor';
+    let cfg = { ...DEFAULTS };
+    try { cfg = { ...DEFAULTS, ...JSON.parse(localStorage.getItem(KEY) || '{}') }; } catch (e) {}
+    const save = () => { try { localStorage.setItem(KEY, JSON.stringify(cfg)); } catch (e) {} };
+    const $ = (id) => document.getElementById(id);
+
+    // ---------- Vista previa ----------
+    function render() {
+      const out = buildSVG(cfg);
+      const stage = $('stage');
+      // Sin fondo: se ve sobre el color de fondo elegido, como referencia
+      stage.style.background = cfg.fondoExport === 'transparente' ? cfg.fondo : '#2a2a30';
+      stage.querySelectorAll('svg').forEach((n) => n.remove());
+      stage.insertAdjacentHTML('afterbegin', out.svg);
+      $('size').textContent = `Proporción ${out.ratio.toFixed(2)} : 1` + (cfg.fondoExport === 'transparente' ? ' · se exporta sin fondo' : '');
+
+      // Pruebas sobre fondos: la composición elegida y el isotipo chico
+      const tests = { tDark: PRESETS.noche, tWine: PRESETS.carmin, tLight: PRESETS.programa, tPhoto: PRESETS.noche };
+      Object.entries(tests).forEach(([id, p]) => {
+        const keep = id === 'tLight' && cfg.tinta.toLowerCase() > '#888888'
+          ? { ...cfg, tinta: PRESETS.programa.tinta } : cfg;
+        const main = buildSVG({ ...keep, margen: 0, lienzo: 'ajustado' }, { background: null }).svg.replace('<svg ', '<svg style="height:auto;width:100%;max-width:220px;flex-basis:100%" ');
+        const fav = buildSVG({ ...keep, layout: 'isotipo', margen: 0, lienzo: 'ajustado' }, { background: null }).svg;
+        $(id).innerHTML = main + fav.replace('<svg ', '<svg style="height:24px;width:auto" ') + fav.replace('<svg ', '<svg style="height:16px;width:auto" ');
+      });
+    }
+
+    // ---------- Formulario ----------
+    function buildForm() {
+      const form = $('form');
+      form.innerHTML = '';
+      SCHEMA.forEach((f) => {
+        if (f.group) { form.insertAdjacentHTML('beforeend', `<h4>${f.group}</h4>`); return; }
+        const wrap = document.createElement('label');
+        wrap.className = 'field' + (f.type === 'check' ? ' check' : f.type === 'color' ? ' color' : '');
+        const label = document.createElement('span');
+        label.textContent = f.label;
+        let input;
+        if (f.type === 'select') {
+          input = document.createElement('select');
+          input.name = f.key;
+          Object.entries(f.options).forEach(([v, t]) => input.add(new Option(t, v)));
+        } else {
+          input = document.createElement('input');
+          input.type = f.type === 'check' ? 'checkbox' : f.type;
+          input.name = f.key;
+          if (f.type === 'range') Object.assign(input, { min: f.min, max: f.max, step: f.step });
+        }
+        const out = document.createElement(f.type === 'color' ? 'code' : 'output');
+        const show = () => { out.textContent = cfg[f.key] + (f.unit || ''); };
+        if (f.type === 'check') input.checked = cfg[f.key]; else input.value = cfg[f.key];
+        show();
+        input.addEventListener('input', () => {
+          cfg[f.key] = f.type === 'check' ? input.checked : f.type === 'range' ? parseFloat(input.value) : input.value;
+          show(); save(); render();
+        });
+        if (f.type === 'check') wrap.append(input, label);
+        else if (f.type === 'color') wrap.append(label, out, input);
+        else { if (f.type === 'range') label.appendChild(out); wrap.append(label, input); }
+        form.appendChild(wrap);
+      });
+    }
+
+    function buildPresets() {
+      const box = $('presets');
+      Object.entries(PRESETS).forEach(([name, p]) => {
+        const b = document.createElement('button');
+        b.className = 'preset';
+        b.innerHTML = `<i style="background:linear-gradient(135deg, ${p.tinta} 50%, ${p.acento} 50%); box-shadow:0 0 0 3px ${p.fondo}"></i>${name}`;
+        b.onclick = () => { Object.assign(cfg, p); save(); buildForm(); render(); };
+        box.appendChild(b);
+      });
+    }
+
+    // ---------- Exportar ----------
+    const fileName = (ext, c = cfg) => `bandonear-${c.layout}${c.sol !== 'ninguno' ? '-sol' : ''}-${c.fondoExport === 'transparente' ? 'sin-fondo' : 'fondo-' + c.fondoExport}${c.lienzo !== 'ajustado' ? '-' + c.lienzo : ''}.${ext}`;
+    function download(blob, name) {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob); a.download = name; a.click();
+      setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    }
+    function toast(msg) {
+      const t = $('toast'); t.textContent = msg; t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 1800);
+    }
+    async function copy(txt, msg) {
+      try { await navigator.clipboard.writeText(txt); toast(msg); }
+      catch (e) { prompt('Copiá este texto:', txt); }
+    }
+    const exportSVG = () => buildSVG(cfg);
+
+    function pngBlob(svg, ratio, w) {
+      return new Promise((ok, ko) => {
+        const img = new Image();
+        img.onload = () => {
+          const cv = document.createElement('canvas');
+          cv.width = w; cv.height = Math.round(w / ratio);
+          cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+          cv.toBlob(ok, 'image/png');
+        };
+        img.onerror = ko;
+        img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+      });
+    }
+
+    $('dlSvg').onclick = () => download(new Blob([exportSVG().svg], { type: 'image/svg+xml' }), fileName('svg'));
+    $('cpSvg').onclick = () => copy(exportSVG().svg, 'SVG copiado');
+    $('cpJson').onclick = () => copy(JSON.stringify(cfg, null, 2), 'Ajustes copiados. Pegámelos en el chat para dejarlos fijos.');
+    $('reset').onclick = () => { if (confirm('¿Volver a los valores por defecto?')) { cfg = { ...DEFAULTS }; save(); buildForm(); render(); } };
+    $('dlPng').onclick = async () => {
+      const { svg, ratio } = exportSVG();
+      download(await pngBlob(svg, ratio, +$('pngW').value), fileName('png'));
+    };
+    $('dlPngBoth').onclick = async () => {
+      // El mismo diseño dos veces: sin fondo y con el color de fondo elegido
+      for (const fondoExport of ['transparente', 'elegido']) {
+        const c = { ...cfg, fondoExport };
+        const { svg, ratio } = buildSVG(c);
+        download(await pngBlob(svg, ratio, +$('pngW').value), fileName('png', c));
+        await new Promise((r) => setTimeout(r, 300));
+      }
+    };
+
+    // Paquete con todas las variantes del diseño actual
+    $('dlZip').onclick = async () => {
+      if (!window.JSZip) return toast('No se pudo cargar JSZip (hace falta internet)');
+      toast('Armando el paquete…');
+      const zip = new JSZip(), w = +$('pngW').value;
+      const variants = [];
+      for (const layout of ['horizontal', 'vertical', 'isotipo'])
+        for (const fondoExport of ['transparente', 'elegido'])
+          variants.push({ ...cfg, layout, fondoExport, lienzo: 'ajustado' });
+      variants.push({ ...cfg, layout: 'isotipo', fondoExport: 'elegido', lienzo: 'cuadrado', margen: 18, radioFondo: 22 });
+      variants.push({ ...cfg, layout: 'vertical', fondoExport: 'elegido', lienzo: 'cuadrado', margen: 12 });
+      variants.push({ ...cfg, layout: 'horizontal', fondoExport: 'elegido', lienzo: 'ancho', margen: 20 });
+      for (const c of variants) {
+        const { svg, ratio } = buildSVG(c);
+        zip.file('svg/' + fileName('svg', c), svg);
+        zip.file('png/' + fileName('png', c), await pngBlob(svg, ratio, w));
+      }
+      zip.file('ajustes.json', JSON.stringify(cfg, null, 2));
+      download(await zip.generateAsync({ type: 'blob' }), 'bandonear-logo-variantes.zip');
+    };
+
+    buildPresets();
+    buildForm();
+    render();
+  </script>
+</body>
+</html>

@@ -9,6 +9,7 @@ Uso (necesita fonttools y brotli):
     pip install fonttools brotli
     python assets/logo/generar_logo.py
 """
+import math
 from pathlib import Path
 
 from fontTools.pens.boundsPen import BoundsPen
@@ -20,11 +21,16 @@ from fontTools.varLib.instancer import instantiateVariableFont
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / "assets" / "logo"
 
-# Las tres paletas del deck, más dos monocromas.
+# Las tres paletas del deck, las variantes celestes y dos monocromas.
 PALETTES = {
     "noche": {"ink": "#f4f1eb", "acc": "#d7a54a"},
     "carmin": {"ink": "#f7efe8", "acc": "#d44a45"},
     "programa": {"ink": "#140f0c", "acc": "#9a6b1f"},
+    # Variantes de color del logo (independientes de la paleta)
+    "celeste": {"ink": "#ffffff", "acc": "#74acdf"},
+    "celeste-fondo-claro": {"ink": "#140f0c", "acc": "#3f86c6"},
+    "celeste-sol": {"ink": "#ffffff", "acc": "#74acdf", "sol": True},
+    "celeste-sol-fondo-claro": {"ink": "#140f0c", "acc": "#3f86c6", "sol": True},
     "mono-claro": {"ink": "#ffffff", "acc": "#ffffff"},
     "mono-oscuro": {"ink": "#000000", "acc": "#000000"},
 }
@@ -37,23 +43,59 @@ def mix(a, b, t):
     return "#" + "".join(f"{round(x + (y - x) * t):02x}" for x, y in zip(ca, cb))
 
 
+# ---------- Sol de Mayo minimalista (mismo dibujo que el editor, logo/index.html) ----------
+SOL_AMARILLO = "#f6b40e"
+
+
+def sol_mayo(color, cx=60, cy=40, radius=9.5, sw=1.3):
+    """Disco con 16 rayos: rectos y ondulados alternados."""
+    def rd(n):
+        return f"{round(n, 2):g}"
+
+    def pt(ang, d):
+        return cx + math.cos(ang) * d, cy + math.sin(ang) * d
+
+    rays = []
+    for i in range(16):
+        ang = i * 2 * math.pi / 16 - math.pi / 2
+        if i % 2 == 0:
+            (x1, y1), (x2, y2) = pt(ang, radius * 0.64), pt(ang, radius)
+            rays.append(f'<line x1="{rd(x1)}" y1="{rd(y1)}" x2="{rd(x2)}" y2="{rd(y2)}"/>')
+        else:
+            a, b = radius * 0.64, radius * 0.94
+            nx, ny, amp = -math.sin(ang), math.cos(ang), radius * 0.09
+
+            def at(t, o):
+                x, y = pt(ang, a + (b - a) * t)
+                return f"{rd(x + nx * o)} {rd(y + ny * o)}"
+            rays.append(f'<path fill="none" d="M{at(0, 0)} C{at(0.33, amp)} {at(0.66, -amp)} {at(1, 0)}"/>')
+    return (f'<circle cx="{cx}" cy="{cy}" r="{rd(radius * 0.46)}" fill="{color}"/>'
+            f'<g stroke="{color}" stroke-width="{sw}" stroke-linecap="round">{"".join(rays)}</g>')
+
+
 # ---------- Isotipo (viewBox 0 0 120 80) ----------
 ISO_W, ISO_H = 120, 80
 HEAD = "M{a} 17 L{b} 8 H{c} L{d} 17 V63 L{c} 72 H{b} L{a} 63 Z"
 
 
-def isotipo(ink, acc):
+def isotipo(ink, acc, sol=False):
     left = HEAD.format(a=6, b=16, c=30, d=36)
     right = HEAD.format(a=84, b=94, c=108, d=114)
     dots = [(15, 27), (15, 37), (15, 47), (15, 57),
             (21.5, 32), (21.5, 42), (21.5, 52),
             (28, 27), (28, 37), (28, 47), (28, 57)]
     keys = [(x, y) for y in (25, 34, 43, 52) for x in (92, 101)]
-    # Cuatro pliegues en perspectiva; el color avanza del crema al dorado
+    # Cuatro pliegues en perspectiva; el color avanza del crema al dorado.
+    # Con sol, van en franjas como la bandera y se recortan alrededor del sol.
     pleats = []
-    for i, x in enumerate((41, 51, 61, 71)):
-        color = mix(ink, acc, i / 3)
+    # Fuelle centrado entre los cabezales: de x 42 a 78, centro en 60
+    for i, x in enumerate((42, 52, 62, 72)):
+        color = (acc if i in (0, 3) else ink) if sol else mix(ink, acc, i / 3)
         pleats.append(f'<path fill="{color}" d="M{x} 12 L{x + 6} 8 V72 L{x} 68Z"/>')
+    if sol:
+        pleats = ['<mask id="solcorte" maskUnits="userSpaceOnUse" x="0" y="0" width="120" height="80">'
+                  '<rect width="120" height="80" fill="#fff"/><circle cx="60" cy="40" r="11.5" fill="#000"/></mask>'
+                  '<g mask="url(#solcorte)">' + "".join(pleats) + "</g>", sol_mayo(SOL_AMARILLO)]
     return "\n".join([
         f'<path d="{left}" fill="none" stroke="{ink}" stroke-width="4" stroke-linejoin="round"/>',
         f'<g fill="{ink}">' + "".join(f'<circle cx="{x}" cy="{y}" r="2.4"/>' for x, y in dots) + "</g>",
@@ -95,7 +137,7 @@ def main():
     word_w = bx1 - bx0
 
     for name, c in PALETTES.items():
-        iso = isotipo(c["ink"], c["acc"])
+        iso = isotipo(c["ink"], c["acc"], c.get("sol", False))
         (OUT / f"isotipo-{name}.svg").write_text(svg((0, 0, ISO_W, ISO_H), iso))
 
         word = (f'<path fill="{c["ink"]}" d="{bandone}"/>\n'

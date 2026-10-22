@@ -95,6 +95,15 @@ y separado con guiones (sin espacios: obligan a escapar la URL).
 - `assets/logo/` — logo vectorial: isotipo, versiones horizontal y vertical en las
   paletas noche, carmín y programa, monocromas y favicon. Se regeneran con
   `python assets/logo/generar_logo.py` (necesita `fonttools` y `brotli`). El
-  póster y la landing llevan el isotipo inline para que tome los colores de la
-  paleta activa; si se cambia el dibujo, hay que actualizar también esas copias.
+  logo integrado del póster lleva una copia inline del isotipo para tomar los
+  colores de la paleta; si se cambia el dibujo base, hay que actualizarla.
   El deck (`index.html`) sigue usando `logo-mark.png`.
+- `logo/index.html` — editor del logo: colores, sol en el fuelle (seis estilos),
+  proporciones del isotipo, peso y espaciado de la palabra, versiones
+  horizontal/vertical, y exportación a SVG o PNG con o sin fondo, en lienzo
+  ajustado, cuadrado, 16:9 o 4:5. "Todas las variantes" arma un .zip (usa JSZip
+  desde cdnjs, necesita internet). El dibujo vive en `logo/logo.js`, que comparten
+  el editor, el póster y la landing: en el póster, el grupo "Logo" del panel trae
+  el diseño del editor; en la landing, el selector "Logo" del pie tiene las
+  variantes y la opción "ed" (último diseño del editor en ese navegador). Las letras van como curvas desde `logo/glifos.js`, generado por
+  `python logo/generar_glifos.py`.

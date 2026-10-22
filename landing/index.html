@@ -116,8 +116,10 @@
     .nav .wrap{display:flex; align-items:center; justify-content:space-between; height:74px; gap:20px}
     .brand{display:flex; align-items:center; gap:12px; text-decoration:none; font-family:var(--font-display); font-weight:800; font-size:24px; color:var(--text-strong)}
     /* Isotipo vectorial (assets/logo/): toma los colores de la paleta activa */
-    .iso{--iso-ink:var(--text-strong); --iso-acc:var(--gold); display:block}
-    .brand .iso{height:30px; width:auto}
+    .iso{display:block}
+    .iso svg{display:block; height:100%; width:auto}
+    .logo-ar{color:var(--logo-acc, var(--gold))}
+    .brand .iso{height:30px}
     .nav ul{display:flex; gap:28px; list-style:none; margin:0; padding:0; font-size:15px}
     .nav ul a{text-decoration:none; color:var(--muted); transition:color .25s}
     .nav ul a:hover,.nav ul a.on{color:var(--text-strong)}
@@ -288,7 +290,7 @@
 
     /* ---------- Equipo y pie ---------- */
     .team{text-align:center}
-    .team-iso{height:clamp(90px, 12vw, 150px); width:auto; margin:0 auto 28px}
+    .team-iso{height:clamp(90px, 12vw, 150px); margin:0 auto 28px; display:flex; justify-content:center}
     .team h2{font-size:clamp(56px, 10vw, 150px)}
     .names{display:flex; justify-content:center; flex-wrap:wrap; gap:12px; margin-top:40px}
     .names span{padding:12px 22px; border:1px solid var(--line); border-radius:999px; font-weight:600; background:var(--panel)}
@@ -315,16 +317,7 @@
 
   <nav class="nav" id="nav">
     <div class="wrap">
-      <a class="brand" href="#inicio"><svg class="iso" viewBox="0 0 120 80" aria-hidden="true">
-<path d="M6 17 L16 8 H30 L36 17 V63 L30 72 H16 L6 63 Z" fill="none" style="stroke:var(--iso-ink)" stroke-width="4" stroke-linejoin="round"/>
-<g style="fill:var(--iso-ink)"><circle cx="15" cy="27" r="2.4"/><circle cx="15" cy="37" r="2.4"/><circle cx="15" cy="47" r="2.4"/><circle cx="15" cy="57" r="2.4"/><circle cx="21.5" cy="32" r="2.4"/><circle cx="21.5" cy="42" r="2.4"/><circle cx="21.5" cy="52" r="2.4"/><circle cx="28" cy="27" r="2.4"/><circle cx="28" cy="37" r="2.4"/><circle cx="28" cy="47" r="2.4"/><circle cx="28" cy="57" r="2.4"/></g>
-<path style="fill:var(--iso-ink)" d="M41 12 L47 8 V72 L41 68Z"/>
-<path style="fill:color-mix(in srgb, var(--iso-acc) 33%, var(--iso-ink))" d="M51 12 L57 8 V72 L51 68Z"/>
-<path style="fill:color-mix(in srgb, var(--iso-acc) 67%, var(--iso-ink))" d="M61 12 L67 8 V72 L61 68Z"/>
-<path style="fill:var(--iso-acc)" d="M71 12 L77 8 V72 L71 68Z"/>
-<path d="M84 17 L94 8 H108 L114 17 V63 L108 72 H94 L84 63 Z" fill="none" style="stroke:var(--iso-acc)" stroke-width="4" stroke-linejoin="round"/>
-<g style="fill:var(--iso-acc)"><rect x="92" y="25" width="5" height="5" rx="1"/><rect x="101" y="25" width="5" height="5" rx="1"/><rect x="92" y="34" width="5" height="5" rx="1"/><rect x="101" y="34" width="5" height="5" rx="1"/><rect x="92" y="43" width="5" height="5" rx="1"/><rect x="101" y="43" width="5" height="5" rx="1"/><rect x="92" y="52" width="5" height="5" rx="1"/><rect x="101" y="52" width="5" height="5" rx="1"/></g>
-</svg><span>Bandone<span class="accent">AR</span></span></a>
+      <a class="brand" href="#inicio"><span class="iso" data-iso></span><span>Bandone<span class="logo-ar">AR</span></span></a>
       <ul>
         <li><a href="#problema">El problema</a></li>
         <li><a href="#instrumento">El instrumento</a></li>
@@ -591,17 +584,8 @@
   <section class="team" id="equipo">
     <div class="wrap">
       <div class="eyebrow reveal">El equipo</div>
-      <svg class="iso team-iso reveal zoom" viewBox="0 0 120 80" aria-hidden="true">
-<path d="M6 17 L16 8 H30 L36 17 V63 L30 72 H16 L6 63 Z" fill="none" style="stroke:var(--iso-ink)" stroke-width="4" stroke-linejoin="round"/>
-<g style="fill:var(--iso-ink)"><circle cx="15" cy="27" r="2.4"/><circle cx="15" cy="37" r="2.4"/><circle cx="15" cy="47" r="2.4"/><circle cx="15" cy="57" r="2.4"/><circle cx="21.5" cy="32" r="2.4"/><circle cx="21.5" cy="42" r="2.4"/><circle cx="21.5" cy="52" r="2.4"/><circle cx="28" cy="27" r="2.4"/><circle cx="28" cy="37" r="2.4"/><circle cx="28" cy="47" r="2.4"/><circle cx="28" cy="57" r="2.4"/></g>
-<path style="fill:var(--iso-ink)" d="M41 12 L47 8 V72 L41 68Z"/>
-<path style="fill:color-mix(in srgb, var(--iso-acc) 33%, var(--iso-ink))" d="M51 12 L57 8 V72 L51 68Z"/>
-<path style="fill:color-mix(in srgb, var(--iso-acc) 67%, var(--iso-ink))" d="M61 12 L67 8 V72 L61 68Z"/>
-<path style="fill:var(--iso-acc)" d="M71 12 L77 8 V72 L71 68Z"/>
-<path d="M84 17 L94 8 H108 L114 17 V63 L108 72 H94 L84 63 Z" fill="none" style="stroke:var(--iso-acc)" stroke-width="4" stroke-linejoin="round"/>
-<g style="fill:var(--iso-acc)"><rect x="92" y="25" width="5" height="5" rx="1"/><rect x="101" y="25" width="5" height="5" rx="1"/><rect x="92" y="34" width="5" height="5" rx="1"/><rect x="101" y="34" width="5" height="5" rx="1"/><rect x="92" y="43" width="5" height="5" rx="1"/><rect x="101" y="43" width="5" height="5" rx="1"/><rect x="92" y="52" width="5" height="5" rx="1"/><rect x="101" y="52" width="5" height="5" rx="1"/></g>
-</svg>
-      <h2 class="reveal" style="--i:1">Bandone<span class="accent">AR</span></h2>
+      <div class="iso team-iso reveal zoom" data-iso></div>
+      <h2 class="reveal" style="--i:1">Bandone<span class="logo-ar">AR</span></h2>
       <div class="names">
         <span class="reveal" style="--i:1">Brenda</span>
         <span class="reveal" style="--i:2">Maxi</span>
@@ -622,9 +606,20 @@
         <button data-palette="carmin" title="Carmín" style="background:#d44a45"></button>
         <button data-palette="programa" title="Programa" style="background:#f3eadc"></button>
       </div>
+      <div class="palettes" aria-label="Colores del logo">
+        <span>Logo</span>
+        <button data-logo="paleta" title="Según la paleta" style="background:conic-gradient(#d7a54a 0 33%, #d44a45 0 66%, #f3eadc 0)"></button>
+        <button data-logo="celeste" title="Blanco a celeste" style="background:linear-gradient(135deg, #ffffff 50%, #74acdf 50%)"></button>
+        <button data-logo="celeste-sol" title="Celeste con sol" style="background:radial-gradient(circle, #f6b40e 0 22%, #ffffff 24% 50%, #74acdf 52%)"></button>
+        <button data-logo="barrotes" title="Sol entre barrotes" style="background:linear-gradient(90deg, #74acdf 0 25%, #fff 25% 40%, #f6b40e 40% 60%, #fff 60% 75%, #74acdf 75%)"></button>
+        <button data-logo="dorado" title="Crema a dorado" style="background:linear-gradient(135deg, #f4f1eb 50%, #d7a54a 50%)"></button>
+        <button data-logo="mono" title="Monocromo" style="background:#ffffff"></button>
+        <button data-logo="editor" title="El último diseño del editor del logo" style="background:#24242a; color:#f4f1eb; font-size:12px">ed</button>
+      </div>
     </div>
   </footer>
 
+  <script src="../logo/logo.js"></script>
   <script>
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -632,13 +627,58 @@
     const root = document.documentElement;
     const setPalette = (p) => {
       root.dataset.palette = p;
-      document.querySelectorAll('.palettes button').forEach((b) => b.classList.toggle('on', b.dataset.palette === p));
+      applyLogo();
+      document.querySelectorAll('[data-palette]:not(html)').forEach((b) => b.classList.toggle('on', b.dataset.palette === p));
       try { localStorage.setItem('bandonear-landing-palette', p); } catch (e) {}
     };
     let saved = null;
     try { saved = localStorage.getItem('bandonear-landing-palette'); } catch (e) {}
+    document.querySelectorAll('button[data-palette]').forEach((b) => b.onclick = () => setPalette(b.dataset.palette));
+
+    // ---------- Colores del logo (se recuerdan en este navegador) ----------
+    // Variantes del logo: ajustes del editor (logo/logo.js) para fondo oscuro y para
+    // fondo claro ("programa"). "paleta" sigue a la paleta activa y "editor" usa el
+    // último diseño guardado en logo/index.html en este navegador.
+    const L = window.BandoneARLogo;
+    const P = L.PRESETS;
+    const PALETA = { noche: P.noche, carmin: P.carmin, programa: P.programa };
+    const LOGO_VARIANTS = {
+      paleta: null,
+      celeste: { dark: P.celeste, light: P['celeste claro'] },
+      'celeste-sol': { dark: P['celeste con sol'], light: P['celeste con sol claro'] },
+      barrotes: { dark: P['celeste barrotes'], light: { ...P['celeste barrotes'], tinta: '#140f0c', acento: '#3f86c6' } },
+      dorado: { dark: P.noche, light: P.programa },
+      mono: { dark: P['mono blanco'], light: { tinta: '#140f0c', acento: '#140f0c' } },
+      editor: 'editor',
+    };
+    let logo = 'paleta';
+    try { logo = localStorage.getItem('bandonear-landing-logo') || 'paleta'; } catch (e) {}
+
+    function logoCfg() {
+      const light = root.dataset.palette === 'programa';
+      const lv = LOGO_VARIANTS[logo];
+      if (lv === 'editor') {
+        try { const ed = JSON.parse(localStorage.getItem('bandonear-logo-editor') || 'null'); if (ed) return ed; } catch (e) {}
+      }
+      if (!lv || lv === 'editor') return PALETA[root.dataset.palette] || P.noche;
+      return light ? lv.light : lv.dark;
+    }
+
+    function applyLogo() {
+      const c = { ...L.DEFAULTS, ...logoCfg() };
+      const B = L.isoBox(c);
+      document.querySelectorAll('[data-iso]').forEach((slot) => {
+        slot.innerHTML = `<svg viewBox="${B.x} 0 ${B.w} 80" aria-hidden="true">${L.isotipo(c)}</svg>`;
+      });
+      root.style.setProperty('--logo-acc', c.acento);
+      document.querySelectorAll('button[data-logo]').forEach((b) => b.classList.toggle('on', b.dataset.logo === logo));
+    }
+    document.querySelectorAll('button[data-logo]').forEach((b) => b.onclick = () => {
+      logo = b.dataset.logo;
+      try { localStorage.setItem('bandonear-landing-logo', logo); } catch (e) {}
+      applyLogo();
+    });
     setPalette(saved || 'noche');
-    document.querySelectorAll('.palettes button').forEach((b) => b.onclick = () => setPalette(b.dataset.palette));
 
     // ---------- Titular del hero palabra por palabra ----------
     document.querySelectorAll('[data-split]').forEach((el) => {

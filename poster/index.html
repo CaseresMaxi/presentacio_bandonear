@@ -103,13 +103,23 @@
       display:flex; align-items:center; justify-content:center; gap:44px;
     }
     /* Isotipo vectorial (assets/logo/): toma los colores de la paleta activa */
-    .iso{--iso-ink:var(--text-strong); --iso-acc:var(--gold); display:block}
+    .iso{--iso-ink:var(--logo-ink, var(--text-strong)); --iso-acc:var(--logo-acc, var(--gold)); display:block}
+    /* Variante con sol: lo muestra y recorta los pliegues a su alrededor */
+    .iso .sun{display:var(--sun-display, none)}
+    .iso .sun-cut{r:var(--sun-cut, 0px)}
+    .lockup h1 .accent{color:var(--logo-acc, var(--gold))}
     .lockup .iso{height:var(--logo-h,260px); width:auto}
     .lockup h1{
       font-family:var(--font-display); font-weight:800; font-size:var(--title-size,290px);
       line-height:1; letter-spacing:-7px; color:var(--text-strong);
     }
     .accent{color:var(--gold)}
+    /* Logo armado en el editor (logo/index.html), dibujado en curvas */
+    .lockup-editor{
+      position:absolute; left:0; right:0; top:var(--lockup-top,560px); height:var(--logo-alto,300px);
+      display:none; justify-content:center;
+    }
+    .lockup-editor svg{height:100%; width:auto; max-width:92%; display:block}
 
     .hero{
       position:absolute; left:0; right:0; top:var(--hero-top,860px); height:var(--hero-h,1480px); overflow:hidden;
@@ -266,14 +276,17 @@
 
             <div class="unlam" role="img" aria-label="Universidad Nacional de La Matanza" data-part="Marco: sello UNLaM"></div>
 
+            <div class="lockup-editor" data-part="Logo BandoneAR" id="lockupEditor"></div>
             <div class="lockup" data-part="Logo BandoneAR" id="lockup">
               <svg id="logoMark" class="iso" viewBox="0 0 120 80" aria-hidden="true">
 <path d="M6 17 L16 8 H30 L36 17 V63 L30 72 H16 L6 63 Z" fill="none" style="stroke:var(--iso-ink)" stroke-width="4" stroke-linejoin="round"/>
 <g style="fill:var(--iso-ink)"><circle cx="15" cy="27" r="2.4"/><circle cx="15" cy="37" r="2.4"/><circle cx="15" cy="47" r="2.4"/><circle cx="15" cy="57" r="2.4"/><circle cx="21.5" cy="32" r="2.4"/><circle cx="21.5" cy="42" r="2.4"/><circle cx="21.5" cy="52" r="2.4"/><circle cx="28" cy="27" r="2.4"/><circle cx="28" cy="37" r="2.4"/><circle cx="28" cy="47" r="2.4"/><circle cx="28" cy="57" r="2.4"/></g>
-<path style="fill:var(--iso-ink)" d="M41 12 L47 8 V72 L41 68Z"/>
-<path style="fill:color-mix(in srgb, var(--iso-acc) 33%, var(--iso-ink))" d="M51 12 L57 8 V72 L51 68Z"/>
-<path style="fill:color-mix(in srgb, var(--iso-acc) 67%, var(--iso-ink))" d="M61 12 L67 8 V72 L61 68Z"/>
-<path style="fill:var(--iso-acc)" d="M71 12 L77 8 V72 L71 68Z"/>
+<mask id="solcorte-poster" maskUnits="userSpaceOnUse" x="0" y="0" width="120" height="80"><rect width="120" height="80" fill="#fff"/><circle class="sun-cut" cx="60" cy="40" fill="#000"/></mask>
+<g mask="url(#solcorte-poster)"><path style="fill:var(--p1, var(--iso-ink))" d="M42 12 L48 8 V72 L42 68Z"/>
+<path style="fill:var(--p2, color-mix(in srgb, var(--iso-acc) 33%, var(--iso-ink)))" d="M52 12 L58 8 V72 L52 68Z"/>
+<path style="fill:var(--p3, color-mix(in srgb, var(--iso-acc) 67%, var(--iso-ink)))" d="M62 12 L68 8 V72 L62 68Z"/>
+<path style="fill:var(--p4, var(--iso-acc))" d="M72 12 L78 8 V72 L72 68Z"/></g>
+<g class="sun"><circle cx="60" cy="40" r="4.37" style="fill:var(--sun-color)"/><g style="stroke:var(--sun-color)" stroke-width="1.3" stroke-linecap="round"><line x1="60" y1="33.92" x2="60" y2="30.5"/><path fill="none" d="M62.33 34.38 C63.48 33.84 62.26 32.31 63.42 31.75"/><line x1="64.3" y1="35.7" x2="66.72" y2="33.28"/><path fill="none" d="M65.62 37.67 C66.82 38.1 67.03 36.16 68.25 36.58"/><line x1="66.08" y1="40" x2="69.5" y2="40"/><path fill="none" d="M65.62 42.33 C66.16 43.48 67.69 42.26 68.25 43.42"/><line x1="64.3" y1="44.3" x2="66.72" y2="46.72"/><path fill="none" d="M62.33 45.62 C61.9 46.82 63.84 47.03 63.42 48.25"/><line x1="60" y1="46.08" x2="60" y2="49.5"/><path fill="none" d="M57.67 45.62 C56.52 46.16 57.74 47.69 56.58 48.25"/><line x1="55.7" y1="44.3" x2="53.28" y2="46.72"/><path fill="none" d="M54.38 42.33 C53.18 41.9 52.97 43.84 51.75 43.42"/><line x1="53.92" y1="40" x2="50.5" y2="40"/><path fill="none" d="M54.38 37.67 C53.84 36.52 52.31 37.74 51.75 36.58"/><line x1="55.7" y1="35.7" x2="53.28" y2="33.28"/><path fill="none" d="M57.67 34.38 C58.1 33.18 56.16 32.97 56.58 31.75"/></g></g>
 <path d="M84 17 L94 8 H108 L114 17 V63 L108 72 H94 L84 63 Z" fill="none" style="stroke:var(--iso-acc)" stroke-width="4" stroke-linejoin="round"/>
 <g style="fill:var(--iso-acc)"><rect x="92" y="25" width="5" height="5" rx="1"/><rect x="101" y="25" width="5" height="5" rx="1"/><rect x="92" y="34" width="5" height="5" rx="1"/><rect x="101" y="34" width="5" height="5" rx="1"/><rect x="92" y="43" width="5" height="5" rx="1"/><rect x="101" y="43" width="5" height="5" rx="1"/><rect x="92" y="52" width="5" height="5" rx="1"/><rect x="101" y="52" width="5" height="5" rx="1"/></g>
 </svg>
@@ -351,6 +364,8 @@
   <div class="toast ui" id="toast"></div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+  <script src="../logo/glifos.js"></script>
+  <script src="../logo/logo.js"></script>
   <script>
     // ---------- Parametros ----------
     // Cada campo del panel. "css" escribe una variable en el poster; el resto
@@ -364,9 +379,35 @@
     const PALETTES = {
       noche: { '--bg': '#000', '--text': '#f4f1eb', '--text-strong': '#fff', '--muted': '#b7b1a7', '--lead': '#e8e3db', '--frame': '#9a9a9a', '--ink': '#fff', '--ink-soft': '#e6e6e6', acento: '#d7a54a' },
       carmin: { '--bg': '#14090b', '--text': '#f7efe8', '--text-strong': '#fff7f2', '--muted': '#c9b4b0', '--lead': '#f0e2db', '--frame': '#7a5a5e', '--ink': '#fff7f2', '--ink-soft': '#ead8d3', acento: '#d44a45' },
-      programa: { '--bg': '#f3eadc', '--text': '#1c1612', '--text-strong': '#140f0c', '--muted': '#6b5e52', '--lead': '#3a322b', '--frame': '#8a7b6a', '--ink': '#140f0c', '--ink-soft': '#3a322b', acento: '#9a6b1f' },
+      programa: { '--bg': '#f3eadc', '--text': '#1c1612', '--text-strong': '#140f0c', '--muted': '#6b5e52', '--lead': '#3a322b', '--frame': '#8a7b6a', '--ink': '#140f0c', '--ink-soft': '#3a322b', acento: '#9a6b1f', light: true },
     };
+    // Variantes de color del logo. "paleta" usa los colores de la paleta activa;
+    // las demás tienen una versión para fondo oscuro y otra para fondo claro.
+    const LOGO_VARIANTS = {
+      paleta: null,
+      celeste: { dark: ['#ffffff', '#74acdf'], light: ['#140f0c', '#3f86c6'] },
+      dorado: { dark: ['#f4f1eb', '#d7a54a'], light: ['#140f0c', '#9a6b1f'] },
+      'celeste-sol': { dark: ['#ffffff', '#74acdf'], light: ['#140f0c', '#3f86c6'], sol: true },
+      mono: { dark: ['#ffffff', '#ffffff'], light: ['#140f0c', '#140f0c'] },
+    };
+    // Trae el diseño guardado por el editor del logo (mismo navegador, file://)
+    function importarLogo() {
+      let saved = null;
+      try { saved = localStorage.getItem('bandonear-logo-editor'); } catch (e) {}
+      if (!saved) return toast('No encontré un diseño guardado. Abrí logo/index.html y ajustalo primero.');
+      cfg.logoEditor = saved;
+      cfg.logoFuente = 'editor';
+      apply(); saveCfg(); buildForm();
+      toast('Logo del editor aplicado');
+    }
+
     const SCHEMA = [
+      { group: 'Logo' },
+      { key: 'logoFuente', label: 'Qué logo usar', type: 'select', options: ['integrado', 'editor'], def: 'integrado' },
+      { type: 'action', label: 'Traer el logo del editor', hint: 'Copia el diseño guardado en logo/index.html. Abrí el editor en este mismo navegador.', run: importarLogo },
+      { key: 'logoEditor', label: 'Ajustes del editor (o pegá acá lo que copiaste con "Copiar ajustes")', type: 'textarea', def: '' },
+      { key: 'logoVersion', label: 'Versión (logo del editor)', type: 'select', options: ['horizontal', 'vertical', 'isotipo', 'palabra'], def: 'horizontal' },
+      { key: 'logoAlto', label: 'Alto (logo del editor)', type: 'range', min: 100, max: 1000, step: 5, def: 290, css: '--logo-alto', unit: 'px' },
       { group: 'Textos' },
       { key: 'titulo', label: 'Nombre (la parte entre *asteriscos* va en color)', type: 'text', def: 'Bandone*AR*' },
       { key: 'frase', label: 'Frase principal (*palabra* en itálica y color)', type: 'textarea', def: 'Tocar tango no debería ser un *privilegio*.' },
@@ -400,6 +441,7 @@
       { key: 'equipoTop', label: 'Posición de equipo y QR', type: 'range', min: 2500, max: 2850, step: 5, def: 2810, css: '--credits-top', unit: 'px' },
       { group: 'Color y visibilidad' },
       { key: 'paleta', label: 'Paleta (las del deck)', type: 'select', options: Object.keys(PALETTES), def: 'noche' },
+      { key: 'logoColor', label: 'Colores del logo (integrado)', type: 'select', options: Object.keys(LOGO_VARIANTS), def: 'paleta' },
       { key: 'acento', label: 'Color de acento (vacío = el de la paleta)', type: 'color', def: '' },
       { key: 'verLogo', label: 'Mostrar isotipo', type: 'check', def: true },
       { key: 'verAtributos', label: 'Mostrar atributos', type: 'check', def: true },
@@ -431,6 +473,20 @@
       const pal = PALETTES[cfg.paleta] || PALETTES.noche;
       Object.entries(pal).forEach(([k, v]) => { if (k.startsWith('--')) poster.style.setProperty(k, v); });
       poster.style.setProperty('--gold', cfg.acento || pal.acento);
+      const lv = LOGO_VARIANTS[cfg.logoColor];
+      if (lv) {
+        const [ink, acc] = pal.light ? lv.light : lv.dark;
+        poster.style.setProperty('--logo-ink', ink);
+        poster.style.setProperty('--logo-acc', acc);
+      } else {
+        poster.style.removeProperty('--logo-ink');
+        poster.style.removeProperty('--logo-acc');
+      }
+      // Sol en el medio del fuelle y pliegues en franjas, como la bandera
+      // Colores directos: un var() dentro de una variable se resuelve donde se declara
+      const [sInk, sAcc] = lv ? (pal.light ? lv.light : lv.dark) : [];
+      const SUN = { '--sun-display': 'inline', '--sun-cut': '11.5px', '--sun-color': '#f6b40e', '--p1': sAcc, '--p2': sInk, '--p3': sInk, '--p4': sAcc };
+      Object.keys(SUN).forEach((k) => (lv && lv.sol ? poster.style.setProperty(k, SUN[k]) : poster.style.removeProperty(k)));
       FIELDS.filter((f) => f.css).forEach((f) => poster.style.setProperty(f.css, cfg[f.key] + f.unit));
       $('title').innerHTML = esc(cfg.titulo).replace(/\*(.+?)\*/g, '<span class="accent">$1</span>');
       $('claim').innerHTML = esc(cfg.frase).replace(/\*(.+?)\*/g, '<em>$1</em>');
@@ -440,6 +496,21 @@
         .map((t) => `<span>${esc(t)}</span>`).join('<i></i>');
       $('pillars').style.display = cfg.verAtributos ? '' : 'none';
       $('logoMark').style.display = cfg.verLogo ? '' : 'none';
+      const usarEditor = cfg.logoFuente === 'editor' && window.BandoneARLogo;
+      $('lockup').style.display = usarEditor ? 'none' : '';
+      $('lockupEditor').style.display = usarEditor ? 'flex' : 'none';
+      if (usarEditor) {
+        // Si todavía no se trajo nada, toma lo guardado por el editor y lo deja en la
+        // configuración, así viaja también en el comando de exportación
+        if (!cfg.logoEditor) {
+          try { cfg.logoEditor = localStorage.getItem('bandonear-logo-editor') || ''; } catch (e) {}
+        }
+        let ajustes = {};
+        try { ajustes = JSON.parse(cfg.logoEditor || '{}'); } catch (e) {}
+        const L = BandoneARLogo;
+        const c = { ...L.DEFAULTS, ...ajustes, layout: cfg.logoVersion, margen: 0, lienzo: 'ajustado' };
+        $('lockupEditor').innerHTML = L.buildSVG(c, { background: null }).svg;
+      }
       $('team').textContent = cfg.equipo;
       $('docentes').textContent = cfg.docentes ? 'Docentes: ' + cfg.docentes : '';
       $('teamBlock').style.visibility = cfg.verEquipo ? '' : 'hidden';
@@ -464,6 +535,16 @@
       form.innerHTML = '';
       SCHEMA.forEach((f) => {
         if (f.group) { form.insertAdjacentHTML('beforeend', `<h4>${f.group}</h4>`); return; }
+        if (f.type === 'action') {
+          const b = document.createElement('button');
+          b.type = 'button'; b.className = 'btn'; b.textContent = f.label; b.onclick = f.run;
+          const wrap = document.createElement('div');
+          wrap.className = 'field';
+          wrap.append(b);
+          if (f.hint) wrap.insertAdjacentHTML('beforeend', `<small>${f.hint}</small>`);
+          form.appendChild(wrap);
+          return;
+        }
         const wrap = document.createElement('label');
         wrap.className = 'field' + (f.type === 'check' ? ' check' : '');
         let input;
