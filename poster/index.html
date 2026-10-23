@@ -512,7 +512,9 @@
         $('lockupEditor').innerHTML = L.buildSVG(c, { background: null }).svg;
       }
       $('team').textContent = cfg.equipo;
-      $('docentes').textContent = cfg.docentes ? 'Docentes: ' + cfg.docentes : '';
+      // Un docente por línea (o separados por coma) → separados con " · ", como el equipo
+      const docentes = (cfg.docentes || '').split(/\n|,/).map((d) => d.trim()).filter(Boolean).join(' · ');
+      $('docentes').textContent = docentes ? 'Docentes: ' + docentes : '';
       $('teamBlock').style.visibility = cfg.verEquipo ? '' : 'hidden';
       $('edicion').textContent = cfg.edicion;
       $('year').textContent = cfg.anio;

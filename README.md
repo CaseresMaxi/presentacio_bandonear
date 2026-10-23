@@ -124,4 +124,25 @@ y separado con guiones (sin espacios: obligan a escapar la URL).
   al final de cada escena, L el loop, S el sonido y F la pantalla completa. Cada
   cuadro se calcula a partir del tiempo en `window.seek(t)`.
   `reel/render.mjs` exporta un MP4 si alguna vez hace falta (playwright-core + ffmpeg).
-
+- `presentacion/motion.html` — *experimental:* la misma presentación como un solo video
+  de motion graphics. Hay una línea de tiempo continua con puntos clave: → reproduce
+  hasta el próximo y ahí se detiene, ← rebobina (Shift salta sin animar). Entre escenas,
+  el antetítulo, el título, los puntos y la imagen o panel principal viajan y se
+  transforman. Un punto sale de su pliegue y se vuelve tarjeta, bloque del diagrama
+  o fila. Mientras tanto, los cuatro pliegues del logo barren la pantalla y la cámara
+  se desplaza con desenfoque de movimiento. Dentro de algunas escenas la cámara
+  recorre el contenido: en la arquitectura va de las entradas a las salidas. Las
+  listas pueden revelarse de a un punto por avance. Lee los mismos datos que la
+  clásica (botón "Traer los cambios de la clásica" en el editor, `E`); el montaje
+  está en `presentacion/motion-tipos.js`. `?escena=5&paso=2` abre un punto clave y
+  `?t=18.9` congela un instante del video.
+  Con el editor abierto, un clic sobre cualquier elemento del escenario lo edita en la
+  pestaña "Elemento". El logo tiene una grilla con todas las variantes, que se elige
+  por escena; las imágenes muestran las del repo; los textos y las listas se editan
+  ahí mismo, con la línea que tocaste ya seleccionada; cualquier elemento se puede
+  ocultar. "Assets" importa archivos propios y cambia las imágenes y el logo general.
+  "Corregir" (tecla `C`) pone una marca numerada en el punto de la escena donde
+  hacés clic. Cada marca lleva una nota y recuerda la escena, el punto clave y el
+  elemento que tocaste. En "Correcciones" se listan, se marcan como hechas y se
+  copian como texto para pegar en el chat (o se exportan a .md). Se guardan con la
+  presentación, también en el .json.
