@@ -117,4 +117,11 @@ y separado con guiones (sin espacios: obligan a escapar la URL).
   `presentacion/escenas.js`. `?escena=5&t=99&tema=plano&ui=0` abre una escena puntual.
   Si se agregan imágenes o logos al repo, `python presentacion/generar_manifiesto.py`
   los suma al selector de assets.
+- `reel/index.html` — "Un pliegue que respira": pieza de motion de 15 s a 120 BPM en
+  la que cada escena sale de la anterior (pliegue → palabra → botonera → 3D →
+  señal → dato → logo → pliegue). Se reproduce en el navegador con su música
+  generada en código. Espacio reproduce, ← → avanzan de a pulso, P activa la pausa
+  al final de cada escena, L el loop, S el sonido y F la pantalla completa. Cada
+  cuadro se calcula a partir del tiempo en `window.seek(t)`.
+  `reel/render.mjs` exporta un MP4 si alguna vez hace falta (playwright-core + ffmpeg).
 

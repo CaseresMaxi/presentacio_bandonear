@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>BandoneAR — Un pliegue que respira</title>
+  <style>
+    @font-face{ font-family:'Playfair Display'; src:url('../assets/fonts/playfair-latin.woff2') format('woff2'); font-weight:400 900; font-style:normal; }
+    @font-face{ font-family:'Playfair Display'; src:url('../assets/fonts/playfair-latin-italic.woff2') format('woff2'); font-weight:400 900; font-style:italic; }
+    html,body{margin:0; height:100%; background:#050506; overflow:hidden; font-family:'Playfair Display',Georgia,serif}
+    #root{position:absolute; left:50%; top:50%; width:1920px; height:1080px; transform-origin:center; cursor:pointer}
+    /* Con ?render el escenario queda fijo en 1920×1080 y sin controles (para render.mjs) */
+    body.render #root{left:0; top:0; transform:none !important}
+    body.render .player{display:none}
+    .player{
+      position:fixed; left:50%; bottom:18px; transform:translateX(-50%); width:min(1100px, calc(100% - 32px));
+      background:rgba(14,14,16,.9); backdrop-filter:blur(14px); border:1px solid #2b2b31; border-radius:16px; padding:10px 14px 12px;
+      color:#f4f1eb; font:13px system-ui, sans-serif; display:grid; gap:8px; transition:opacity .4s, transform .4s; z-index:10;
+    }
+    .player.hidden{opacity:0; transform:translate(-50%, 20px); pointer-events:none}
+    .row{display:flex; align-items:center; gap:6px; flex-wrap:wrap}
+    .spacer{flex:1}
+    .btn{background:#24242a; color:#f4f1eb; border:1px solid #2b2b31; border-radius:9px; padding:7px 11px; font:inherit; cursor:pointer}
+    .btn:hover{background:#2f2f36}
+    .btn.on{background:#d7a54a; color:#111; border-color:#d7a54a}
+    .tl{position:relative; height:38px; border-radius:8px; background:#1b1b20; cursor:pointer; overflow:hidden}
+    .tl .part{position:absolute; top:0; bottom:0; border-right:2px solid #0e0e10}
+    .tl .part span{position:absolute; left:8px; top:5px; font-size:11px; color:#b7b1a7; white-space:nowrap}
+    .tl .part.cur span{color:#fff}
+    .tl .beat{position:absolute; bottom:4px; width:2px; height:8px; background:#3a3a42}
+    .tl .beat.down{height:14px; background:#5a5a62}
+    .tl .fill{position:absolute; left:0; top:0; bottom:0; background:rgba(215,165,74,.25); pointer-events:none}
+    .tl .head{position:absolute; top:0; bottom:0; width:2px; background:#d7a54a; pointer-events:none}
+    .clock{font-variant-numeric:tabular-nums; color:#b7b1a7; min-width:190px}
+    svg{display:block}
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <div class="player" id="player">
+    <div class="tl" id="tl"></div>
+    <div class="row">
+      <button class="btn" data-a="start" title="Inicio (Inicio)">⏮</button>
+      <button class="btn" data-a="back" title="Pulso anterior (←)">◀</button>
+      <button class="btn" data-a="play" id="bPlay" title="Reproducir / pausar (Espacio)">▶</button>
+      <button class="btn" data-a="fwd" title="Pulso siguiente (→)">▶▶</button>
+      <span class="clock" id="clock"></span>
+      <span class="spacer"></span>
+      <button class="btn on" data-a="sound" id="bSound" title="Sonido (S)">Sonido</button>
+      <button class="btn" data-a="scenes" id="bScenes" title="Pausa al final de cada escena, como la presentación (P)">Pausa por escena</button>
+      <button class="btn on" data-a="loop" id="bLoop" title="Repetir (L)">Loop</button>
+      <button class="btn" data-a="full" title="Pantalla completa (F)">⛶</button>
+    </div>
+  </div>
+  <script>
+    // Un pliegue que respira: el fuelle se abre y se vuelve palabra, botonera,
+    // instrumento, señal, dato y logo; al final se cierra en el mismo pliegue.
+    //
+    // Todo se calcula a partir del tiempo dentro de window.seek(t): sin animaciones
+    // CSS, sin timers y sin estado entre cuadros. 120 BPM, un pulso cada 0,5 s.
+    const W = 1920, H = 1080, CX = 960, CY = 540, BEAT = 0.5, DUR = 15;
+    const COL = { bg: '#0d0d0f', w: '#f4f1eb', g: '#d7a54a', c: '#74acdf' };
+    const FONT = "'Playfair Display'";
+
+    // ---------- Curvas: exponenciales y resorte críticamente amortiguado (sin rebote) ----------
+    const cl = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+    const prog = (t, a, d) => cl((t - a) / d);
+    const N10 = 1 - Math.pow(2, -10);
+    const exOut = (x) => (x <= 0 ? 0 : x >= 1 ? 1 : (1 - Math.pow(2, -10 * x)) / N10);
+    const exIn = (x) => (x <= 0 ? 0 : x >= 1 ? 1 : (Math.pow(2, 10 * x - 10) - Math.pow(2, -10)) / N10);
+    const spring = (x, w = 9) => (x <= 0 ? 0 : x >= 1 ? 1 : (1 - (1 + w * x) * Math.exp(-w * x)) / (1 - (1 + w) * Math.exp(-w)));
+    const lerp = (a, b, k) => a + (b - a) * k;
+    const hex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+    const mixC = (a, b, k) => '#' + hex(a).map((x, i) => Math.round(lerp(x, hex(b)[i], cl(k))).toString(16).padStart(2, '0')).join('');
+    const r2 = (n) => Math.round(n * 100) / 100;
+    // Pulso del bombo: 0 justo en el golpe, pico a los 30 ms, decae
+    const kick = (t) => { const dt = t - Math.floor(t / BEAT + 1e-9) * BEAT; return (dt / 0.03) * Math.exp(1 - dt / 0.03); };
+    // Interpolación entre fotogramas clave con salida exponencial: [[t, v], ...]
+    const kf = (t, keys) => {
+      if (t <= keys[0][0]) return keys[0][1];
+      for (let i = 0; i < keys.length - 1; i++) {
+        const [t0, v0] = keys[i], [t1, v1] = keys[i + 1];
+        if (t < t1) return lerp(v0, v1, exOut((t - t0) / (t1 - t0)));
+      }
+      return keys[keys.length - 1][1];
+    };
+    // Desenfoque direccional según la velocidad horizontal (px/s)
+    const blur = (vx) => { const s = Math.min(40, Math.round(Math.abs(vx) / 260)); return s >= 1 ? ` filter="url(#hb${s})"` : ''; };
+    const speed = (f, t) => (f(t) - f(t - 1 / 240)) * 240;
+    const DEFS = '<defs>' + Array.from({ length: 40 }, (_, i) => `<filter id="hb${i + 1}" x="-50%" y="-10%" width="200%" height="120%"><feGaussianBlur stdDeviation="${i + 1} 0"/></filter>`).join('') + '</defs>';
+
+    // ---------- Medición de texto (determinística, la fuente ya está cargada) ----------
+    const ctx2d = document.createElement('canvas').getContext('2d');
+    const measure = (str, size, italic = false, weight = 800) => { ctx2d.font = `${italic ? 'italic ' : ''}${weight} ${size}px ${FONT}`; return ctx2d.measureText(str).width; };
+    const text = (str, x, y, size, fill, { italic = false, weight = 800, anchor = 'start', extra = '', ls = 0 } = {}) =>
+      `<text x="${r2(x)}" y="${r2(y)}" font-family="${FONT}" font-size="${size}" font-weight="${weight}" font-style="${italic ? 'italic' : 'normal'}" fill="${fill}" text-anchor="${anchor}" letter-spacing="${ls}" ${extra}>${str}</text>`;
+
+    // ---------- Geometría del isotipo (unidades 0–120 × 0–80, la del logo) ----------
+    const OCT_L = [[6, 17], [16, 8], [30, 8], [36, 17], [36, 63], [30, 72], [16, 72], [6, 63]];
+    const OCT_R = OCT_L.map(([u, v]) => [u + 78, v]);
+    const DOTS = [[15, 27], [15, 37], [15, 47], [15, 57], [21.5, 32], [21.5, 42], [21.5, 52], [28, 27], [28, 37], [28, 47], [28, 57]];
+    const KEYS = [27.5, 36.5, 45.5, 54.5].flatMap((v) => [[94.5, v], [103.5, v]]);
+    const PLEATS = [[42, COL.c], [52, COL.w], [62, COL.w], [72, COL.c]];
+    const toW = (u, v, S, ox = CX, oy = CY) => [ox + (u - 60) * S, oy + (v - 40) * S];
+    const poly = (pts) => pts.map(([x, y]) => `${r2(x)},${r2(y)}`).join(' ');
+
+    // ================= Compás 1 · 0–2 s · gancho: un pliegue se abre en ocho =================
+    const LEVEL_T = [[0.5, 1, 2], [1.0, 2, 4], [1.5, 4, 8]];
+    const slotX = (i, n) => CX + (Math.floor(i / (8 / n)) - (n - 1) / 2) * (1120 / n);
+    const slotC = (i, n) => (Math.floor(i / (8 / n)) % 2 ? COL.w : COL.g);
+    function hookX(i, t) {
+      let x = CX;
+      for (const [tb, a, b] of LEVEL_T) if (t >= tb) x = lerp(slotX(i, a), slotX(i, b), exOut(prog(t, tb, 0.32)));
+      return x;
+    }
+    function hookColor(i, t) {
+      let c = COL.g;
+      for (const [tb, a, b] of LEVEL_T) if (t >= tb) c = mixC(slotC(i, a), slotC(i, b), exOut(prog(t, tb, 0.32)));
+      return c;
+    }
+    function scene1(t) {
+      const h = 560 * (1 + 0.07 * kick(t));
+      let s = '';
+      for (let i = 0; i < 8; i++) {
+        const x = hookX(i, t), v = speed((tt) => hookX(i, tt), t);
+        s += `<rect x="${r2(x - 18)}" y="${r2(CY - h / 2)}" width="36" height="${r2(h)}" fill="${hookColor(i, t)}"${blur(v)}/>`;
+      }
+      return s;
+    }
+
+    // ================= Compás 2 · 2–4 s · tipografía cinética: abre / cierra / una nota / dos notas =================
+    const WORDS = [['abre', COL.w, false], ['cierra', COL.w, false], ['una nota', COL.w, true], ['dos notas', COL.c, true]];
+    const TS = 220, BASE = CY + 78;
+    const wordBox = (k) => { const w = measure(WORDS[k][0], TS, WORDS[k][2]); return [CX - w / 2, CX + w / 2]; };
+    // Posición del cursor (el pliegue cerrado) y borde visible de cada palabra
+    function caretX(t) {
+      const k = cl(Math.floor((t - 2) / BEAT), 0, 3), u = Math.max(0, t - 2 - k * BEAT);
+      const [L, R] = wordBox(k);
+      const from = k === 0 ? CX : wordBox(k - 1)[0];
+      if (u < 0.16) return k === 0 ? lerp(CX, L, exOut(u / 0.16)) : lerp(wordBox(k - 1)[1], from, exOut(u / 0.16));
+      return lerp(L, R, exOut((u - 0.16) / 0.28)) + 14;
+    }
+    function scene2(t) {
+      let s = '';
+      // Los 8 pliegues se cierran sobre el cursor
+      const col = exOut(prog(t, 2, 0.2));
+      const cx = caretX(t), ch = lerp(560, 250, col), cw = lerp(36, 14, col);
+      if (col < 1) for (let i = 0; i < 8; i++) {
+        const x = lerp(slotX(i, 8), cx, col);
+        s += `<rect x="${r2(x - cw / 2)}" y="${r2(CY - ch / 2)}" width="${r2(cw)}" height="${r2(ch)}" fill="${mixC(slotC(i, 8), COL.g, col)}"${blur(speed((tt) => lerp(slotX(i, 8), caretX(tt), exOut(prog(tt, 2, 0.2))), t))}/>`;
+      }
+      const k = cl(Math.floor((t - 2) / BEAT), 0, 3), u = Math.max(0, t - 2 - k * BEAT);
+      // Palabra anterior: el cursor la borra hacia la izquierda
+      if (k > 0 && u < 0.16) {
+        const [L, R] = wordBox(k - 1), edge = lerp(R, L, exOut(u / 0.16));
+        s += `<clipPath id="cpPrev"><rect x="${r2(L - 20)}" y="0" width="${r2(Math.max(0, edge - L + 20))}" height="${H}"/></clipPath>`;
+        s += `<g clip-path="url(#cpPrev)">${text(WORDS[k - 1][0], L, BASE, TS, WORDS[k - 1][1], { italic: WORDS[k - 1][2] })}</g>`;
+      }
+      // Palabra actual: el cursor la escribe hacia la derecha
+      const [L, R] = wordBox(k), edge = u < 0.16 ? L : lerp(L, R, exOut((u - 0.16) / 0.28));
+      s += `<clipPath id="cpCur"><rect x="${r2(L - 20)}" y="0" width="${r2(Math.max(0, edge - L + 20))}" height="${H}"/></clipPath>`;
+      s += `<g clip-path="url(#cpCur)">${text(WORDS[k][0], L, BASE, TS, WORDS[k][1], { italic: WORDS[k][2] })}</g>`;
+      if (col >= 1) s += `<rect x="${r2(cx - 7)}" y="${r2(CY - 125 - 10 * kick(t))}" width="14" height="${r2(250 + 20 * kick(t))}" fill="${COL.g}"${blur(speed(caretX, t))}/>`;
+      return s;
+    }
+
+    // ================= Compás 3 · 4–6 s · morfismo: letras → puntos → teclas → isotipo =================
+    const S3 = 7;
+    function letterCenters() {
+      const str = 'dos notas', [L] = wordBox(3), out = [];
+      for (let i = 0; i < str.length; i++) {
+        if (str[i] === ' ') continue;
+        const a = measure(str.slice(0, i), TS, true), b = measure(str.slice(0, i + 1), TS, true);
+        out.push([L + (a + b) / 2, BASE - 62, str[i], L + a]);
+      }
+      return out;
+    }
+    function dotPos(i, t) {
+      const [lx, ly] = letterCenters()[i], [kx, ky] = toW(...KEYS[i], S3);
+      const m = exOut(prog(t, 4.15 + i * 0.03, 0.4));
+      return [lerp(lx, kx, m), lerp(ly, ky, m)];
+    }
+    function isoFlat(S, t, { dotsK = 1, outlineK = 1, pleatK = 1, keysK = 1, ox = CX, oy = CY, stroke = 4 } = {}) {
+      // Isotipo plano a escala S, con controles de construcción (0 a 1)
+      let s = '';
+      PLEATS.forEach(([u, c], j) => {
+        const order = [1, 2, 0, 3].indexOf(j), g = typeof pleatK === 'function' ? pleatK(order) : pleatK;
+        if (g <= 0) return;
+        const [x, y] = toW(u, 8, S, ox, oy), hh = 64 * S * g;
+        s += `<rect x="${r2(x)}" y="${r2(oy - hh / 2)}" width="${r2(6 * S)}" height="${r2(hh)}" fill="${c}"/>`;
+      });
+      [[OCT_L, COL.w], [OCT_R, COL.c]].forEach(([oct, c]) => {
+        if (outlineK <= 0) return;
+        const pts = oct.map(([u, v]) => toW(u, v, S, ox, oy));
+        const len = pts.reduce((a, p, i) => a + Math.hypot(...[0, 1].map((k) => p[k] - pts[(i + 1) % pts.length][k])), 0);
+        s += `<polygon points="${poly(pts)}" fill="none" stroke="${c}" stroke-width="${r2(stroke * S)}" stroke-linejoin="round" stroke-dasharray="${r2(len)}" stroke-dashoffset="${r2(len * (1 - outlineK))}"/>`;
+      });
+      DOTS.forEach(([u, v], i) => {
+        const k = typeof dotsK === 'function' ? dotsK(i) : dotsK;
+        if (k <= 0) return;
+        const [x, y] = toW(u, v, S, ox, oy);
+        s += `<circle cx="${r2(x)}" cy="${r2(y)}" r="${r2(2.4 * S * k)}" fill="${COL.w}"/>`;
+      });
+      if (keysK > 0) KEYS.forEach(([u, v]) => {
+        const [x, y] = toW(u, v, S, ox, oy), k = 5 * S * keysK;
+        s += `<rect x="${r2(x - k / 2)}" y="${r2(y - k / 2)}" width="${r2(k)}" height="${r2(k)}" rx="${r2(S)}" fill="${COL.c}"/>`;
+      });
+      return s;
+    }
+    function scene3(t) {
+      let s = '';
+      const lc = letterCenters(), shrink = exOut(prog(t, 4.0, 0.3));
+      // Letras que se achican sobre su centro mientras nace un punto en el mismo lugar
+      if (shrink < 1) lc.forEach(([x, y, ch, lx]) => {
+        s += `<g transform="translate(${r2(x)} ${r2(y)}) scale(${r2(1 - shrink)}) translate(${r2(-x)} ${r2(-y)})">${text(ch, lx, BASE, TS, COL.c, { italic: true })}</g>`;
+      });
+      // Cursor que se apaga hacia abajo
+      const cg = 1 - exOut(prog(t, 4.0, 0.25));
+      if (cg > 0) s += `<rect x="${r2(wordBox(3)[1] + 7)}" y="${r2(CY - 125 * cg)}" width="14" height="${r2(250 * cg)}" fill="${COL.g}"/>`;
+      // Puntos → teclas cuadradas
+      const sq = exOut(prog(t, 4.5, 0.3)), keySize = 5 * S3;
+      lc.forEach((_, i) => {
+        const [x, y] = dotPos(i, t), r = lerp(22, keySize / 2, exOut(prog(t, 4.2, 0.4))) * exOut(prog(t, 4.0, 0.25));
+        const size = lerp(2 * r, keySize, sq), rx = lerp(r, S3, sq);
+        s += `<rect x="${r2(x - size / 2)}" y="${r2(y - size / 2)}" width="${r2(size)}" height="${r2(size)}" rx="${r2(rx)}" fill="${COL.c}"${blur(speed((tt) => dotPos(i, tt)[0], t))}/>`;
+      });
+      // Contornos, botones y pliegues
+      s += isoFlat(S3, t, {
+        keysK: 0,
+        outlineK: exOut(prog(t, 5.0, 0.45)),
+        dotsK: (i) => spring(prog(t, 5.05 + i * 0.025, 0.35)),
+        pleatK: (o) => exOut(prog(t, 5.5 + o * 0.05, 0.35)),
+      });
+      return s;
+    }
+
+    // ================= Compás 4 · 6–8 s · de 2D a 3D: el isotipo gana profundidad y se pone de canto =================
+    const rotY = (t) => kf(t, [[6, 0], [6.45, -38], [6.5, -38], [6.95, 38], [7.0, 38], [7.45, 22], [7.5, 22], [7.95, 0]]);
+    const rotX = (t) => kf(t, [[6, 0], [6.45, 14], [7.5, 14], [7.95, 90]]);
+    const spread = (t) => kf(t, [[7.0, 1], [7.45, 1.7], [7.5, 1.7], [7.95, 1.3]]);
+    const depth = (t) => kf(t, [[6, 0], [6.45, 18], [7.0, 18], [7.45, 30], [7.5, 30], [7.95, 0]]);
+    function scene4(t) {
+      const S = S3, ay = rotY(t) * Math.PI / 180, ax = rotX(t) * Math.PI / 180, sp = spread(t), d = depth(t), F = 2400;
+      const flat = exOut(prog(t, 7.5, 0.45)); // al final todo se vuelve una línea blanca fina
+      const P = ([x, y, z]) => {
+        const x1 = x * Math.cos(ay) + z * Math.sin(ay), z1 = -x * Math.sin(ay) + z * Math.cos(ay);
+        const y2 = y * Math.cos(ax) - z1 * Math.sin(ax), z2 = y * Math.sin(ax) + z1 * Math.cos(ax);
+        const k = F / (F + z2);
+        return [CX + x1 * k, CY + y2 * k, z2];
+      };
+      const U = (u, v, z, shift = 0) => [((u - 60) * sp + shift) * S, (v - 40) * S, z * S];
+      const faces = [];
+      const pushPoly = (pts3, fill, stroke, sw) => {
+        const p = pts3.map(P), z = p.reduce((a, q) => a + q[2], 0) / p.length;
+        faces.push({ z, svg: `<polygon points="${poly(p)}" fill="${fill}" stroke="${stroke}" stroke-width="${r2(sw)}" stroke-linejoin="round"/>` });
+      };
+      const sw = lerp(4 * S, 6, flat);
+      // Cabezales: prisma octogonal en alambre (cara trasera, aristas, cara delantera)
+      [[OCT_L, COL.w, DOTS, 'dot', -30], [OCT_R, COL.c, KEYS, 'key', 30]].forEach(([oct, c, marks, kind, sh]) => {
+        const shift = (sp - 1) * sh;
+        const front = oct.map(([u, v]) => U(u, v, -d / 2, shift)), back = oct.map(([u, v]) => U(u, v, d / 2, shift));
+        const cc = mixC(c, COL.w, flat);
+        pushPoly(back, 'none', mixC(cc, COL.bg, 0.55), sw * 0.6);
+        front.forEach((f, i) => { const a = P(f), b = P(back[i]); faces.push({ z: (a[2] + b[2]) / 2, svg: `<line x1="${r2(a[0])}" y1="${r2(a[1])}" x2="${r2(b[0])}" y2="${r2(b[1])}" stroke="${mixC(cc, COL.bg, 0.35)}" stroke-width="${r2(sw * 0.5)}"/>` }); });
+        pushPoly(front, 'none', cc, sw);
+        marks.forEach(([u, v]) => {
+          if (kind === 'dot') {
+            const p = P(U(u, v, -d / 2, shift)), rr = 2.4 * S * (F / (F + p[2])) * (1 - flat);
+            faces.push({ z: p[2] - 1, svg: `<circle cx="${r2(p[0])}" cy="${r2(p[1])}" r="${r2(Math.max(0, rr))}" fill="${COL.w}"/>` });
+          } else {
+            const q = 2.5 * (1 - flat);
+            pushPoly([[u - q, v - q], [u + q, v - q], [u + q, v + q], [u - q, v + q]].map(([a, b]) => U(a, b, -d / 2, shift)), COL.c, COL.c, 0.1);
+          }
+        });
+      });
+      // Pliegues: placas con espesor, caras visibles ordenadas por profundidad
+      PLEATS.forEach(([u, c]) => {
+        const x0 = u, x1 = u + 6, hh = lerp(32, 0.4, flat);
+        const v0 = 40 - hh, v1 = 40 + hh, z0 = -d / 2, z1 = d / 2;
+        const cc = mixC(c, COL.w, flat), side = mixC(cc, COL.bg, 0.45);
+        pushPoly([[x0, v0, z1], [x1, v0, z1], [x1, v1, z1], [x0, v1, z1]].map(([a, b, z]) => U(a, b, z)), side, side, 0.1);
+        pushPoly([[x0, v0, z0], [x0, v0, z1], [x0, v1, z1], [x0, v1, z0]].map(([a, b, z]) => U(a, b, z)), side, side, 0.1);
+        pushPoly([[x1, v0, z0], [x1, v0, z1], [x1, v1, z1], [x1, v1, z0]].map(([a, b, z]) => U(a, b, z)), side, side, 0.1);
+        pushPoly([[x0, v0, z0], [x1, v0, z0], [x1, v0, z1], [x0, v0, z1]].map(([a, b, z]) => U(a, b, z)), side, side, 0.1);
+        pushPoly([[x0, v0, z0], [x1, v0, z0], [x1, v1, z0], [x0, v1, z0]].map(([a, b, z]) => U(a, b, z)), cc, cc, 0.1);
+      });
+      faces.sort((a, b) => b.z - a.z);
+      const v = speed(rotY, t) * 7; // giro → velocidad lateral aproximada en pantalla
+      return `<g${blur(v)}>${faces.map((f) => f.svg).join('')}</g>`;
+    }
+
+    // ================= Compás 5 · 8–10 s · interfaz: la línea se vuelve señal, derivada y monitor =================
+    const pos = (x) => Math.sin(x * 1.1) * 0.75 + Math.sin(x * 2.3 + 1) * 0.2;
+    const vel = (x) => (pos(x + 0.01) - pos(x - 0.01)) / 0.02 / 1.6;
+    const LINE_HALF = (54 * 1.3 + 0.3 * 30) * S3; // medio largo de la línea al final del compás 4 (fuelle abierto a 1,3)
+    const traceEnds = (t) => {
+      const open = exOut(prog(t, 8.0, 0.4)), narrow = exOut(prog(t, 9.0, 0.4)), wide = exOut(prog(t, 10.0, 0.4));
+      const a = lerp(CX - LINE_HALF, 200, open), b = lerp(lerp(CX + LINE_HALF, 1720, open), 1180, narrow);
+      return [a, lerp(b, 1720, wide)];
+    };
+    const phase = (t) => (t - 8) * 1.6;
+    function tracePath(t, fn, yc, amp) {
+      const [a, b] = traceEnds(t), N = 160;
+      let d = '';
+      for (let i = 0; i <= N; i++) {
+        const x = lerp(a, b, i / N), tau = (i / N) * 7 + phase(t);
+        d += `${i ? 'L' : 'M'}${r2(x)} ${r2(yc - fn(tau) * amp)}`;
+      }
+      return d;
+    }
+    const PANEL_X = (t) => lerp(lerp(W + 40, 1290, exOut(prog(t, 9.0, 0.4))), W + 60, exIn(prog(t, 10.0, 0.3)));
+    function panel(t) {
+      const x = PANEL_X(t), y = 300, w = 470, h = 480;
+      if (x >= W) return '';
+      let s = `<g${blur(speed(PANEL_X, t))}><rect x="${r2(x)}" y="${y}" width="${w}" height="${h}" rx="26" fill="none" stroke="${COL.w}" stroke-opacity=".35" stroke-width="2"/>`;
+      s += text('FUELLE', x + 40, y + 62, 28, COL.w, { weight: 700, ls: 6, extra: 'fill-opacity=".6"' });
+      // "abre ▲" / "cierra ▼" cambia en cada pulso con un barrido vertical
+      const k = Math.floor((t - 9.0) / BEAT), u = t - 9.0 - k * BEAT, flip = exOut(u / 0.2);
+      const words = ['abre ▲', 'cierra ▼'];
+      s += `<clipPath id="cpDir"><rect x="${r2(x)}" y="${y + 80}" width="${w}" height="110"/></clipPath><g clip-path="url(#cpDir)">`;
+      if (k > 0) s += text(words[(k - 1) % 2], x + 40, y + 165 - 110 * flip, 78, COL.g, { italic: true });
+      s += text(words[Math.max(0, k) % 2], x + 40, y + 165 + 110 * (1 - flip) * (k > 0 ? 1 : 0), 78, COL.g, { italic: true });
+      s += '</g>';
+      // Medidor de velocidad
+      const m = Math.min(1, Math.abs(vel(7 + phase(t))) * 0.9);
+      s += `<rect x="${r2(x + 40)}" y="${y + 215}" width="${w - 80}" height="10" rx="5" fill="${COL.w}" fill-opacity=".15"/><rect x="${r2(x + 40)}" y="${y + 215}" width="${r2((w - 80) * m)}" height="10" rx="5" fill="${COL.c}"/>`;
+      // Monitor MIDI: una fila nueva cada medio pulso a partir del pulso 20
+      s += text('MIDI', x + 40, y + 290, 28, COL.w, { weight: 700, ls: 6, extra: 'fill-opacity=".6"' });
+      const rows = ['Note On   69   vel 92', 'Note Off  69   vel 0', 'Note On   71   vel 104'];
+      rows.forEach((row, i) => {
+        const g = exOut(prog(t, 9.5 + i * 0.125, 0.2));
+        if (g <= 0) return;
+        s += `<clipPath id="cpRow${i}"><rect x="${r2(x + 40)}" y="${y + 305 + i * 52}" width="${r2((w - 80) * g)}" height="52"/></clipPath>`;
+        s += `<g clip-path="url(#cpRow${i})">${text(row, x + 40, y + 345 + i * 52, 34, i % 2 ? COL.w : COL.c, { weight: 500, italic: true })}</g>`;
+      });
+      return s + '</g>';
+    }
+    function scene5(t) {
+      const a1 = 110 * exOut(prog(t, 8.05, 0.45)), y1 = lerp(CY, CY - 150, exOut(prog(t, 8.5, 0.4)));
+      const k2 = exOut(prog(t, 8.5, 0.45)), y2 = lerp(y1, CY + 190, k2);
+      let s = '';
+      if (t >= 8.5) s += `<path d="${tracePath(t, (x) => lerp(pos(x), vel(x), k2), y2, a1)}" fill="none" stroke="${COL.c}" stroke-width="6" stroke-linejoin="round"/>`;
+      s += `<path d="${tracePath(t, pos, y1, a1)}" fill="none" stroke="${COL.w}" stroke-width="6" stroke-linejoin="round"/>`;
+      // Rótulos con barrido
+      [['POSICIÓN', y1 - 150, 8.6], ['VELOCIDAD', y2 - 150, 8.75]].forEach(([lab, y, at], i) => {
+        const g = exOut(prog(t, at, 0.3)), [a] = traceEnds(t);
+        if (g <= 0) return;
+        s += `<clipPath id="cpLab${i}"><rect x="${r2(a)}" y="${r2(y - 36)}" width="${r2(380 * g)}" height="50"/></clipPath><g clip-path="url(#cpLab${i})">${text(lab, a, y, 30, COL.w, { weight: 700, ls: 7, extra: 'fill-opacity=".75"' })}</g>`;
+      });
+      // Cabezal de lectura sobre el borde derecho
+      const [, b] = traceEnds(t);
+      if (t >= 8.3) s += `<line x1="${r2(b)}" x2="${r2(b)}" y1="${r2(y1 - 160)}" y2="${r2(y2 + 160)}" stroke="${COL.g}" stroke-width="3" stroke-dasharray="8 10"/>`;
+      return s + panel(t);
+    }
+
+    // ================= Compás 6 · 10–12 s · datos: la señal se muestrea en barras y da ≈25 % =================
+    const AXIS = CY + 280, NB = 12;
+    function sampleBar(i, t) {
+      // Barra i: nace de la curva de velocidad y termina en una de las dos barras finales
+      const [a, b] = [200, 1720], x0 = lerp(a, b, (i + 0.5) / NB);
+      const tau = ((i + 0.5) / NB) * 7 + phase(10), yv = CY + 190 - vel(tau) * 110;
+      const grow = exOut(prog(t, 10.0, 0.35)), merge = exOut(prog(t, 10.5 + (i % 6) * 0.02, 0.4));
+      const big = i < 6;
+      const tx = big ? 1060 : 1420, th = big ? 600 : 150, tw = 200;
+      const top0 = lerp(yv, Math.min(yv, AXIS - 40), grow);
+      const x = lerp(x0, tx, merge), w = lerp(48, tw, merge), top = lerp(lerp(yv, top0, grow), AXIS - th, merge);
+      const bottom = lerp(yv + 6, AXIS, grow);
+      return { x, w, top, bottom, color: big ? mixC(COL.c, COL.w, merge) : mixC(COL.c, COL.g, merge) };
+    }
+    // Al final del compás, las dos barras se parten en los cuatro pliegues (afuera celeste, adentro blanco)
+    const SPLIT = (t) => exOut(prog(t, 11.65, 0.3));
+    function scene6(t) {
+      let s = '';
+      // Eje: la curva de posición se aplana y baja
+      const flatten = exOut(prog(t, 10.0, 0.4)), yA = lerp(CY - 150, AXIS, flatten), amp = lerp(110, 0, flatten);
+      const [ea, eb] = [lerp(200, 980, exOut(prog(t, 10.5, 0.4))), lerp(1720, 1600, exOut(prog(t, 10.5, 0.4)))];
+      let d = '';
+      for (let i = 0; i <= 120; i++) { const x = lerp(ea, eb, i / 120); d += `${i ? 'L' : 'M'}${r2(x)} ${r2(yA - pos((i / 120) * 7 + phase(t)) * amp)}`; }
+      const axisGone = exOut(prog(t, 11.7, 0.25));
+      if (axisGone < 1) s += `<path d="${d}" fill="none" stroke="${COL.w}" stroke-width="${r2(6 * (1 - axisGone))}"/>`;
+      // Curva de velocidad que se achica sobre las barras
+      if (t < 10.4) s += `<path d="${tracePath(10, vel, CY + 190, 110)}" fill="none" stroke="${COL.c}" stroke-width="${r2(6 * (1 - exOut(prog(t, 10.0, 0.35))))}"/>`;
+      s += panel(t);
+      // Barras
+      const sp = SPLIT(t);
+      if (sp <= 0) {
+        for (let i = NB - 1; i >= 0; i--) {
+          const b = sampleBar(i, t);
+          s += `<rect x="${r2(b.x - b.w / 2)}" y="${r2(b.top)}" width="${r2(b.w)}" height="${r2(Math.max(0, b.bottom - b.top))}" fill="${b.color}"${blur(speed((tt) => sampleBar(i, tt).x, t))}/>`;
+        }
+      } else {
+        // Cuatro pliegues delgados que vienen de las dos barras (posiciones de partida del compás 7)
+        flagStart(t).forEach((p) => { s += `<rect x="${r2(p.x - p.w / 2)}" y="${r2(p.top)}" width="${r2(p.w)}" height="${r2(p.h)}" fill="${p.c}"/>`; });
+      }
+      // Rótulos de las barras
+      [['tradicional', 1060, 10.7], ['BandoneAR', 1420, 10.8]].forEach(([lab, x, at], i) => {
+        const g = exOut(prog(t, at, 0.3)) * (1 - sp);
+        if (g <= 0) return;
+        s += `<clipPath id="cpBl${i}"><rect x="${r2(x - 160)}" y="${AXIS + 20}" width="${r2(320 * g)}" height="60"/></clipPath><g clip-path="url(#cpBl${i})">${text(lab, x, AXIS + 62, 34, COL.w, { italic: true, weight: 600, anchor: 'middle' })}</g>`;
+      });
+      // Cifra: ≈25 % cuenta y al final se cierra en un disco (el sol)
+      if (t >= 11.0) {
+        const n = Math.round(25 * exOut(prog(t, 11.0, 0.6))), reveal = exOut(prog(t, 11.0, 0.3));
+        const sq = exIn(prog(t, 11.55, 0.3));
+        const str = `≈${n}%`, w = measure('≈25%', 300), x = 180, y = CY + 70;
+        const ncx = x + w / 2;
+        s += `<clipPath id="cpNum"><rect x="${x - 10}" y="0" width="${r2((w + 20) * reveal)}" height="${H}"/></clipPath>`;
+        if (sq < 1) s += `<g clip-path="url(#cpNum)"><g transform="translate(${r2(ncx)} ${CY}) scale(${r2(1 - sq)} ${r2(1 - sq)}) translate(${r2(-ncx)} ${-CY})">${text(str, x, y, 300, COL.g)}</g></g>`;
+        if (sq > 0) s += `<circle cx="${r2(ncx)}" cy="${CY}" r="${r2(60 * sq)}" fill="${COL.g}"/>`;
+      }
+      return s;
+    }
+    function flagStart(t) {
+      // De dos barras a cuatro: la blanca se parte en los dos pliegues centrales, la dorada en los dos de afuera
+      const k = SPLIT(t);
+      return [
+        { x: lerp(1420, 1300, k), w: lerp(200, 70, k), top: AXIS - 150, h: 150, c: mixC(COL.g, COL.c, k) },
+        { x: lerp(1060, 1010, k), w: lerp(200, 70, k), top: AXIS - 600, h: 600, c: COL.w },
+        { x: lerp(1060, 1110, k), w: lerp(200, 70, k), top: AXIS - 600, h: 600, c: COL.w },
+        { x: lerp(1420, 1540, k), w: lerp(200, 70, k), top: AXIS - 150, h: 150, c: mixC(COL.g, COL.c, k) },
+      ];
+    }
+
+    // ================= Compás 7 · 12–14 s · el momento más fuerte: sol entre barrotes y logo =================
+    const S7 = 9;
+    const SUN_R = 7.5, SUN_AIR = 1.75;
+    const lockK = (t) => exOut(prog(t, 13.5, 0.45));
+    const WM = 'BandoneAR', WM_S = 200;
+    function lockLayout() {
+      const isoW = 120 * 3.2, gap = 56, wm = measure(WM, WM_S), total = isoW + gap + wm;
+      return { isoCX: CX - total / 2 + isoW / 2, wmX: CX - total / 2 + isoW + gap, wm };
+    }
+    function isoState(t) {
+      const k = lockK(t), L = lockLayout();
+      const S = lerp(S7, 3.2, k), ox = lerp(CX, L.isoCX, k), oy = lerp(CY, CY - 40, k);
+      // Respiración del fuelle en el pulso 27
+      const br = Math.sin(Math.PI * prog(t, 13.0, 0.5)) * 0.32;
+      return { S, ox, oy, br };
+    }
+    function scene7(t) {
+      let s = '';
+      const { S, ox, oy, br } = isoState(t), start = flagStart(12);
+      const slam = exOut(prog(t, 12.0, 0.28));
+      // Pliegues de bandera
+      const pleatX = (j, tt) => { const st = isoState(tt); return lerp(flagStart(12)[j].x, st.ox + (PLEATS[j][0] + 3 - 60) * st.S * (1 + st.br), exOut(prog(tt, 12.0, 0.28))); };
+      PLEATS.forEach(([u, c], j) => {
+        const p = start[j], x = pleatX(j, t), w = lerp(p.w, 6 * S, slam), h = lerp(p.h, 64 * S, slam), top = lerp(p.top, oy - 32 * S, slam);
+        s += `<rect class="pl${j}" x="${r2(x - w / 2)}" y="${r2(top)}" width="${r2(w)}" height="${r2(h)}" fill="${c}"${blur(speed((tt) => pleatX(j, tt), t))}/>`;
+      });
+      // Sol: viene del disco de la cifra, se ve solo a través de los pliegues blancos, con aire alrededor
+      const w0 = measure('≈25%', 300), sx = lerp(180 + w0 / 2, ox, slam), sy = lerp(CY, oy, slam), sr = lerp(60, SUN_R * S, slam);
+      const inner = [1, 2].map((j) => { const x = pleatX(j, t), w = lerp(start[j].w, 6 * S, slam); return `<rect x="${r2(x - w / 2)}" y="0" width="${r2(w)}" height="${H}"/>`; }).join('');
+      s += `<clipPath id="cpSun">${inner}</clipPath>`;
+      // Aire: se dibuja un anillo del color de fondo sobre los pliegues centrales
+      s += `<g clip-path="url(#cpSun)"><circle cx="${r2(sx)}" cy="${r2(sy)}" r="${r2(sr + SUN_AIR * S * slam)}" fill="${COL.bg}"/><circle cx="${r2(sx)}" cy="${r2(sy)}" r="${r2(sr)}" fill="${COL.g}"/></g>`;
+      if (slam < 1) s += `<circle cx="${r2(sx)}" cy="${r2(sy)}" r="${r2(sr * (1 - slam))}" fill="${COL.g}"${blur(speed((tt) => lerp(180 + w0 / 2, isoState(tt).ox, exOut(prog(tt, 12.0, 0.28))), t))}/>`;
+      // Cabezales: entran de golpe desde los costados en el pulso 26
+      const enter = exOut(prog(t, 12.5, 0.3));
+      if (t >= 12.5) [[OCT_L, COL.w, -1], [OCT_R, COL.c, 1]].forEach(([oct, c, side]) => {
+        const off = (1 - enter) * 1150 * side + side * 30 * S * br;
+        const offAt = (tt) => (1 - exOut(prog(tt, 12.5, 0.3))) * 1150 * side;
+        const pts = oct.map(([u, v]) => [ox + (u - 60) * S + off, oy + (v - 40) * S]);
+        let g = `<polygon points="${poly(pts)}" fill="none" stroke="${c}" stroke-width="${r2(4 * S)}" stroke-linejoin="round"/>`;
+        if (side < 0) DOTS.forEach(([u, v]) => { g += `<circle cx="${r2(ox + (u - 60) * S + off)}" cy="${r2(oy + (v - 40) * S)}" r="${r2(2.4 * S)}" fill="${COL.w}"/>`; });
+        else KEYS.forEach(([u, v]) => { const k = 5 * S; g += `<rect x="${r2(ox + (u - 60) * S + off - k / 2)}" y="${r2(oy + (v - 40) * S - k / 2)}" width="${r2(k)}" height="${r2(k)}" rx="${r2(S)}" fill="${COL.c}"/>`; });
+        s += `<g${blur(speed(offAt, t))}>${g}</g>`;
+      });
+      // Palabra: las letras suben desde la línea de base, una tras otra
+      if (t >= 13.55) s += wordmark(t);
+      return s;
+    }
+    function wordmark(t, squeeze = 0) {
+      const L = lockLayout(), y = CY + 30;
+      let s = `<clipPath id="cpWm"><rect x="${r2(L.wmX - 20)}" y="${r2(y - 220)}" width="${r2(L.wm + 60)}" height="270"/></clipPath><g clip-path="url(#cpWm)">`;
+      for (let i = 0; i < WM.length; i++) {
+        const a = measure(WM.slice(0, i), WM_S), up = exOut(prog(t, 13.55 + i * 0.035, 0.35));
+        s += text(WM[i], L.wmX + a, y + 240 * (1 - up), WM_S, i >= 7 ? COL.c : COL.w);
+      }
+      return s + '</g>';
+    }
+
+    // ================= Cierre · 14–15 s · bajada y vuelta al primer pliegue =================
+    function scene8(t) {
+      const close = exIn(prog(t, 14.5, 0.35)), drift = 1 + 0.025 * prog(t, 14.0, 0.5);
+      let s = '';
+      if (close < 1) {
+        const L = lockLayout();
+        let g = isoFlat(3.2, t, { ox: L.isoCX, oy: CY - 40 });
+        // Sol entre barrotes en el lockup chico
+        const S = 3.2, sx = L.isoCX, sy = CY - 40;
+        const inner = [1, 2].map((j) => `<rect x="${r2(sx + (PLEATS[j][0] - 60) * S)}" y="0" width="${r2(6 * S)}" height="${H}"/>`).join('');
+        g += `<clipPath id="cpSun2">${inner}</clipPath><g clip-path="url(#cpSun2)"><circle cx="${r2(sx)}" cy="${r2(sy)}" r="${r2((SUN_R + SUN_AIR) * S)}" fill="${COL.bg}"/><circle cx="${r2(sx)}" cy="${r2(sy)}" r="${r2(SUN_R * S)}" fill="${COL.g}"/></g>`;
+        g += wordmark(99);
+        // Bajada con barrido
+        const sub = 'Bandoneón digital · Expo Proyecto 2026', sw = measure(sub, 46, true, 500), wipe = exOut(prog(t, 14.0, 0.35));
+        g += `<clipPath id="cpSub"><rect x="${r2(CX - sw / 2 - 10)}" y="${CY + 90}" width="${r2((sw + 20) * wipe)}" height="80"/></clipPath><g clip-path="url(#cpSub)">${text(sub, CX, CY + 150, 46, COL.w, { italic: true, weight: 500, anchor: 'middle', extra: 'fill-opacity=".75"' })}</g>`;
+        s += `<g transform="translate(${CX} ${CY}) scale(${r2(drift * (1 - close))} ${r2(drift)}) translate(${-CX} ${-CY})"${blur(speed((tt) => exIn(prog(tt, 14.5, 0.35)) * 900, t))}>${g}</g>`;
+      }
+      // El pliegue dorado del primer cuadro
+      const grow = exOut(prog(t, 14.72, 0.24));
+      if (grow > 0) { const h = 560 * grow * (1 + 0.07 * kick(t)); s += `<rect x="${CX - 18}" y="${r2(CY - h / 2)}" width="36" height="${r2(h)}" fill="${COL.g}"/>`; }
+      return s;
+    }
+
+    // ---------- Composición ----------
+    const SCENES = [scene1, scene2, scene3, scene4, scene5, scene6, scene7, scene8];
+    window.seek = (t) => {
+      t = cl(t, 0, DUR);
+      const i = Math.min(SCENES.length - 1, Math.floor(t / 2));
+      document.getElementById('root').innerHTML =
+        `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">${DEFS}<rect width="${W}" height="${H}" fill="${COL.bg}"/>${SCENES[i](t)}</svg>`;
+    };
+    // ---------- Reproductor: el tiempo sale del reloj del audio, seek(t) dibuja ----------
+    const PARTS = ['Gancho', 'Tipografía cinética', 'Morfismo', 'De 2D a 3D', 'Interfaz', 'Datos', 'Clímax', 'Cierre'];
+    const isRender = new URLSearchParams(location.search).has('render');
+    if (isRender) document.body.classList.add('render');
+    let playing = false, cur = 0, sound = true, loop = true, scenePause = false;
+    let actx = null, abuf = null, src = null, startedAt = 0, startT = 0, lastFrameT = performance.now();
+    const $ = (id) => document.getElementById(id);
+
+    function fit() {
+      const s = Math.min(innerWidth / W, innerHeight / H);
+      $('root').style.transform = `translate(-50%, -50%) scale(${s})`;
+    }
+    async function ensureAudio() {
+      if (!actx) actx = new AudioContext();
+      if (!abuf) abuf = await buildAudio();
+      if (actx.state === 'suspended') await actx.resume();
+    }
+    function stopSource() { if (src) { try { src.stop(); } catch (e) {} src.disconnect(); src = null; } }
+    async function play() {
+      if (cur >= DUR - 0.01) cur = 0;
+      playing = true; $('bPlay').textContent = '❚❚';
+      startT = cur;
+      if (sound) {
+        await ensureAudio();
+        stopSource();
+        src = actx.createBufferSource(); src.buffer = abuf; src.connect(actx.destination);
+        startedAt = actx.currentTime; src.start(0, cur);
+      }
+      lastFrameT = performance.now();
+    }
+    function pause() { playing = false; $('bPlay').textContent = '▶'; stopSource(); }
+    function go(t) { const was = playing; pause(); cur = cl(t, 0, DUR); window.seek(cur); updateUI(); if (was) play(); }
+
+    function tick(now) {
+      if (playing) {
+        // Con sonido, el reloj del audio manda; sin sonido, el reloj del navegador
+        let t = sound && src ? startT + (actx.currentTime - startedAt) : cur + (now - lastFrameT) / 1000;
+        // Pausa por escena: se detiene justo al final de cada compás de 2 s
+        const nextEdge = (Math.floor(cur / 2 + 1e-6) + 1) * 2;
+        if (scenePause && t >= nextEdge && nextEdge < DUR) { cur = nextEdge - 0.001; window.seek(cur); pause(); updateUI(); }
+        else if (t >= DUR) {
+          if (loop) { cur = 0; window.seek(0); pause(); play(); }
+          else { cur = DUR; window.seek(DUR); pause(); }
+        } else { cur = t; window.seek(cur); }
+      }
+      lastFrameT = now;
+      updateUI();
+      requestAnimationFrame(tick);
+    }
+
+    function buildTimeline() {
+      const tl = $('tl');
+      tl.innerHTML = '<div class="fill" id="tlFill"></div>';
+      PARTS.forEach((p, i) => {
+        const w = (i < 7 ? 2 : 1) / DUR * 100;
+        tl.insertAdjacentHTML('beforeend', `<div class="part" data-i="${i}" style="left:${(i * 2) / DUR * 100}%; width:${w}%"><span>${i + 1}. ${p}</span></div>`);
+      });
+      for (let b = 0; b < DUR / BEAT; b++) tl.insertAdjacentHTML('beforeend', `<i class="beat${b % 4 === 0 ? ' down' : ''}" style="left:${(b * BEAT) / DUR * 100}%"></i>`);
+      tl.insertAdjacentHTML('beforeend', '<div class="head" id="tlHead"></div>');
+      tl.addEventListener('click', (e) => { e.stopPropagation(); const r = tl.getBoundingClientRect(); go(((e.clientX - r.left) / r.width) * DUR); });
+    }
+    function updateUI() {
+      const k = cur / DUR * 100;
+      $('tlFill').style.width = k + '%'; $('tlHead').style.left = k + '%';
+      const part = Math.min(7, Math.floor(cur / 2));
+      document.querySelectorAll('.tl .part').forEach((el, i) => el.classList.toggle('cur', i === part));
+      $('clock').textContent = `${cur.toFixed(2)} s · pulso ${Math.min(30, Math.floor(cur / BEAT) + 1)}/30 · ${PARTS[part]}`;
+    }
+
+    const ACT = {
+      play: () => (playing ? pause() : play()),
+      start: () => go(0),
+      back: () => go(Math.ceil(cur / BEAT - 1.001) * BEAT),
+      fwd: () => go(Math.floor(cur / BEAT + 1.001) * BEAT),
+      sound: () => { sound = !sound; $('bSound').classList.toggle('on', sound); if (playing) { pause(); play(); } },
+      loop: () => { loop = !loop; $('bLoop').classList.toggle('on', loop); },
+      scenes: () => { scenePause = !scenePause; $('bScenes').classList.toggle('on', scenePause); },
+      full: () => (document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen()),
+    };
+    document.querySelectorAll('[data-a]').forEach((b) => b.addEventListener('click', (e) => { e.stopPropagation(); ACT[b.dataset.a](); }));
+    $('root').addEventListener('click', () => ACT.play());
+    addEventListener('keydown', (e) => {
+      const k = e.key;
+      if (k === ' ') { e.preventDefault(); ACT.play(); }
+      else if (k === 'ArrowRight') ACT.fwd();
+      else if (k === 'ArrowLeft') ACT.back();
+      else if (k === 'Home') ACT.start();
+      else if (/^[sS]$/.test(k)) ACT.sound();
+      else if (/^[lL]$/.test(k)) ACT.loop();
+      else if (/^[pP]$/.test(k)) ACT.scenes();
+      else if (/^[fF]$/.test(k)) ACT.full();
+      showPlayer();
+    });
+    let hideTimer;
+    function showPlayer() { $('player').classList.remove('hidden'); clearTimeout(hideTimer); hideTimer = setTimeout(() => playing && $('player').classList.add('hidden'), 2500); }
+    addEventListener('mousemove', showPlayer);
+    addEventListener('resize', fit);
+
+    window.ready = Promise.all([
+      document.fonts.load(`800 100px ${FONT}`), document.fonts.load(`italic 800 100px ${FONT}`), document.fonts.load(`italic 500 100px ${FONT}`),
+    ]).then(() => document.fonts.ready).then(() => {
+      window.seek(0);
+      if (!isRender) { fit(); buildTimeline(); updateUI(); showPlayer(); requestAnimationFrame(tick); }
+      return true;
+    });
+
+    // ---------- Banda sonora en código (OfflineAudioContext) → WAV ----------
+    async function buildAudio() {
+      const SR = 48000, ac = new OfflineAudioContext(2, SR * DUR, SR);
+      const out = ac.createDynamicsCompressor();
+      out.threshold.value = -10; out.ratio.value = 4; out.connect(ac.destination);
+      const master = ac.createGain(); master.gain.value = 0.9; master.connect(out);
+      const noiseBuf = ac.createBuffer(1, SR * 3, SR);
+      { const d = noiseBuf.getChannelData(0); let s = 1234567; for (let i = 0; i < d.length; i++) { s = (s * 16807) % 2147483647; d[i] = (s / 2147483647) * 2 - 1; } }
+      const env = (g, t0, a, peak, dec) => { g.gain.setValueAtTime(0, t0); g.gain.linearRampToValueAtTime(peak, t0 + a); g.gain.exponentialRampToValueAtTime(0.0008, t0 + a + dec); };
+      // Bombo en cada pulso
+      for (let b = 0; b < DUR / BEAT; b++) {
+        const t0 = b * BEAT, o = ac.createOscillator(), g = ac.createGain();
+        o.frequency.setValueAtTime(150, t0); o.frequency.exponentialRampToValueAtTime(45, t0 + 0.12);
+        env(g, t0, 0.004, b % 4 === 0 ? 1 : 0.75, 0.32);
+        o.connect(g); g.connect(master); o.start(t0); o.stop(t0 + 0.4);
+      }
+      // Acordes de bandoneón en marcato (dos sierras desafinadas por nota, filtro pasabajos)
+      const CH = [[220, 261.6, 329.6], [220, 261.6, 329.6], [293.7, 349.2, 440], [164.8, 207.7, 246.9, 293.7], [220, 261.6, 329.6], [174.6, 220, 261.6], [164.8, 207.7, 246.9, 293.7], [220, 261.6, 329.6]];
+      for (let b = 0; b < DUR / BEAT; b++) {
+        const t0 = b * BEAT, bar = Math.floor(b / 4), lp = ac.createBiquadFilter(), g = ac.createGain();
+        lp.type = 'lowpass'; lp.frequency.value = bar === 6 ? 2600 : 1700;
+        env(g, t0, 0.01, (b % 4 === 0 ? 0.11 : 0.07) * (bar === 6 ? 1.3 : 1), 0.2);
+        lp.connect(g); g.connect(master);
+        CH[bar].forEach((f) => [0, 7].forEach((cents) => {
+          const o = ac.createOscillator(); o.type = 'sawtooth'; o.frequency.value = f; o.detune.value = cents;
+          o.connect(lp); o.start(t0); o.stop(t0 + 0.3);
+        }));
+      }
+      // Golpe en cada cambio de escena
+      for (let b = 2; b < DUR; b += 2) {
+        const big = b === 12, n = ac.createBufferSource(), hp = ac.createBiquadFilter(), gn = ac.createGain();
+        n.buffer = noiseBuf; hp.type = 'highpass'; hp.frequency.value = 1800;
+        env(gn, b, 0.002, big ? 0.5 : 0.28, big ? 0.6 : 0.25);
+        n.connect(hp); hp.connect(gn); gn.connect(master); n.start(b, 0.5); n.stop(b + 0.8);
+        const o = ac.createOscillator(), g = ac.createGain();
+        o.frequency.setValueAtTime(big ? 70 : 90, b); o.frequency.exponentialRampToValueAtTime(38, b + 0.4);
+        env(g, b, 0.003, big ? 0.9 : 0.5, big ? 0.9 : 0.45);
+        o.connect(g); g.connect(master); o.start(b); o.stop(b + 1);
+      }
+      // Riser hacia el último compás completo (10 → 12 s)
+      {
+        const n = ac.createBufferSource(), bp = ac.createBiquadFilter(), g = ac.createGain();
+        n.buffer = noiseBuf; n.loop = true; bp.type = 'bandpass'; bp.Q.value = 4;
+        bp.frequency.setValueAtTime(300, 10); bp.frequency.exponentialRampToValueAtTime(7000, 12);
+        g.gain.setValueAtTime(0, 10); g.gain.linearRampToValueAtTime(0.32, 11.95); g.gain.linearRampToValueAtTime(0, 12.0);
+        n.connect(bp); bp.connect(g); g.connect(master); n.start(10); n.stop(12.05);
+        const o = ac.createOscillator(), lp = ac.createBiquadFilter(), go = ac.createGain();
+        o.type = 'sawtooth'; o.frequency.setValueAtTime(110, 10); o.frequency.exponentialRampToValueAtTime(880, 12);
+        lp.type = 'lowpass'; lp.frequency.setValueAtTime(400, 10); lp.frequency.exponentialRampToValueAtTime(5000, 12);
+        go.gain.setValueAtTime(0, 10); go.gain.linearRampToValueAtTime(0.07, 11.95); go.gain.linearRampToValueAtTime(0, 12.0);
+        o.connect(lp); lp.connect(go); go.connect(master); o.start(10); o.stop(12.05);
+      }
+      return ac.startRendering();
+    }
+    window.renderAudio = async () => {
+      const buf = await buildAudio();
+      // WAV 16 bits estéreo
+      const L = buf.getChannelData(0), R = buf.getChannelData(1), n = L.length, bytes = new DataView(new ArrayBuffer(44 + n * 4));
+      const str = (o, s) => [...s].forEach((c, i) => bytes.setUint8(o + i, c.charCodeAt(0)));
+      str(0, 'RIFF'); bytes.setUint32(4, 36 + n * 4, true); str(8, 'WAVEfmt '); bytes.setUint32(16, 16, true); bytes.setUint16(20, 1, true);
+      bytes.setUint16(22, 2, true); bytes.setUint32(24, SR, true); bytes.setUint32(28, SR * 4, true); bytes.setUint16(32, 4, true); bytes.setUint16(34, 16, true);
+      str(36, 'data'); bytes.setUint32(40, n * 4, true);
+      for (let i = 0; i < n; i++) { bytes.setInt16(44 + i * 4, cl(L[i], -1, 1) * 32767, true); bytes.setInt16(46 + i * 4, cl(R[i], -1, 1) * 32767, true); }
+      let bin = ''; const u8 = new Uint8Array(bytes.buffer);
+      for (let i = 0; i < u8.length; i += 0x8000) bin += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000));
+      return btoa(bin);
+    };
+  </script>
+</body>
+</html>
