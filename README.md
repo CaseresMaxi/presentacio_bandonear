@@ -124,4 +124,15 @@ y separado con guiones (sin espacios: obligan a escapar la URL).
   al final de cada escena, L el loop, S el sonido y F la pantalla completa. Cada
   cuadro se calcula a partir del tiempo en `window.seek(t)`.
   `reel/render.mjs` exporta un MP4 si alguna vez hace falta (playwright-core + ffmpeg).
-
+- `presentacion/motion.html` — *experimental:* la misma presentación como un solo video
+  de motion graphics. Hay una línea de tiempo continua con puntos clave: → reproduce
+  hasta el próximo y ahí se detiene, ← rebobina (Shift salta sin animar). Entre escenas,
+  el antetítulo, el título, los puntos y la imagen o panel principal viajan y se
+  transforman. Un punto sale de su pliegue y se vuelve tarjeta, bloque del diagrama
+  o fila. Mientras tanto, los cuatro pliegues del logo barren la pantalla y la cámara
+  se desplaza con desenfoque de movimiento. Dentro de algunas escenas la cámara
+  recorre el contenido: en la arquitectura va de las entradas a las salidas. Las
+  listas pueden revelarse de a un punto por avance. Lee los mismos datos que la
+  clásica (botón "Traer los cambios de la clásica" en el editor, `E`); el montaje
+  está en `presentacion/motion-tipos.js`. `?escena=5&paso=2` abre un punto clave y
+  `?t=18.9` congela un instante del video.
