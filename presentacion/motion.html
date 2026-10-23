@@ -86,6 +86,7 @@
     .chrome .rule b{position:absolute; inset:0; background:var(--accent); transform-origin:0 0}
     .chrome .brand{display:flex; align-items:center; gap:14px; font-family:'Playfair Display',serif; font-weight:800; color:var(--strong); font-size:26px}
     .chrome .brand .logo-iso{height:30px}
+    .chrome .brand svg{height:40px; width:auto; display:block}
     .counter{display:flex; align-items:baseline; gap:10px; font-family:'Playfair Display',serif; font-style:italic; font-size:30px; color:var(--strong)}
     .counter .roll{display:inline-block; height:1.15em; overflow:hidden; line-height:1.15}
     .counter .roll span{display:flex; flex-direction:column}
@@ -407,6 +408,7 @@
   <div class="toast" id="toast"></div>
 
   <script src="manifiesto.js"></script>
+  <script src="../logo/glifos.js"></script>
   <script src="../logo/logo.js"></script>
   <script src="escenas.js"></script>
   <script src="motion-tipos.js"></script>
@@ -452,13 +454,17 @@
 
     // ---------- Estado guardado (mismo formato que la presentación clásica) ----------
     const KEY = 'bandonear-motion';
-    const ESTILO_DEF = { tema: 'noche', logo: 'paleta', transicion: 'pliegues', desenfoque: true, velocidad: 1, grano: true, cromo: true, institucion: 'Expo Proyecto 2026 · DIIT · UNLaM' };
+    // Si hay un diseño guardado en el editor de logo, ese es el logo de la presentación
+    const HAY_DISENO = (() => { try { return !!localStorage.getItem('bandonear-logo-editor'); } catch (e) { return false; } })();
+    const ESTILO_DEF = { tema: 'noche', logo: HAY_DISENO ? 'editor' : 'paleta', transicion: 'pliegues', desenfoque: true, velocidad: 1, grano: true, cromo: true, institucion: 'Expo Proyecto 2026 · DIIT · UNLaM' };
     const clone = (o) => JSON.parse(JSON.stringify(o));
     const fresh = () => ({ escenas: clone(ESCENAS).map((s) => ({ activa: true, ...s })), estilo: { ...ESTILO_DEF } });
     let doc = fresh();
     try {
       const saved = JSON.parse(localStorage.getItem(KEY) || 'null');
       if (saved && Array.isArray(saved.escenas)) doc = { escenas: saved.escenas, estilo: { ...ESTILO_DEF, ...saved.estilo } };
+      // "Según el tema" que nadie eligió a mano (venía por defecto): pasa al diseño del editor
+      if (HAY_DISENO && doc.estilo.logo === 'paleta' && !doc.estilo.logoElegido) doc.estilo.logo = 'editor';
     } catch (e) {}
     let saveTimer;
     const save = () => {
@@ -494,6 +500,15 @@
       if (!own) stage.style.setProperty('--logo-acc', c.acento);
       return `<span class="logo-iso ${size}"><svg viewBox="${B.x} 0 ${B.w} 80" aria-hidden="true">${L.isotipo(c)}</svg></span>`;
     }
+
+    // Marca del encabezado: el logo horizontal completo (isotipo y palabra en curvas)
+    function brandHTML(v = '') {
+      v = v || doc.estilo.logo;
+      if (v.startsWith('archivo:')) return logoHTML('', v);
+      const c = { ...L.DEFAULTS, ...logoCfg(v), layout: 'horizontal', margen: 0, lienzo: 'ajustado' };
+      return L.buildSVG(c, { background: null }).svg;
+    }
+    let brandFor = null;
 
     // ---------- Construcción: una capa por escena, medida una vez ----------
     const active = () => doc.escenas.filter((s) => s.activa !== false);
@@ -568,7 +583,7 @@
       buildTimeline();
       $('dots').innerHTML = S.map(() => '<i></i>').join('');
       $('cOf').textContent = '/ ' + nn(S.length);
-      $('chromeBrand').innerHTML = logoHTML() + '<span>Bandone<span style="color:var(--logo-acc, var(--accent))">AR</span></span>';
+      brandFor = null;
       $('chromeInst').textContent = doc.estilo.institucion;
       markSel(); pinsKey = '';
     }
@@ -794,6 +809,8 @@
       if (ti >= 0) { m = exInOut(cl((T - TR[ti].start) / D)); f = ti + m; }
       const vis = ti >= 0 ? lerp(1 - hidden(S[ti]), 1 - hidden(S[ti + 1]), m) : 1 - hidden(S[ci]);
       $('chromeTop').style.opacity = $('chromeBottom').style.opacity = vis;
+      const bv = S[Math.round(f)]?.d.logo || '';
+      if (bv !== brandFor) { brandFor = bv; $('chromeBrand').innerHTML = brandHTML(bv); }
       // Contador que rueda como un odómetro
       const base = Math.floor(f + 1e-6), frac = f - base;
       $('cA').textContent = nn(base + 1); $('cB').textContent = nn(Math.min(S.length, base + 2));
@@ -1209,7 +1226,7 @@
         dest[0][dest[1]] = u; save(); rebuild(); renderAssets(); toast('Imagen aplicada a la escena');
       }));
       const tl = $('thumbsLogo'); tl.innerHTML = '';
-      tl.appendChild(logoGrid(doc.estilo.logo, (v) => { doc.estilo.logo = v; save(); applyStyle(); renderAssets(); renderStyleForm(); toast('Logo de la presentación cambiado'); }));
+      tl.appendChild(logoGrid(doc.estilo.logo, (v) => { doc.estilo.logo = v; doc.estilo.logoElegido = true; save(); applyStyle(); renderAssets(); renderStyleForm(); toast('Logo de la presentación cambiado'); }));
       const tu = $('thumbsUser');
       tu.innerHTML = userAssets.length ? '<p class="hint" style="grid-column:1/-1">Las imágenes importadas aparecen arriba, entre las imágenes y los logos.</p>' : '<p class="hint">Todavía no importaste nada.</p>';
       userAssets.filter((a) => a.tipo === 'video').forEach((a) => {
@@ -1352,6 +1369,7 @@
         if (type === 'check') f.append(input, span); else f.append(span, input);
         input.addEventListener('input', () => {
           e[key] = type === 'check' ? input.checked : type === 'range' ? parseFloat(input.value) : input.value;
+          if (key === 'logo') e.logoElegido = true;
           if (type === 'range') span.textContent = `${label} · ${e[key]}×`;
           save();
           if (key !== 'velocidad' && key !== 'desenfoque') applyStyle();
