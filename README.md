@@ -136,3 +136,13 @@ y separado con guiones (sin espacios: obligan a escapar la URL).
   clásica (botón "Traer los cambios de la clásica" en el editor, `E`); el montaje
   está en `presentacion/motion-tipos.js`. `?escena=5&paso=2` abre un punto clave y
   `?t=18.9` congela un instante del video.
+  Con el editor abierto, un clic sobre cualquier elemento del escenario lo edita en la
+  pestaña "Elemento". El logo tiene una grilla con todas las variantes, que se elige
+  por escena; las imágenes muestran las del repo; los textos y las listas se editan
+  ahí mismo, con la línea que tocaste ya seleccionada; cualquier elemento se puede
+  ocultar. "Assets" importa archivos propios y cambia las imágenes y el logo general.
+  "Corregir" (tecla `C`) pone una marca numerada en el punto de la escena donde
+  hacés clic. Cada marca lleva una nota y recuerda la escena, el punto clave y el
+  elemento que tocaste. En "Correcciones" se listan, se marcan como hechas y se
+  copian como texto para pegar en el chat (o se exportan a .md). Se guardan con la
+  presentación, también en el .json.

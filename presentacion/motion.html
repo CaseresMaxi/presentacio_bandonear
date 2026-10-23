@@ -35,7 +35,7 @@
     *{box-sizing:border-box}
     html,body{margin:0; height:100%; background:#050506; color:#f4f1eb; font-family:'Inter',system-ui,sans-serif; overflow:hidden}
     .app{display:grid; grid-template-columns:1fr 0; height:100vh; transition:grid-template-columns .35s ease}
-    .app.editing{grid-template-columns:1fr 460px}
+    .app.editing{grid-template-columns:1fr 480px}
     .viewport{position:relative; overflow:hidden; display:grid; place-items:center; min-width:0}
 
     /* ---------- Escenario 1920 × 1080 ---------- */
@@ -105,7 +105,7 @@
     /* Portada */
     .bg-photo{position:absolute; inset:0; overflow:hidden}
     .bg-photo img, .photo-half img{width:100%; height:100%; object-fit:cover; object-position:60% 55%}
-    .bg-shade{position:absolute; inset:0; background:linear-gradient(90deg, var(--overlay) 0%, var(--overlay) 38%, transparent 85%), linear-gradient(0deg, var(--overlay), transparent 45%)}
+    .bg-shade{position:absolute; inset:0; pointer-events:none; background:linear-gradient(90deg, var(--overlay) 0%, var(--overlay) 38%, transparent 85%), linear-gradient(0deg, var(--overlay), transparent 45%)}
     .cover{position:absolute; left:140px; bottom:150px; right:600px}
     .cover .sub{font-size:38px; line-height:1.4; color:var(--lead); max-width:34ch; margin:36px 0 0}
     .meta{margin-top:46px; display:flex; flex-direction:column; gap:8px; font-size:24px; color:var(--muted)}
@@ -206,6 +206,19 @@
     .closing .final{font-family:'Playfair Display',serif; font-weight:800; font-size:130px; color:var(--strong); margin-top:30px}
     .closing .meta{align-items:center}
 
+    /* ---------- Edición sobre el escenario ---------- */
+    .stage.editing-on [data-f]{cursor:pointer}
+    .stage.editing-on [data-f]:hover{outline:2px dashed rgba(116,172,223,.75); outline-offset:6px}
+    .stage .f-sel{outline:3px solid #74acdf !important; outline-offset:8px}
+    .stage.marking, .stage.marking *{cursor:crosshair !important}
+    .stage.marking::before{content:"Clic en el punto a corregir · Esc para cancelar"; position:absolute; left:50%; top:24px; transform:translateX(-50%); z-index:40; background:#e5484d; color:#fff; font:600 22px 'Inter',sans-serif; padding:10px 22px; border-radius:30px}
+    .pins{position:absolute; inset:0; z-index:26; pointer-events:none}
+    .pin{position:absolute; width:52px; height:52px; margin:-52px 0 0 0; border-radius:50% 50% 50% 0; border:3px solid #fff; background:#e5484d; color:#fff;
+      font:800 22px 'Inter',sans-serif; display:grid; place-items:center; pointer-events:auto; cursor:pointer; box-shadow:0 8px 24px rgba(0,0,0,.45); padding:0}
+    .pin.done{background:#2f9e6b}
+    .pin.other{opacity:.45}
+    .pin.cur{outline:4px solid #f6b40e; outline-offset:3px}
+
     /* ---------- Controles ---------- */
     .controls{
       position:absolute; left:50%; bottom:18px; transform:translateX(-50%); width:min(1100px, calc(100% - 32px)); z-index:50;
@@ -242,7 +255,8 @@
     .editor header{padding:14px 16px; border-bottom:1px solid #2b2b31; display:flex; align-items:center; justify-content:space-between}
     .editor header h2{font-size:22px; max-width:none}
     .tabs{display:flex; border-bottom:1px solid #2b2b31}
-    .tabs button{flex:1; background:none; border:none; border-bottom:2px solid transparent; color:#b7b1a7; padding:11px 6px; font:inherit; font-weight:600; cursor:pointer}
+    .tabs{overflow-x:auto}
+    .tabs button{flex:1; background:none; border:none; border-bottom:2px solid transparent; color:#b7b1a7; padding:11px 7px; font:inherit; font-size:12.5px; font-weight:600; cursor:pointer}
     .tabs button.on{color:#fff; border-bottom-color:#d7a54a}
     .pane{display:none; flex:1; overflow:auto; padding:14px 16px 20px}
     .pane.on{display:block}
@@ -264,6 +278,24 @@
     .sitem .acts button{background:#24242a; border:1px solid #2b2b31; color:#f4f1eb; border-radius:6px; width:26px; height:26px; cursor:pointer; font-size:12px}
     .row-btns{display:flex; flex-wrap:wrap; gap:6px; margin-top:10px}
     .hint{color:#b7b1a7; font-size:12px; line-height:1.5}
+    .thumbs{display:grid; grid-template-columns:repeat(3, 1fr); gap:8px}
+    .thumb{border:1px solid #2b2b31; border-radius:8px; overflow:hidden; background:#0f0f12; cursor:pointer; display:flex; flex-direction:column; padding:0; color:inherit; font:inherit; text-align:left}
+    .thumb:hover{border-color:#d7a54a}
+    .thumb.on{border-color:#d7a54a; box-shadow:0 0 0 2px #d7a54a}
+    .thumb img{width:100%; aspect-ratio:4/3; object-fit:cover; background:#222; display:block}
+    .thumb .lg{display:grid; place-items:center; aspect-ratio:4/3; padding:12px}
+    .thumb .lg .logo-iso{height:46px}
+    .thumb span.n{font-size:10px; color:#b7b1a7; padding:4px 6px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+    .corr{border:1px solid #2b2b31; border-radius:10px; background:#1b1b20; padding:10px; margin-bottom:8px}
+    .corr.cur{border-color:#e5484d}
+    .corr.done{opacity:.6}
+    .corr header{display:flex; gap:8px; align-items:center; justify-content:flex-start; padding:0; border:0; font-size:12px; color:#b7b1a7}
+    .corr header b{background:#e5484d; color:#fff; border-radius:10px; padding:1px 8px; font-size:12px}
+    .corr.done header b{background:#2f9e6b}
+    .corr .cita{font-size:11px; color:#8d877e; margin:6px 0; font-style:italic}
+    .corr textarea{width:100%; min-height:60px; background:#0f0f12; color:#f4f1eb; border:1px solid #2b2b31; border-radius:7px; padding:8px; font:inherit; font-size:13px; resize:vertical}
+    .corr .row-btns{margin-top:6px}
+    .cbtn.sm{padding:4px 8px; font-size:12px}
     .toast{position:fixed; bottom:100px; left:50%; transform:translateX(-50%); background:#d7a54a; color:#111; padding:10px 16px; border-radius:8px; font-weight:600; opacity:0; transition:opacity .2s; pointer-events:none; z-index:100}
     .toast.show{opacity:1}
   </style>
@@ -277,6 +309,7 @@
         <div class="ghosts" id="ghosts"></div>
         <div class="layers" id="layers"></div>
         <div class="pleats" id="pleats"><i></i><i></i><i></i><i></i></div>
+        <div class="pins" id="pins"></div>
         <div class="chrome top" id="chromeTop">
           <div class="brand" id="chromeBrand"></div>
           <div class="counter"><span class="roll"><span><b id="cA">01</b><b id="cB">02</b></span></span><span class="of" id="cOf"></span></div>
@@ -295,6 +328,7 @@
         <kbd>Shift</kbd> + flecha: saltar sin animar · <kbd>Inicio</kbd> <kbd>Fin</kbd><br>
         <kbd>P</kbd> congelar · <kbd>A</kbd> automático · <kbd>R</kbd> repetir el tramo<br>
         <kbd>N</kbd> notas · <kbd>T</kbd> tema · <kbd>M</kbd> desenfoque · <kbd>E</kbd> editor<br>
+        <kbd>C</kbd> marcar una corrección · con el editor abierto, clic en un elemento para editarlo<br>
         <kbd>F</kbd> pantalla completa · <kbd>H</kbd> esta ayuda
       </div>
 
@@ -314,6 +348,7 @@
           <button class="cbtn" data-c="theme" title="Tema (T)">Tema</button>
           <button class="cbtn" data-c="help" title="Atajos (H)">?</button>
           <button class="cbtn" data-c="full" title="Pantalla completa (F)">⛶</button>
+          <button class="cbtn" data-c="mark" id="btnMark" title="Marcar un punto y anotar una corrección (C)">Corregir</button>
           <button class="cbtn" data-c="edit" id="btnEdit" title="Editor (E)">Editar</button>
         </div>
       </div>
@@ -324,6 +359,9 @@
       <div class="tabs" id="tabs">
         <button class="on" data-tab="escenas">Escenas</button>
         <button data-tab="editar">Escena</button>
+        <button data-tab="elemento">Elemento</button>
+        <button data-tab="assets">Assets</button>
+        <button data-tab="correcciones">Correcciones</button>
         <button data-tab="estilo">Movimiento</button>
       </div>
       <section class="pane on" id="pane-escenas">
@@ -343,6 +381,26 @@
         <input type="file" id="importFile" accept="application/json" hidden>
       </section>
       <section class="pane" id="pane-editar"><div id="sceneForm"></div></section>
+      <section class="pane" id="pane-elemento"><div id="inspector"></div></section>
+      <section class="pane" id="pane-assets">
+        <p class="hint">Las imágenes se aplican a la escena actual (o al elemento elegido). Los logos cambian el de toda la presentación; para una sola escena, hacé clic en su logo y elegilo en "Elemento".</p>
+        <div class="row-btns"><button class="cbtn" id="uploadAsset">Importar archivo propio…</button></div>
+        <input type="file" id="assetFile" accept="image/*,video/*" hidden>
+        <h4>Imágenes</h4><div id="thumbsImg"></div>
+        <h4>Logo de la presentación</h4><div id="thumbsLogo"></div>
+        <h4>Importados (solo en esta sesión)</h4><div class="thumbs" id="thumbsUser"></div>
+      </section>
+      <section class="pane" id="pane-correcciones">
+        <p class="hint">Marcá un punto de la escena (botón "Corregir" o tecla C) y escribí qué cambiar. Cada marca guarda la escena, el punto clave y el elemento que tocaste. "Copiar como texto" arma la lista lista para pegar en el chat.</p>
+        <div class="row-btns">
+          <button class="cbtn" id="corrMark">+ Marcar un punto</button>
+          <button class="cbtn" id="corrCopy">Copiar como texto</button>
+          <button class="cbtn" id="corrMd">Exportar .md</button>
+          <button class="cbtn" id="corrClean">Borrar las hechas</button>
+        </div>
+        <label class="field check" style="margin-top:12px"><input type="checkbox" id="corrShow" checked><span>Ver las marcas sobre el escenario</span></label>
+        <div id="corrList"></div>
+      </section>
       <section class="pane" id="pane-estilo"><div id="styleForm"></div></section>
     </aside>
   </div>
@@ -416,20 +474,24 @@
     $('app').addEventListener('transitionend', fit);
 
     // ---------- Logo ----------
-    const LOGOS = { paleta: 'Según el tema', celeste: 'Celeste', 'celeste con sol': 'Celeste con sol', 'celeste barrotes': 'Sol entre barrotes', 'mono blanco': 'Monocromo', editor: 'Último diseño del editor de logo' };
-    function logoCfg() {
-      const P = L.PRESETS, tema = doc.estilo.tema, light = tema === 'programa', v = doc.estilo.logo;
+    const LOGOS = { paleta: 'Según el tema', celeste: 'Celeste', 'celeste con sol': 'Celeste con sol', 'celeste barrotes': 'Sol entre barrotes', 'barrotes solos': 'Barrotes solos',
+      'mono blanco': 'Monocromo', noche: 'Noche', carmin: 'Carmín', programa: 'Programa', 'celeste claro': 'Celeste (fondo claro)', 'celeste con sol claro': 'Celeste con sol (fondo claro)',
+      'mono negro': 'Monocromo negro', editor: 'Último diseño del editor de logo' };
+    // v: variante; sin valor, la de la presentación (cada escena puede tener la suya)
+    function logoCfg(v = doc.estilo.logo) {
+      const P = L.PRESETS, tema = doc.estilo.tema, light = tema === 'programa';
       if (v === 'editor') { try { const e = JSON.parse(localStorage.getItem('bandonear-logo-editor') || 'null'); if (e) return e; } catch (e) {} }
       if (v === 'paleta' || v === 'editor' || !P[v]) return { noche: P.noche, carmin: P.carmin, programa: P.programa, plano: P.celeste }[tema] || P.noche;
       if (!light) return P[v];
       return { celeste: P['celeste claro'], 'celeste con sol': P['celeste con sol claro'], 'mono blanco': P['mono negro'],
         'celeste barrotes': { ...P['celeste barrotes'], tinta: '#140f0c', acento: '#3f86c6' } }[v] || P[v];
     }
-    function logoHTML(size = '') {
-      const v = doc.estilo.logo;
+    function logoHTML(size = '', v = '') {
+      const own = !!v;
+      v = v || doc.estilo.logo;
       if (v.startsWith('archivo:')) return `<span class="logo-iso ${size}"><img src="${esc(v.slice(8))}" alt=""></span>`;
-      const c = { ...L.DEFAULTS, ...logoCfg() }, B = L.isoBox(c);
-      stage.style.setProperty('--logo-acc', c.acento);
+      const c = { ...L.DEFAULTS, ...logoCfg(v) }, B = L.isoBox(c);
+      if (!own) stage.style.setProperty('--logo-acc', c.acento);
       return `<span class="logo-iso ${size}"><svg viewBox="${B.x} 0 ${B.w} 80" aria-hidden="true">${L.isotipo(c)}</svg></span>`;
     }
 
@@ -468,7 +530,10 @@
       S = active().map((d, i) => {
         const tipo = TIPOS[d.tipo], el = document.createElement('section');
         el.className = 'scene scene-' + d.tipo;
-        el.innerHTML = tipo ? tipo.render(d, { logo: logoHTML, n: i + 1 }) : `<div class="pad"><h2>Tipo desconocido: ${esc(d.tipo)}</h2></div>`;
+        el.innerHTML = tipo ? tipo.render(d, { logo: (size) => logoHTML(size, d.logo), n: i + 1 }) : `<div class="pad"><h2>Tipo desconocido: ${esc(d.tipo)}</h2></div>`;
+        if (d.logo && !d.logo.startsWith('archivo:')) el.style.setProperty('--logo-acc', logoCfg(d.logo).acento);
+        // Elementos ocultos desde el editor
+        (d.ocultar || []).forEach((f) => el.querySelectorAll(`[data-f="${f}"]`).forEach((x) => x.remove()));
         box.appendChild(el);
         el.querySelectorAll('[data-m="words"], [data-m="letters"]').forEach((e) => splitText(e, e.dataset.m === 'letters'));
         const anims = [...el.querySelectorAll('[data-m]')].map((e, order) => {
@@ -505,6 +570,7 @@
       $('cOf').textContent = '/ ' + nn(S.length);
       $('chromeBrand').innerHTML = logoHTML() + '<span>Bandone<span style="color:var(--logo-acc, var(--accent))">AR</span></span>';
       $('chromeInst').textContent = doc.estilo.institucion;
+      markSel(); pinsKey = '';
     }
 
     // Posición de reposo de cada elemento compartido y pares que viajan en cada transición
@@ -791,6 +857,7 @@
       }
       if (S.length) {
         render(T, vel);
+        renderPins();
         S.forEach((sc) => {
           if (!sc.vis) return;
           sc.tipo?.tick?.(sc.el, amb);
@@ -837,7 +904,7 @@
       const state = paused ? 'congelado' : vel > 0 ? 'reproduciendo' : vel < 0 ? 'rebobinando' : keyAt(T) ? 'punto clave' : 'detenido';
       $('clock').textContent = `${ci + 1}/${S.length} · paso ${st + 1}/${sc.steps} · ${state} · ${nn(Math.floor(secs / 60))}:${nn(secs % 60)}`;
       if (notesFor !== `${ci}.${st}`) renderNotes(ci, st);
-      if (listFor !== ci) { listFor = ci; renderSceneList(); if (editorOpen && currentTab === 'editar') renderSceneForm(); }
+      if (listFor !== ci) { listFor = ci; renderSceneList(); if (editorOpen && currentTab === 'editar') renderSceneForm(); if (editorOpen && currentTab === 'assets') renderAssets(); }
     }
     let notesFor = '', listFor = -1;
     function renderNotes(ci, st) {
@@ -864,9 +931,15 @@
       help: () => $('help').classList.toggle('on'),
       full: () => (document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen()),
       edit: () => toggleEditor(),
+      mark: () => toggleMarking(),
     };
     document.querySelectorAll('[data-c]').forEach((b) => b.addEventListener('click', (e) => { e.stopPropagation(); ACTIONS[b.dataset.c](); }));
-    stage.addEventListener('click', () => { if (!editorOpen) next(); });
+    // Clic en el escenario: marca una corrección, elige un elemento (editor abierto) o avanza
+    stage.addEventListener('click', (e) => {
+      if (marking) return addCorrection(e);
+      if (editorOpen) return selectAt(e);
+      next();
+    });
     addEventListener('keydown', (e) => {
       if (e.target.closest?.('input, textarea, select')) return;
       const k = e.key;
@@ -881,6 +954,8 @@
       else if (/^[tT]$/.test(k)) cycleTheme();
       else if (/^[mM]$/.test(k)) { doc.estilo.desenfoque = !doc.estilo.desenfoque; save(); toast('Desenfoque de movimiento: ' + (doc.estilo.desenfoque ? 'sí' : 'no')); }
       else if (/^[eE]$/.test(k)) toggleEditor();
+      else if (/^[cC]$/.test(k)) toggleMarking();
+      else if (k === 'Escape' && marking) toggleMarking(false);
       else if (/^[fF]$/.test(k)) ACTIONS.full();
       else if (/^[hH?]$/.test(k)) ACTIONS.help();
       showControls();
@@ -914,15 +989,18 @@
       editorOpen = v;
       $('app').classList.toggle('editing', v);
       $('btnEdit').classList.toggle('on', v);
+      stage.classList.toggle('editing-on', v);
+      if (!v) { selF = null; markSel(); }
       setTimeout(fit, 380);
-      if (v) { renderSceneList(); renderSceneForm(); renderStyleForm(); showControls(); }
+      if (v) { renderSceneList(); renderSceneForm(); renderStyleForm(); renderInspector(); renderAssets(); renderCorrections(); showControls(); }
     }
+    const openTab = (name) => document.querySelector(`#tabs [data-tab="${name}"]`).click();
     $('tabs').addEventListener('click', (e) => {
       const b = e.target.closest('button'); if (!b) return;
       currentTab = b.dataset.tab;
       document.querySelectorAll('#tabs button').forEach((x) => x.classList.toggle('on', x === b));
       document.querySelectorAll('.pane').forEach((p) => p.classList.toggle('on', p.id === 'pane-' + currentTab));
-      if (currentTab === 'editar') renderSceneForm();
+      ({ editar: renderSceneForm, elemento: renderInspector, assets: renderAssets, correcciones: renderCorrections })[currentTab]?.();
     });
     const goScene = (i) => { const sc = S[i]; if (sc) { T = sc.tIn; target = sc.keyT[0]; } };
 
@@ -931,10 +1009,10 @@
       const box = $('sceneList'), cur = S[sceneAt(T)]?.d;
       box.innerHTML = '';
       doc.escenas.forEach((s, i) => {
-        const it = document.createElement('div');
+        const it = document.createElement('div'), pend = (s.correcciones || []).filter((c) => !c.hecho).length;
         it.className = 'sitem' + (s === cur ? ' cur' : '') + (s.activa === false ? ' off' : '');
         it.innerHTML = `<input type="checkbox" ${s.activa !== false ? 'checked' : ''} title="Incluir">
-          <div><b>${i + 1}. ${esc((s.kicker || s.titulo || '').replace(/\*/g, ''))}</b><small>${esc(BASE[s.tipo]?.nombre || s.tipo)}</small></div>
+          <div><b>${i + 1}. ${esc((s.kicker || s.titulo || '').replace(/\*/g, ''))}</b><small>${esc(BASE[s.tipo]?.nombre || s.tipo)}${pend ? ` · <span style="color:#e5484d">${pend} ${pend > 1 ? 'correcciones' : 'corrección'}</span>` : ''}</small></div>
           <div class="acts"><button data-a="up" title="Subir">↑</button><button data-a="down" title="Bajar">↓</button><button data-a="dup" title="Duplicar">⧉</button><button data-a="del" title="Borrar">✕</button></div>`;
         it.querySelector('input').onclick = (e) => { e.stopPropagation(); s.activa = e.target.checked; save(); rebuild(); };
         it.querySelectorAll('[data-a]').forEach((b) => b.onclick = (e) => {
@@ -949,7 +1027,7 @@
         it.onclick = () => {
           if (s.activa === false) return toast('Esta escena está desactivada');
           goScene(active().indexOf(s));
-          document.querySelector('#tabs [data-tab=editar]').click();
+          openTab('editar');
         };
         box.appendChild(it);
       });
@@ -961,58 +1039,78 @@
       const s = { tipo: sel.value, activa: true, mantener: 8, kicker: 'Nueva escena', titulo: 'Título de la *escena*', notas: '' };
       doc.escenas.splice(doc.escenas.indexOf(S[sceneAt(T)]?.d) + 1, 0, s);
       save(); build(); goScene(active().indexOf(s));
-      document.querySelector('#tabs [data-tab=editar]').click();
+      openTab('editar');
     };
 
+    const CON_LOGO = ['portada', 'cierre'];
     const EXTRA = [
+      ['logo', 'logo', 'Logo de esta escena'],
       ['pasos', 'select', 'Puntos clave', { '': 'Según el tipo de escena', uno: 'Uno por punto (cada avance suma uno)', todo: 'Todo junto' }],
       ['entrada', 'select', 'Cómo llega la cámara', { '': 'Automático', derecha: 'Desde la derecha', izquierda: 'Desde la izquierda', abajo: 'Desde abajo', arriba: 'Desde arriba', zoom: 'Zoom hacia adentro' }],
       ['mantener', 'number', 'Pausa en automático (segundos)'],
       ['notas', 'area', 'Notas del presentador'],
     ];
+    const logoOptions = () => [...Object.entries(LOGOS), ...MANIFIESTO.logos.map((p) => ['archivo:' + p, 'Archivo: ' + p.split('/').pop()]),
+      ...userAssets.filter((a) => a.tipo === 'image').map((a) => ['archivo:' + a.url, 'Importado: ' + a.nombre])];
+    const campoDe = (d, f) => [...(BASE[d.tipo]?.campos || []), ...EXTRA].find(([k]) => k === f) || [f, 'area', f];
+
+    // Un campo ligado a s[key]: al cambiar, guarda y reconstruye manteniendo el punto clave
     let formTimer;
+    function makeField(s, [key, type, label, opt], extraLabel = '') {
+      const f = document.createElement('label');
+      f.className = 'field';
+      f.innerHTML = `<span>${esc(label)}${extraLabel}</span>`;
+      let input;
+      const val = Array.isArray(s[key]) ? s[key].join('\n') : (s[key] ?? '');
+      const select = (opts) => { input = document.createElement('select'); opts.forEach(([v, n]) => input.add(new Option(n, v))); input.value = val; };
+      if (type === 'image' || type === 'video') {
+        const opts = type === 'image' ? [...MANIFIESTO.imagenes] : [...MANIFIESTO.videos];
+        const own = userAssets.filter((a) => a.tipo === type).map((a) => a.url);
+        if (val && !opts.includes(val) && !own.includes(val)) opts.unshift(val);
+        select([...opts.map((o) => [o, o.split('/').pop()]), ...own.map((o) => [o, 'Archivo importado'])]);
+      } else if (type === 'logo') select([['', 'Igual que la presentación'], ...logoOptions()]);
+      else if (type === 'select') select(Object.entries(opt));
+      else if (type === 'area' || type === 'lines' || type === 'pairs') {
+        input = document.createElement('textarea');
+        input.value = val;
+        if (type !== 'area') input.rows = Math.max(4, String(val).split('\n').length + 1);
+      } else {
+        input = document.createElement('input');
+        input.type = type === 'number' ? 'number' : 'text';
+        input.value = val;
+      }
+      input.addEventListener('input', () => {
+        s[key] = type === 'number' ? parseFloat(input.value) || 0 : input.value;
+        if (type === 'logo' && !input.value) delete s[key];
+        save();
+        if (key === 'notas') { notesFor = ''; return; }
+        if (key === 'mantener') return;
+        clearTimeout(formTimer);
+        formTimer = setTimeout(() => { rebuild(); if (key === 'kicker' || key === 'titulo') renderSceneList(); }, 160);
+      });
+      f.appendChild(input);
+      return f;
+    }
+
     function renderSceneForm() {
       if (!editorOpen) return;
       const box = $('sceneForm'), sc = S[sceneAt(T)], s = sc?.d;
       if (!s) { box.innerHTML = '<p class="hint">No hay escenas activas.</p>'; return; }
-      box.innerHTML = `<h4>${esc(BASE[s.tipo]?.nombre || s.tipo)} · escena ${sc.i + 1}</h4>`;
-      const campos = [...(BASE[s.tipo]?.campos || []), ...EXTRA.filter(([k]) => k !== 'pasos' || TIPOS[s.tipo]?.pasos)];
-      campos.forEach(([key, type, label, opt]) => {
-        const f = document.createElement('label');
-        f.className = 'field';
-        f.innerHTML = `<span>${esc(label)}${key === 'pasos' ? ` (por defecto: ${TIPOS[s.tipo].pasos === 'uno' ? 'uno por punto' : 'todo junto'})` : ''}</span>`;
-        let input;
-        const val = Array.isArray(s[key]) ? s[key].join('\n') : (s[key] ?? '');
-        if (type === 'image' || type === 'video') {
-          input = document.createElement('select');
-          const opts = type === 'image' ? [...MANIFIESTO.imagenes] : [...MANIFIESTO.videos];
-          if (val && !opts.includes(val)) opts.unshift(val);
-          opts.forEach((o) => input.add(new Option(o.split('/').pop(), o)));
-          input.value = val;
-        } else if (type === 'select') {
-          input = document.createElement('select');
-          Object.entries(opt).forEach(([v, n]) => input.add(new Option(n, v)));
-          input.value = val;
-        } else if (type === 'area' || type === 'lines' || type === 'pairs') {
-          input = document.createElement('textarea');
-          input.value = val;
-          if (type !== 'area') input.rows = Math.max(4, String(val).split('\n').length + 1);
-        } else {
-          input = document.createElement('input');
-          input.type = type === 'number' ? 'number' : 'text';
-          input.value = val;
-        }
-        input.addEventListener('input', () => {
-          s[key] = type === 'number' ? parseFloat(input.value) || 0 : input.value;
-          save();
-          if (key === 'notas') { notesFor = ''; return; }
-          if (key === 'mantener') return;
-          clearTimeout(formTimer);
-          formTimer = setTimeout(() => { rebuild(); if (key === 'kicker' || key === 'titulo') renderSceneList(); }, 160);
+      box.innerHTML = `<h4>${esc(BASE[s.tipo]?.nombre || s.tipo)} · escena ${sc.i + 1}</h4><p class="hint">También podés hacer clic directo sobre un elemento del escenario para editar solo ese.</p>`;
+      const extra = EXTRA.filter(([k]) => (k !== 'pasos' || TIPOS[s.tipo]?.pasos) && (k !== 'logo' || CON_LOGO.includes(s.tipo)));
+      [...(BASE[s.tipo]?.campos || []), ...extra].forEach((c) => box.appendChild(makeField(s, c,
+        c[0] === 'pasos' ? ` (por defecto: ${TIPOS[s.tipo].pasos === 'uno' ? 'uno por punto' : 'todo junto'})` : '')));
+      // Elementos ocultos: se vuelven a mostrar desde acá
+      if (s.ocultar?.length) {
+        box.insertAdjacentHTML('beforeend', '<h4>Elementos ocultos</h4>');
+        const row = document.createElement('div'); row.className = 'row-btns';
+        s.ocultar.forEach((f) => {
+          const b = document.createElement('button'); b.className = 'cbtn sm'; b.textContent = 'Mostrar: ' + campoDe(s, f)[2];
+          b.onclick = () => { s.ocultar = s.ocultar.filter((x) => x !== f); save(); rebuild(); renderSceneForm(); };
+          row.appendChild(b);
         });
-        f.appendChild(input);
-        box.appendChild(f);
-      });
+        box.appendChild(row);
+      }
       const tools = document.createElement('div');
       tools.className = 'row-btns';
       tools.innerHTML = '<button class="cbtn" data-a="in">↺ Ver la llegada</button><button class="cbtn" data-a="all">Ver completa</button>';
@@ -1020,6 +1118,212 @@
       tools.querySelector('[data-a=all]').onclick = () => { T = target = sc.keyT[sc.steps - 1]; };
       box.appendChild(tools);
     }
+
+    // ---------- Elemento: con el editor abierto, un clic en el escenario lo elige ----------
+    let selF = null; // { d: escena, f: campo, i: cuál de los elementos con ese campo }
+    function selectAt(e) {
+      const sc = S[sceneAt(T)], el = e.target.closest?.('[data-f]');
+      if (!el || !sc?.el.contains(el)) { selF = null; markSel(); renderInspector(); return; }
+      selF = { d: sc.d, f: el.dataset.f, i: [...sc.el.querySelectorAll(`[data-f="${el.dataset.f}"]`)].indexOf(el) };
+      markSel(); openTab('elemento');
+    }
+    function markSel() {
+      stage.querySelectorAll('.f-sel').forEach((x) => x.classList.remove('f-sel'));
+      const sc = selF && S.find((x) => x.d === selF.d);
+      if (!sc) return;
+      const all = sc.el.querySelectorAll(`[data-f="${selF.f}"]`);
+      (all[selF.i] || all[0])?.classList.add('f-sel');
+    }
+    function logoGrid(cur, onPick, inherit = false) {
+      const g = document.createElement('div'), bg = getComputedStyle(stage).getPropertyValue('--bg');
+      g.className = 'thumbs';
+      [...(inherit ? [['', 'Igual que la presentación']] : []), ...logoOptions()].forEach(([v, n]) => {
+        const b = document.createElement('button');
+        b.className = 'thumb' + (v === cur ? ' on' : '');
+        b.innerHTML = `<div class="lg" style="background:${bg}">${logoHTML('', v)}</div><span class="n">${esc(n)}</span>`;
+        b.onclick = () => onPick(v);
+        g.appendChild(b);
+      });
+      return g;
+    }
+    function imageGrid(cur, onPick) {
+      const g = document.createElement('div');
+      g.className = 'thumbs';
+      [...MANIFIESTO.imagenes.map((u) => [u, u.split('/').pop()]), ...userAssets.filter((a) => a.tipo === 'image').map((a) => [a.url, a.nombre])].forEach(([u, n]) => {
+        const b = document.createElement('button');
+        b.className = 'thumb' + (u === cur ? ' on' : '');
+        b.innerHTML = `<img src="${esc(u)}" alt="" loading="lazy"><span class="n">${esc(n)}</span>`;
+        b.onclick = () => onPick(u);
+        g.appendChild(b);
+      });
+      return g;
+    }
+    function renderInspector() {
+      if (!editorOpen) return;
+      const box = $('inspector');
+      if (!selF || !active().includes(selF.d)) {
+        box.innerHTML = '<p class="hint">Hacé clic sobre cualquier elemento de la escena (el logo, el título, una imagen, un punto, una tarjeta, un bloque) y se edita acá. Con el editor abierto, los elementos editables se marcan con un borde punteado al pasar el mouse.</p>';
+        return;
+      }
+      const d = selF.d, f = selF.f, campo = campoDe(d, f), type = campo[1];
+      box.innerHTML = `<h4>${esc(campo[2])} · escena ${active().indexOf(d) + 1} · ${esc(BASE[d.tipo]?.nombre || d.tipo)}</h4>`;
+      const redo = () => { save(); rebuild(); renderInspector(); };
+      if (type === 'logo') {
+        box.insertAdjacentHTML('beforeend', '<p class="hint">Variante del logo para esta escena. "Igual que la presentación" sigue al logo general (pestañas Assets o Movimiento).</p>');
+        box.appendChild(logoGrid(d.logo || '', (v) => { if (v) d.logo = v; else delete d.logo; redo(); }, true));
+      } else if (type === 'image') {
+        box.appendChild(imageGrid(d[f], (u) => { d[f] = u; redo(); }));
+      } else {
+        const fld = makeField(d, campo);
+        box.appendChild(fld);
+        // En una lista, el elemento elegido es una línea del texto: se deja seleccionada
+        const ta = fld.querySelector('textarea');
+        if (ta && (type === 'lines' || type === 'pairs') && selF.i >= 0) {
+          const ls = ta.value.split('\n'), start = ls.slice(0, selF.i).reduce((a, l) => a + l.length + 1, 0);
+          fld.querySelector('span').textContent += ` · línea ${selF.i + 1}`;
+          setTimeout(() => { ta.focus(); ta.setSelectionRange(start, start + (ls[selF.i] || '').length); }, 30);
+        }
+      }
+      const tools = document.createElement('div');
+      tools.className = 'row-btns';
+      tools.innerHTML = '<button class="cbtn" data-a="hide">Ocultar este elemento</button><button class="cbtn" data-a="mark">Anotar una corrección</button>';
+      tools.querySelector('[data-a=hide]').onclick = () => {
+        d.ocultar = [...new Set([...(d.ocultar || []), f])]; selF = null;
+        save(); rebuild(); renderInspector(); toast('Oculto. Se vuelve a mostrar desde la pestaña Escena.');
+      };
+      tools.querySelector('[data-a=mark]').onclick = () => toggleMarking(true);
+      box.appendChild(tools);
+    }
+
+    // ---------- Assets ----------
+    const userAssets = []; // archivos importados: solo viven en esta sesión
+    function renderAssets() {
+      if (!editorOpen) return;
+      const d = S[sceneAt(T)]?.d;
+      // Destino de las imágenes: el elemento elegido, o la imagen de la escena actual
+      const imgKey = (s) => (BASE[s.tipo]?.campos || []).find(([, t]) => t === 'image')?.[0];
+      const dest = selF && campoDe(selF.d, selF.f)[1] === 'image' ? [selF.d, selF.f] : d && imgKey(d) ? [d, imgKey(d)] : null;
+      const ti = $('thumbsImg'); ti.innerHTML = '';
+      ti.appendChild(imageGrid(dest ? dest[0][dest[1]] : '', (u) => {
+        if (!dest) return toast('Esta escena no tiene imagen');
+        dest[0][dest[1]] = u; save(); rebuild(); renderAssets(); toast('Imagen aplicada a la escena');
+      }));
+      const tl = $('thumbsLogo'); tl.innerHTML = '';
+      tl.appendChild(logoGrid(doc.estilo.logo, (v) => { doc.estilo.logo = v; save(); applyStyle(); renderAssets(); renderStyleForm(); toast('Logo de la presentación cambiado'); }));
+      const tu = $('thumbsUser');
+      tu.innerHTML = userAssets.length ? '<p class="hint" style="grid-column:1/-1">Las imágenes importadas aparecen arriba, entre las imágenes y los logos.</p>' : '<p class="hint">Todavía no importaste nada.</p>';
+      userAssets.filter((a) => a.tipo === 'video').forEach((a) => {
+        const b = document.createElement('button');
+        b.className = 'thumb'; b.innerHTML = `<span class="n" style="padding:20px 6px">🎞 ${esc(a.nombre)}</span>`;
+        b.onclick = () => { if (d?.tipo !== 'video') return toast('Andá a una escena de video'); d.video = a.url; save(); rebuild(); };
+        tu.appendChild(b);
+      });
+    }
+    $('uploadAsset').onclick = () => $('assetFile').click();
+    $('assetFile').onchange = (e) => {
+      const file = e.target.files[0]; if (!file) return;
+      // URL de sesión: no se guarda en el .json; para dejarlo fijo, copialo a assets/ y regenerá el manifiesto
+      userAssets.push({ tipo: file.type.startsWith('video') ? 'video' : 'image', nombre: file.name, url: URL.createObjectURL(file) });
+      renderAssets(); renderInspector(); toast('Importado. Para que quede guardado, copialo a assets/ y regenerá el manifiesto.');
+      e.target.value = '';
+    };
+
+    // ---------- Correcciones: una marca sobre un punto de la escena ----------
+    let marking = false, showPins = true, pinsKey = '', corrCur = null;
+    const corrections = () => {
+      const out = [];
+      active().forEach((d, si) => (d.correcciones || []).forEach((c) => out.push({ c, d, si, n: out.length + 1 })));
+      return out;
+    };
+    function toggleMarking(v = !marking) {
+      marking = v;
+      stage.classList.toggle('marking', v);
+      $('btnMark').classList.toggle('on', v);
+      if (v) { target = T; showControls(); }
+    }
+    function addCorrection(e) {
+      const sc = S[sceneAt(T)], r = stage.getBoundingClientRect(), k = r.width / W;
+      const near = e.target.closest?.('[data-f]');
+      const c = { x: Math.round((e.clientX - r.left) / k), y: Math.round((e.clientY - r.top) / k), paso: stepAt(sc, T) + 1, texto: '', hecho: false,
+        elemento: near ? campoDe(sc.d, near.dataset.f)[2] : '', cita: near ? near.innerText.replace(/\s+/g, ' ').trim().slice(0, 90) : '',
+        fecha: new Date().toLocaleString('es-AR') };
+      (sc.d.correcciones ||= []).push(c);
+      save(); toggleMarking(false);
+      corrCur = c; pinsKey = '';
+      if (!editorOpen) toggleEditor(true);
+      openTab('correcciones'); renderSceneList();
+      setTimeout(() => $('corrList').querySelector('.corr.cur textarea')?.focus(), 60);
+    }
+    function goCorr(c, d) {
+      const sc = S.find((x) => x.d === d);
+      corrCur = c; pinsKey = '';
+      if (sc) T = target = sc.keyT[Math.min(c.paso, sc.steps) - 1];
+      $('corrList').querySelectorAll('.corr').forEach((el) => el.classList.toggle('cur', el._c === c));
+    }
+    // Marcas de la escena actual, solo con la imagen quieta (las coordenadas son de ese cuadro)
+    function renderPins() {
+      if (!S.length) return;
+      const ci = sceneAt(T), sc = S[ci], st = stepAt(sc, T), show = showPins && !vel && !TR.some((tr) => T > tr.start && T < tr.start + D);
+      const key = `${ci}.${st}.${show}`;
+      if (key === pinsKey) return;
+      pinsKey = key;
+      $('pins').innerHTML = !show ? '' : corrections().filter((o) => o.d === sc.d).map((o) =>
+        `<button class="pin${o.c.hecho ? ' done' : ''}${o.c.paso - 1 !== st ? ' other' : ''}${o.c === corrCur ? ' cur' : ''}" data-n="${o.n}" style="left:${o.c.x}px; top:${o.c.y}px" title="${esc(o.c.texto || 'Sin texto todavía')}">${o.n}</button>`).join('');
+    }
+    $('pins').addEventListener('click', (e) => {
+      const b = e.target.closest('.pin'); if (!b) return;
+      e.stopPropagation();
+      corrCur = corrections()[b.dataset.n - 1]?.c; pinsKey = '';
+      if (!editorOpen) toggleEditor(true);
+      openTab('correcciones');
+    });
+    function renderCorrections() {
+      if (!editorOpen) return;
+      const box = $('corrList'), all = corrections();
+      box.innerHTML = all.length ? '' : '<p class="hint">Todavía no hay correcciones.</p>';
+      all.forEach(({ c, d, si, n }) => {
+        const it = document.createElement('div');
+        it._c = c;
+        it.className = 'corr' + (c === corrCur ? ' cur' : '') + (c.hecho ? ' done' : '');
+        it.innerHTML = `<header><b>${n}</b><span>Escena ${si + 1} · ${esc((d.kicker || BASE[d.tipo]?.nombre || '').replace(/\*/g, ''))} · paso ${c.paso}${c.elemento ? ' · ' + esc(c.elemento) : ''}</span></header>
+          ${c.cita ? `<div class="cita">«${esc(c.cita)}»</div>` : ''}
+          <textarea placeholder="¿Qué hay que cambiar?">${esc(c.texto)}</textarea>
+          <div class="row-btns"><button class="cbtn sm" data-a="go">Ir al punto</button><button class="cbtn sm" data-a="ok">${c.hecho ? 'Reabrir' : '✓ Hecha'}</button><button class="cbtn sm" data-a="del">Borrar</button></div>`;
+        const ta = it.querySelector('textarea');
+        ta.oninput = () => { c.texto = ta.value; save(); pinsKey = ''; };
+        ta.onfocus = () => { if (corrCur !== c) goCorr(c, d); };
+        it.querySelector('[data-a=go]').onclick = () => goCorr(c, d);
+        it.querySelector('[data-a=ok]').onclick = () => { c.hecho = !c.hecho; save(); pinsKey = ''; renderCorrections(); renderSceneList(); };
+        it.querySelector('[data-a=del]').onclick = () => {
+          if (!confirm('¿Borrar esta corrección?')) return;
+          d.correcciones.splice(d.correcciones.indexOf(c), 1); save(); pinsKey = ''; renderCorrections(); renderSceneList();
+        };
+        box.appendChild(it);
+      });
+    }
+    // Texto para pegar en el chat (o .md): solo las pendientes
+    function corrText(md = false) {
+      const all = corrections().filter((o) => !o.c.hecho), head = `Correcciones · BandoneAR, presentación motion · ${new Date().toLocaleDateString('es-AR')}`;
+      return [md ? '# ' + head : head, '', ...all.map(({ c, d, si, n }) =>
+        `${md ? '- ' : ''}#${n} · Escena ${si + 1} «${(d.kicker || BASE[d.tipo]?.nombre || '').replace(/\*/g, '')}» · paso ${c.paso}${c.elemento ? ' · ' + c.elemento : ''}${c.cita ? ` («${c.cita}»)` : ''} · punto ${c.x}, ${c.y}\n  ${c.texto || '(sin texto)'}`)].join('\n');
+    }
+    $('corrMark').onclick = () => toggleMarking(true);
+    $('corrCopy').onclick = async () => {
+      if (!corrections().some((o) => !o.c.hecho)) return toast('No hay correcciones pendientes');
+      const t = corrText();
+      try { await navigator.clipboard.writeText(t); toast('Copiadas: pegalas en el chat'); } catch (e) { prompt('Copiá este texto:', t); }
+    };
+    $('corrMd').onclick = () => {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([corrText(true)], { type: 'text/markdown' }));
+      a.download = 'bandonear-correcciones.md'; a.click();
+    };
+    $('corrClean').onclick = () => {
+      if (!confirm('¿Borrar las correcciones marcadas como hechas?')) return;
+      doc.escenas.forEach((d) => { if (d.correcciones) d.correcciones = d.correcciones.filter((c) => !c.hecho); });
+      save(); pinsKey = ''; renderCorrections(); renderSceneList();
+    };
+    $('corrShow').onchange = (e) => { showPins = e.target.checked; pinsKey = ''; };
 
     function renderStyleForm() {
       const box = $('styleForm'), e = doc.estilo;
