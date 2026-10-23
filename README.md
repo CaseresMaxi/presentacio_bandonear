@@ -107,3 +107,14 @@ y separado con guiones (sin espacios: obligan a escapar la URL).
   el diseño del editor; en la landing, el selector "Logo" del pie tiene las
   variantes y la opción "ed" (último diseño del editor en ese navegador). Las letras van como curvas desde `logo/glifos.js`, generado por
   `python logo/generar_glifos.py`.
+- `presentacion/index.html` — presentación técnica en formato "video": cada escena
+  entra animada y queda en pausa hasta que avanzás (→, Espacio o clic). Con `A`
+  pasa sola después de cada pausa (sirve para grabarla como video). `E` abre el
+  editor: texto de cada escena, orden, escenas nuevas, tema (noche, carmín,
+  programa, plano técnico), logo (variantes, diseño del editor o SVG del repo),
+  transiciones, velocidad e imágenes. Los cambios se guardan en el navegador y se
+  exportan o importan como .json. El guion por defecto está en
+  `presentacion/escenas.js`. `?escena=5&t=99&tema=plano&ui=0` abre una escena puntual.
+  Si se agregan imágenes o logos al repo, `python presentacion/generar_manifiesto.py`
+  los suma al selector de assets.
+
