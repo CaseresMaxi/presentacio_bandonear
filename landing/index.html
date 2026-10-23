@@ -254,6 +254,59 @@
     @keyframes eq{from{transform:scaleY(.25)} to{transform:scaleY(1)}}
     @media (max-width:900px){ .mode{grid-template-columns:1fr} }
 
+    /* ---------- Aprendé: lecciones animadas ---------- */
+    .learn{background:radial-gradient(1000px 520px at 85% 20%, var(--glow-2), transparent 70%)}
+    .learn-grid{display:grid; grid-template-columns:300px 1fr; gap:28px; margin-top:50px; align-items:start}
+    .lessons{list-style:none; margin:0; padding:0; display:grid; gap:10px}
+    .lessons button{
+      width:100%; text-align:left; display:grid; grid-template-columns:auto 1fr; gap:4px 14px; align-items:center;
+      padding:16px 18px; border-radius:18px; border:1px solid var(--line); background:var(--panel); color:var(--text);
+      font:inherit; cursor:pointer; position:relative; overflow:hidden; transition:border-color .3s var(--ease), transform .3s var(--ease);
+    }
+    .lessons button:hover{transform:translateX(4px)}
+    .lessons button .n{grid-row:span 2; font-family:var(--font-display); font-style:italic; font-size:30px; color:var(--muted); line-height:1}
+    .lessons button b{font-size:16px; color:var(--text-strong)}
+    .lessons button small{color:var(--muted); font-size:13px}
+    .lessons button.on{border-color:var(--gold)}
+    .lessons button.on .n{color:var(--gold)}
+    .lessons button .bar{position:absolute; left:0; bottom:0; height:3px; width:100%; background:var(--gold); transform-origin:left; transform:scaleX(0)}
+    .lesson-stage{border:1px solid var(--line); border-radius:28px; background:var(--panel); box-shadow:var(--shadow); overflow:hidden}
+    .lesson-stage svg{display:block; width:100%; height:auto; background:radial-gradient(circle at 50% 55%, var(--glow-2), transparent 70%)}
+    .lesson-copy{padding:24px 28px 26px; border-top:1px solid var(--line); display:grid; gap:10px}
+    .lesson-copy h3{font-size:clamp(24px, 2.6vw, 32px)}
+    .lesson-copy p{color:var(--lead); font-size:17px; max-width:60ch}
+    .lesson-copy .tip{color:var(--muted); font-size:14px}
+    .lesson-copy .tip b{color:var(--gold); font-weight:600}
+    .lesson-controls{display:flex; flex-wrap:wrap; gap:10px; margin-top:6px}
+    .lesson-controls .btn{padding:10px 16px; font-size:14px}
+    .lesson-controls .btn.on{background:var(--gold); color:var(--ink-on-gold); border-color:var(--gold)}
+    .lesson-copy.swap{animation:fade .6s var(--ease)}
+    /* Dibujo de las lecciones */
+    .lsn .head{fill:var(--panel-2); stroke:var(--text-strong); stroke-width:3}
+    .lsn .head.r{stroke:var(--gold)}
+    .lsn .dot{fill:var(--muted); opacity:.6}
+    .lsn .dot.lit{fill:var(--gold); opacity:1}
+    .lsn .pa{fill:color-mix(in srgb, var(--text) 12%, var(--bg))}
+    .lsn .pb{fill:color-mix(in srgb, var(--text) 5%, var(--bg))}
+    .lsn .pl{stroke:var(--gold); stroke-width:1.2; opacity:.5}
+    .lsn .lbl{fill:var(--text-strong); font:600 20px var(--font-body)}
+    .lsn .lbl.sm{fill:var(--muted); font-size:15px; letter-spacing:.12em; text-transform:uppercase}
+    .lsn .big{fill:var(--gold); font:800 46px var(--font-display)}
+    .lsn .arrow{stroke:var(--gold); stroke-width:4; fill:none; stroke-linecap:round; stroke-linejoin:round}
+    .lsn .hand{fill:color-mix(in srgb, var(--gold) 28%, transparent); stroke:var(--gold); stroke-width:2.5}
+    .lsn .strap{stroke:#8a5a35; stroke-width:9; stroke-linecap:round}
+    .lsn .leg{fill:none; stroke:var(--muted); stroke-width:3; stroke-dasharray:2 8; stroke-linecap:round; opacity:.7}
+    .lsn .beat{fill:var(--panel-2); stroke:var(--line); stroke-width:2}
+    .lsn .beat.on{fill:var(--gold); stroke:var(--gold)}
+    .lsn .beat.acc{stroke:var(--gold)}
+    .lsn .trace{fill:none; stroke:var(--gold); stroke-width:4; stroke-linecap:round; stroke-linejoin:round}
+    .lsn .trace.cut{stroke:var(--danger)}
+    @media (max-width:900px){
+      .learn-grid{grid-template-columns:1fr}
+      .lessons{grid-template-columns:repeat(5, minmax(150px, 1fr)); overflow-x:auto; padding-bottom:6px}
+      .lessons button:hover{transform:none}
+    }
+
     /* ---------- Propuesta / costo ---------- */
     .value{background:radial-gradient(900px 500px at 15% 55%, var(--glow-2), transparent 70%)}
     .value-grid{display:grid; grid-template-columns:1fr 1fr; gap:clamp(40px, 6vw, 90px); align-items:center; margin-top:56px}
@@ -323,6 +376,7 @@
         <li><a href="#instrumento">El instrumento</a></li>
         <li><a href="#como-funciona">Cómo funciona</a></li>
         <li><a href="#modos">Modos</a></li>
+        <li><a href="#aprender">Aprendé</a></li>
         <li><a href="#video">Video</a></li>
       </ul>
       <a class="btn primary" href="#video">Ver el video</a>
@@ -530,6 +584,22 @@
               <li>Toca con <b>librerías personalizadas</b></li>
             </ul>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Aprendé: lecciones básicas animadas -->
+  <section class="learn" id="aprender">
+    <div class="wrap">
+      <div class="eyebrow reveal">Aprendé</div>
+      <h2 class="reveal" style="--i:1">Tus primeros pasos en el <span class="accent">bandoneón</span>.</h2>
+      <p class="lead reveal" style="--i:2">Cinco lecciones cortas para entender cómo se toca. Lo que practicás en BandoneAR vale para el instrumento tradicional: la mano encuentra los botones donde los espera.</p>
+      <div class="learn-grid">
+        <ol class="lessons reveal from-left" style="--i:3" id="lessonList"></ol>
+        <div class="lesson-stage reveal zoom" style="--i:4">
+          <svg class="lsn" id="lessonSvg" viewBox="0 0 800 400" role="img" aria-label="Animación de la lección"></svg>
+          <div class="lesson-copy" id="lessonCopy" aria-live="polite"></div>
         </div>
       </div>
     </div>
@@ -873,6 +943,274 @@
     modeBtns.forEach((b) => b.onclick = () => setMode(b));
     document.fonts.ready.then(() => setMode(modeBtns.find((b) => b.classList.contains('on'))));
     addEventListener('resize', () => setMode(modeBtns.find((b) => b.classList.contains('on'))));
+
+    // ---------- Aprendé: lecciones animadas en SVG ----------
+    // Cada lección dibuja su escena una vez (setup) y la anima con el tiempo (frame).
+    // Las notas son ejemplos para entender el mecanismo, no la ubicación real en la botonera.
+    (function () {
+      const svg = document.getElementById('lessonSvg');
+      const list = document.getElementById('lessonList');
+      const copy = document.getElementById('lessonCopy');
+      if (!svg) return;
+      const NS = 'http://www.w3.org/2000/svg';
+      const el = (tag, attrs = {}, parent = svg) => {
+        const n = document.createElementNS(NS, tag);
+        Object.entries(attrs).forEach(([k, v]) => n.setAttribute(k, v));
+        parent.appendChild(n); return n;
+      };
+      const text = (x, y, str, cls = 'lbl', anchor = 'middle', parent = svg) => {
+        const t = el('text', { x, y, class: cls, 'text-anchor': anchor }, parent); t.textContent = str; return t;
+      };
+
+      // ----- Sonido opcional: lengüeta sintetizada (dos sierras desafinadas + filtro) -----
+      let ctx = null, soundOn = false;
+      function note(freq, dur = 0.5, vol = 0.18) {
+        if (!soundOn) return;
+        ctx = ctx || new (window.AudioContext || window.webkitAudioContext)();
+        const t0 = ctx.currentTime, g = ctx.createGain(), f = ctx.createBiquadFilter();
+        f.type = 'lowpass'; f.frequency.value = 1800;
+        g.gain.setValueAtTime(0, t0);
+        g.gain.linearRampToValueAtTime(vol, t0 + 0.04);
+        g.gain.setValueAtTime(vol, t0 + dur - 0.08);
+        g.gain.linearRampToValueAtTime(0, t0 + dur);
+        [0, 6].forEach((cents) => {
+          const o = ctx.createOscillator();
+          o.type = 'sawtooth'; o.frequency.value = freq; o.detune.value = cents;
+          o.connect(f); o.start(t0); o.stop(t0 + dur + 0.02);
+        });
+        f.connect(g); g.connect(ctx.destination);
+      }
+      const click = (acc) => note(acc ? 220 : 165, 0.09, acc ? 0.22 : 0.12);
+
+      // ----- Instrumento: dos cabezales y el fuelle entre ellos -----
+      function bandoneon(parent, { cy = 200, h = 210 } = {}) {
+        const g = el('g', {}, parent);
+        const pleatsG = el('g', {}, g);
+        const left = el('g', {}, g), right = el('g', {}, g);
+        const oct = (w) => [[0, 26], [30, 0], [w - 30, 0], [w, 26], [w, h - 26], [w - 30, h], [30, h], [0, h - 26]].map((p) => p.join(',')).join(' ');
+        el('polygon', { class: 'head', points: oct(130) }, left);
+        el('polygon', { class: 'head r', points: oct(130) }, right);
+        const dots = [];
+        // Botonera escalonada que se adapta al alto del cabezal
+        const step = (h - 80) / 4.5;
+        for (let c = 0; c < 3; c++) for (let r = 0; r < 5; r++) {
+          const y = 40 + r * step + (c % 2) * step / 2;
+          dots.push(el('circle', { class: 'dot', cx: 38 + c * 27, cy: y, r: 8 }, left));
+          el('circle', { class: 'dot', cx: 38 + c * 27, cy: y, r: 8 }, right);
+        }
+        const N = 12, pleats = [];
+        for (let i = 0; i < N; i++) pleats.push([el('rect', { class: i % 2 ? 'pb' : 'pa', y: cy - h / 2 + 10, height: h - 20 }, pleatsG), el('line', { class: 'pl', y1: cy - h / 2 + 10, y2: cy + h / 2 - 10 }, pleatsG)]);
+        // open: 0 cerrado, 1 abierto. Sin rightX, el instrumento queda centrado;
+        // con rightX, el cabezal derecho queda quieto (apoyado) y se mueve el izquierdo.
+        function set(open, rightX) {
+          const bw = 70 + 260 * open;
+          if (rightX === undefined) rightX = 400 + (260 + bw) / 2 - 130;
+          const lx = rightX - bw - 130;
+          left.setAttribute('transform', `translate(${lx} ${cy - h / 2})`);
+          right.setAttribute('transform', `translate(${rightX} ${cy - h / 2})`);
+          const pw = bw / N;
+          pleats.forEach(([rc, ln], i) => {
+            const x = lx + 130 + i * pw;
+            rc.setAttribute('x', x); rc.setAttribute('width', pw + 0.5);
+            ln.setAttribute('x1', x); ln.setAttribute('x2', x);
+          });
+          return { lx, bw };
+        }
+        return { g, set, dots };
+      }
+      const breath = (t, period) => 0.5 - 0.5 * Math.cos((t / period) * Math.PI * 2);
+
+      const LESSONS = [
+        {
+          title: 'Las manos', sub: 'Quién toca qué',
+          h: 'Cada mano tiene su teclado.',
+          p: 'Las manos entran por las correas de cada cabezal. La derecha lleva la melodía, en los agudos; la izquierda acompaña, en los graves, y además mueve el fuelle.',
+          tip: '<b>Probá:</b> ajustá las correas para que la mano quede firme pero los dedos lleguen sueltos a todos los botones.',
+          setup() {
+            const b = bandoneon(svg);
+            const { lx, bw } = b.set(0.45);
+            const hands = [];
+            [[lx + 65, 'Izquierda · graves'], [lx + 195 + bw, 'Derecha · melodía']].forEach(([x, label], i) => {
+              const g = el('g');
+              el('line', { class: 'strap', x1: x - 50, y1: 128, x2: x + 50, y2: 128 }, g);
+              el('rect', { class: 'hand', x: x - 46, y: 96, width: 92, height: 112, rx: 40 }, g);
+              const t = text(x, 70, label, 'lbl sm', 'middle', g);
+              hands.push({ g, t, from: i ? 160 : -160 });
+            });
+            return (t) => {
+              const k = Math.min(1, (t % 6) / 1.2), e = 1 - Math.pow(1 - k, 3);
+              hands.forEach((h) => {
+                h.g.setAttribute('transform', `translate(${h.from * (1 - e)} 0)`);
+                h.g.style.opacity = e;
+              });
+            };
+          },
+        },
+        {
+          title: 'El fuelle', sub: 'Abrir y cerrar',
+          h: 'El fuelle es tu respiración.',
+          p: 'Un lado descansa apoyado sobre la pierna y queda quieto; el otro brazo abre y cierra el fuelle. Movimientos parejos, sin tirones: el sonido sigue al gesto.',
+          tip: '<b>Probá:</b> abrí contando hasta cuatro y cerrá contando hasta cuatro, sin tocar ningún botón.',
+          setup() {
+            const b = bandoneon(svg);
+            el('path', { class: 'leg', d: 'M460 330 Q 580 345 720 335' });
+            text(585, 372, 'Apoyado', 'lbl sm');
+            const arrow = el('path', { class: 'arrow' });
+            const label = text(400, 52, '', 'big');
+            return (t) => {
+              const open = breath(t, 5), dir = Math.sin((t / 5) * Math.PI * 2) >= 0;
+              const { lx } = b.set(open, 520);
+              const ax = lx - 30;
+              arrow.setAttribute('d', dir ? `M${ax + 20} 200 H${ax - 40} M${ax - 25} 185 L${ax - 40} 200 L${ax - 25} 215` : `M${ax - 40} 200 H${ax + 20} M${ax + 5} 185 L${ax + 20} 200 L${ax + 5} 215`);
+              label.textContent = dir ? 'Abriendo' : 'Cerrando';
+            };
+          },
+        },
+        {
+          title: 'Un botón, dos notas', sub: 'Bisonoro',
+          h: 'Abriendo suena una nota. Cerrando, otra.',
+          p: 'El bandoneón es bisonoro: el mismo botón da una nota al abrir el fuelle y otra distinta al cerrarlo. Por eso hay que aprender cuatro teclados: dos por lado. BandoneAR respeta ese comportamiento.',
+          tip: '<b>Activá el sonido</b> y escuchá cómo cambia la nota del botón dorado con cada cambio de dirección. Las notas son de ejemplo.',
+          setup() {
+            const b = bandoneon(svg);
+            const lit = b.dots[7]; lit.classList.add('lit');
+            const label = text(400, 52, '', 'big');
+            const sub = text(400, 380, '', 'lbl sm');
+            let last = null;
+            return (t) => {
+              const open = breath(t, 4), dir = Math.sin((t / 4) * Math.PI * 2) >= 0;
+              b.set(open);
+              label.textContent = dir ? 'La' : 'Sol';
+              sub.textContent = dir ? 'Mismo botón · abriendo' : 'Mismo botón · cerrando';
+              lit.setAttribute('r', 8 + 3 * Math.abs(Math.sin(t * 6)));
+              if (last !== null && dir !== last) note(dir ? 440 : 392, 1.6);
+              last = dir;
+            };
+          },
+        },
+        {
+          title: 'El marcato', sub: 'El pulso del tango',
+          h: 'Primero, el pulso: el marcato.',
+          p: 'El tango se apoya en un pulso marcado. Empezá con el marcato en cuatro: un golpe corto y firme en cada tiempo. Después probá la síncopa 3-3-2, el acento que le da al tango su empuje.',
+          tip: '<b>Probá:</b> marcá cada tiempo con un golpe corto de fuelle. Cuando salga parejo, pasá a la síncopa.',
+          setup() {
+            const b = bandoneon(svg, { cy: 230, h: 180 });
+            const title = text(400, 48, '', 'lbl');
+            const cells = [];
+            for (let i = 0; i < 8; i++) cells.push(el('circle', { class: 'beat', cx: 400 - 7 * 32 + i * 64, cy: 92, r: 14 }));
+            let lastStep = -1;
+            return (t) => {
+              const stepDur = 0.32, step = Math.floor(t / stepDur);
+              const bar = Math.floor(step / 8), pos = step % 8;
+              const sincopa = bar % 4 >= 2;
+              const accents = sincopa ? [0, 3, 6] : [0, 2, 4, 6];
+              title.textContent = sincopa ? 'Síncopa 3-3-2' : 'Marcato en cuatro';
+              cells.forEach((c, i) => {
+                c.classList.toggle('acc', accents.includes(i));
+                c.classList.toggle('on', i === pos && accents.includes(i));
+                c.setAttribute('r', accents.includes(i) ? 16 : 9);
+              });
+              const hit = accents.includes(pos), local = (t % stepDur) / stepDur;
+              b.set(0.55 - (hit ? 0.12 * Math.exp(-local * 6) : 0));
+              if (step !== lastStep && hit) click(pos === 0);
+              lastStep = step;
+            };
+          },
+        },
+        {
+          title: 'El ligado', sub: 'Frasear sin cortes',
+          h: 'Ligar: una frase, un solo gesto.',
+          p: 'Para que la melodía cante, cambiá de botón sin cortar el aire: el fuelle sigue en la misma dirección mientras los dedos pasan de una nota a la otra. Si el fuelle cambia de dirección en el medio, la frase se corta.',
+          tip: '<b>Probá:</b> tocá cuatro notas seguidas abriendo, sin que el fuelle se detenga entre una y otra.',
+          setup() {
+            const b = bandoneon(svg, { cy: 235, h: 170 });
+            const title = text(400, 44, '', 'lbl');
+            text(400, 140, 'La frase', 'lbl sm');
+            const path = el('path', { class: 'trace' });
+            const seq = [2, 6, 10, 13];
+            const freqs = [392, 440, 494, 523];
+            let lastIdx = -1;
+            return (t) => {
+              const cycle = t % 9, ligado = cycle < 4.5, k = (cycle % 4.5) / 4.5;
+              title.textContent = ligado ? 'Ligado: el fuelle no se detiene' : 'Cortado: el fuelle cambia de dirección';
+              path.classList.toggle('cut', !ligado);
+              const open = ligado ? 0.15 + 0.7 * k : 0.5 + 0.18 * Math.sin(k * Math.PI * 8);
+              b.set(open);
+              const idx = Math.min(3, Math.floor(k * 4));
+              b.dots.forEach((d) => d.classList.remove('lit'));
+              b.dots[seq[idx]].classList.add('lit');
+              // Línea de la frase: continua si es ligado, con huecos si es cortado
+              let d = '';
+              for (let i = 0; i <= idx; i++) {
+                const x0 = 150 + i * 130, x1 = x0 + (i < idx ? 115 : 115 * ((k * 4) % 1));
+                const y = 110 - i * 12;
+                d += ligado ? `${i ? 'L' : 'M'}${x0} ${y} L${x1} ${y - 10}` : `M${x0} ${y} L${x1} ${y - 10}`;
+              }
+              path.setAttribute('d', d);
+              if (idx !== lastIdx) note(freqs[idx], ligado ? 1.1 : 0.45);
+              lastIdx = idx;
+            };
+          },
+        },
+      ];
+
+      let current = 0, frameFn = null, t0 = performance.now(), paused = false, pausedAt = 0, visible = false;
+      const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      LESSONS.forEach((l, i) => {
+        const li = document.createElement('li');
+        li.innerHTML = `<button type="button"><span class="n">${i + 1}</span><b>${l.title}</b><small>${l.sub}</small><i class="bar"></i></button>`;
+        li.firstChild.onclick = () => show(i);
+        list.appendChild(li);
+      });
+
+      function show(i) {
+        current = (i + LESSONS.length) % LESSONS.length;
+        const l = LESSONS[current];
+        svg.innerHTML = '';
+        frameFn = l.setup();
+        t0 = performance.now(); pausedAt = 0;
+        list.querySelectorAll('button').forEach((b, j) => b.classList.toggle('on', j === current));
+        list.querySelectorAll('.bar').forEach((bar) => { bar.style.transform = 'scaleX(0)'; });
+        copy.classList.remove('swap'); void copy.offsetWidth; copy.classList.add('swap');
+        copy.innerHTML = `<div class="eyebrow" style="margin:0">Lección ${current + 1} de ${LESSONS.length}</div>
+          <h3>${l.h}</h3><p>${l.p}</p><p class="tip">${l.tip}</p>
+          <div class="lesson-controls">
+            <button type="button" class="btn" data-a="prev">← Anterior</button>
+            <button type="button" class="btn" data-a="pause">${paused ? '▶ Seguir' : '❚❚ Pausa'}</button>
+            <button type="button" class="btn${soundOn ? ' on' : ''}" data-a="sound">${soundOn ? '🔊 Sonido' : '🔈 Sin sonido'}</button>
+            <button type="button" class="btn primary" data-a="next">Siguiente →</button>
+          </div>`;
+        copy.querySelector('[data-a=prev]').onclick = () => show(current - 1);
+        copy.querySelector('[data-a=next]').onclick = () => show(current + 1);
+        copy.querySelector('[data-a=pause]').onclick = (e) => {
+          paused = !paused;
+          if (paused) pausedAt = performance.now(); else t0 += performance.now() - pausedAt;
+          e.target.textContent = paused ? '▶ Seguir' : '❚❚ Pausa';
+        };
+        copy.querySelector('[data-a=sound]').onclick = (e) => {
+          soundOn = !soundOn;
+          if (soundOn) { ctx = ctx || new (window.AudioContext || window.webkitAudioContext)(); ctx.resume(); }
+          e.target.classList.toggle('on', soundOn);
+          e.target.textContent = soundOn ? '🔊 Sonido' : '🔈 Sin sonido';
+        };
+        frameFn(reduceMotion ? 1.5 : 0);
+      }
+
+      function loop(now) {
+        if (visible && !paused && !reduceMotion && frameFn) {
+          const t = (now - t0) / 1000;
+          frameFn(t);
+          const bar = list.querySelectorAll('.bar')[current];
+          if (bar) bar.style.transform = `scaleX(${(t % 9) / 9})`;
+        }
+        requestAnimationFrame(loop);
+      }
+      // Solo anima cuando la sección está en pantalla
+      new IntersectionObserver(([e]) => { visible = e.isIntersecting; }, { threshold: 0.1 }).observe(svg);
+      show(0);
+      requestAnimationFrame(loop);
+    })();
 
     // ---------- Video ----------
     const video = document.getElementById('video-el');
