@@ -85,3 +85,43 @@ y el resto de la presentación funciona normalmente.
 El isotipo aparece además en el sidebar y como favicon. Si se suman imágenes
 nuevas, van en `assets/img/` con nombre descriptivo del contenido, en minúsculas
 y separado con guiones (sin espacios: obligan a escapar la URL).
+
+## Expo final: póster, landing y logo
+
+- `poster/index.html` — póster A1 de la Expo Proyecto, con panel de parámetros y
+  observaciones. `bash poster/exportar.sh` genera el PNG a 300 dpi y el PDF en
+  `poster/salida/` (ignorada por git).
+- `landing/index.html` — landing page del producto. Se abre directo, sin servidor.
+- `assets/logo/` — logo vectorial: isotipo, versiones horizontal y vertical en las
+  paletas noche, carmín y programa, monocromas y favicon. Se regeneran con
+  `python assets/logo/generar_logo.py` (necesita `fonttools` y `brotli`). El
+  logo integrado del póster lleva una copia inline del isotipo para tomar los
+  colores de la paleta; si se cambia el dibujo base, hay que actualizarla.
+  El deck (`index.html`) sigue usando `logo-mark.png`.
+- `logo/index.html` — editor del logo: colores, sol en el fuelle (seis estilos),
+  proporciones del isotipo, peso y espaciado de la palabra, versiones
+  horizontal/vertical, y exportación a SVG o PNG con o sin fondo, en lienzo
+  ajustado, cuadrado, 16:9 o 4:5. "Todas las variantes" arma un .zip (usa JSZip
+  desde cdnjs, necesita internet). El dibujo vive en `logo/logo.js`, que comparten
+  el editor, el póster y la landing: en el póster, el grupo "Logo" del panel trae
+  el diseño del editor; en la landing, el selector "Logo" del pie tiene las
+  variantes y la opción "ed" (último diseño del editor en ese navegador). Las letras van como curvas desde `logo/glifos.js`, generado por
+  `python logo/generar_glifos.py`.
+- `presentacion/index.html` — presentación técnica en formato "video": cada escena
+  entra animada y queda en pausa hasta que avanzás (→, Espacio o clic). Con `A`
+  pasa sola después de cada pausa (sirve para grabarla como video). `E` abre el
+  editor: texto de cada escena, orden, escenas nuevas, tema (noche, carmín,
+  programa, plano técnico), logo (variantes, diseño del editor o SVG del repo),
+  transiciones, velocidad e imágenes. Los cambios se guardan en el navegador y se
+  exportan o importan como .json. El guion por defecto está en
+  `presentacion/escenas.js`. `?escena=5&t=99&tema=plano&ui=0` abre una escena puntual.
+  Si se agregan imágenes o logos al repo, `python presentacion/generar_manifiesto.py`
+  los suma al selector de assets.
+- `reel/index.html` — "Un pliegue que respira": pieza de motion de 15 s a 120 BPM en
+  la que cada escena sale de la anterior (pliegue → palabra → botonera → 3D →
+  señal → dato → logo → pliegue). Se reproduce en el navegador con su música
+  generada en código. Espacio reproduce, ← → avanzan de a pulso, P activa la pausa
+  al final de cada escena, L el loop, S el sonido y F la pantalla completa. Cada
+  cuadro se calcula a partir del tiempo en `window.seek(t)`.
+  `reel/render.mjs` exporta un MP4 si alguna vez hace falta (playwright-core + ffmpeg).
+
