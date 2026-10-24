@@ -1,3 +1,5 @@
 .claude/
 .DS_Store
 *~
+# Canciones transcriptas para practicar (pueden tener derechos de autor)
+practica/canciones.js
