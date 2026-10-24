@@ -1,0 +1,156 @@
+{
+  "escenas": [
+    {
+      "activa": true,
+      "tipo": "portada",
+      "mantener": 7,
+      "kicker": "Expo Proyecto 2026 · DIIT · UNLaM",
+      "titulo": "Bandone*AR*",
+      "subtitulo": "Bandoneón digital para el aprendizaje: un instrumento accesible que conserva la ergonomía, la botonera y el tacto del original.",
+      "equipo": "Brenda · Maxi · Antonio · Leo · Franco",
+      "institucion": "Universidad Nacional de La Matanza",
+      "imagen": "../assets/img/bandonear-mesa.jpg",
+      "notas": "Presentación del equipo y del proyecto en una frase: un bandoneón digital pensado para aprender, con transferencia directa al instrumento tradicional."
+    },
+    {
+      "activa": true,
+      "tipo": "texto",
+      "mantener": 9,
+      "kicker": "Planteo del problema",
+      "titulo": "Aprender bandoneón exige un instrumento que *casi no existe*.",
+      "cuerpo": "",
+      "puntos": "Fabricación artesanal y escasa: pocos luthiers, la mayoría de los instrumentos son usados restaurados.\nCosto de miles de dólares, incluso para un instrumento de estudio.\nEs bisonoro: cada botón da dos notas, lo que equivale a memorizar cuatro teclados.\nSin un instrumento propio, la práctica no se sostiene.",
+      "notas": "Contexto mínimo: no es falta de interés sino de acceso. Las tres barreras: disponibilidad, costo y aprendizaje."
+    },
+    {
+      "activa": true,
+      "tipo": "texto",
+      "mantener": 9,
+      "kicker": "Objetivo",
+      "titulo": "Un instrumento de estudio con *transferencia directa* al tradicional.",
+      "cuerpo": "La técnica aprendida en BandoneAR tiene que servir, sin adaptación, frente a un bandoneón real.",
+      "puntos": "Replicar la ergonomía, las distancias, la distribución y el tacto de la botonera.\nReproducir el comportamiento bisonoro y la dinámica del fuelle.\nFuncionar como instrumento autónomo y como controlador MIDI.\nAlcanzar un costo cercano al 25 % de un bandoneón tradicional.",
+      "notas": "El criterio que ordena todas las decisiones de diseño: transferencia técnica directa. No buscamos reemplazar al instrumento."
+    },
+    {
+      "activa": true,
+      "tipo": "requisitos",
+      "mantener": 10,
+      "kicker": "Requisitos de diseño",
+      "titulo": "De la técnica del instrumento a *requisitos medibles*.",
+      "items": "Fidelidad física | Distribución, distancia y altura de los botones iguales al original\nTacto | Switches mecánicos lineales: recorrido parejo, sin escalón\nBisonoridad | El mismo botón da una nota abriendo y otra cerrando\nDinámica | Intensidad y volumen según el movimiento del fuelle\nAutonomía | Batería, síntesis y amplificación integradas\nInteroperabilidad | Conexión USB-MIDI con cualquier computadora",
+      "notas": "Cada requisito sale de una característica del instrumento real que tiene que conservarse para que el aprendizaje sea transferible."
+    },
+    {
+      "activa": true,
+      "tipo": "arquitectura",
+      "mantener": 12,
+      "kicker": "Arquitectura del sistema",
+      "titulo": "Entradas, procesamiento y salidas.",
+      "bloques": "Botonera | 71 switches · 38 der. / 33 izq.\nFuelle | Encoder: apertura y cierre\nProcesamiento | Lectura y mapeo bisonoro\nSíntesis | Generación digital del sonido\nUSB-MIDI | Modo controlador\nAmplificador | Parlantes estéreo\nSalida auxiliar | Jack 3,5 mm\nComputadora | Producción musical (DAW)",
+      "nota": "El sonido es cien por ciento digital: el fuelle no mueve aire, controla el gesto, la postura y la dinámica.",
+      "notas": "Recorrer el diagrama de izquierda a derecha. Dos entradas físicas, un núcleo de procesamiento y dos caminos de salida: autónomo y MIDI."
+    },
+    {
+      "activa": true,
+      "tipo": "imagen",
+      "mantener": 9,
+      "kicker": "Interfaz física",
+      "titulo": "Cabezales y botonera *fieles al original*.",
+      "imagen": "../assets/img/tacto-switches.webp",
+      "puntos": "Cabezales impresos en 3D con la distribución exacta del instrumento.\nTeclas impresas a medida, con la misma distancia y altura.\nSwitches mecánicos lineales: respuesta rápida y recorrido parejo.\n71 botones: 38 en el lado derecho y 33 en el izquierdo.\nFuelle inicial, reemplazable por uno artesanal de luthier.",
+      "notas": "Elegimos switches lineales porque su recorrido parejo es lo más parecido a la pulsación de un bandoneón real. La memoria muscular es transferible."
+    },
+    {
+      "activa": true,
+      "tipo": "fuelle",
+      "mantener": 12,
+      "kicker": "Sensado del fuelle",
+      "titulo": "Del gesto a la *dinámica*.",
+      "cuerpo": "Un encoder rotativo convierte la apertura y el cierre del fuelle en una señal de posición. El software deriva de ella la dirección, la velocidad y la aceleración.",
+      "puntos": "Dirección: define qué nota da cada botón.\nVelocidad y aceleración: definen intensidad, volumen y dinámica.\nEl fuelle conserva su rol ergonómico y postural.",
+      "notas": "Señal ilustrativa: arriba la posición, en el medio su derivada (signo = dirección), abajo el volumen resultante."
+    },
+    {
+      "activa": true,
+      "tipo": "bisonoro",
+      "mantener": 11,
+      "kicker": "Lógica bisonora",
+      "titulo": "La nota depende del botón *y del sentido del fuelle*.",
+      "cuerpo": "Un mapa por lado asocia cada botón a dos notas, una por dirección, siguiendo la disposición del instrumento original.",
+      "tabla": "Botón A | La / Sol\nBotón B | Do / Re\nBotón C | Mi / Fa",
+      "codigo": "dir  = signo(Δposición)   // +1 abre · −1 cierra\nnota = mapa[lado][botón][dir]\nvel  = f(|Δposición| / Δt)\n\nsi dir cambia mientras hay botones apretados:\n    apagar notas actuales\n    encender mapa[lado][botón][dir]",
+      "nota": "Tabla y código ilustrativos: muestran el esquema, no la disposición real de notas.",
+      "notas": "Explicar el esquema de mapeo. Aclarar que la tabla es de ejemplo."
+    },
+    {
+      "activa": true,
+      "tipo": "modos",
+      "mantener": 11,
+      "kicker": "Modos de operación",
+      "titulo": "Instrumento autónomo o *controlador MIDI*.",
+      "izqTitulo": "Modo autónomo",
+      "izq": "Batería integrada.\nSintetizador y amplificador internos.\nParlantes estéreo: graves a la izquierda y agudos a la derecha, como en el original.\nSalida auxiliar jack 3,5 mm.",
+      "derTitulo": "Modo controlador MIDI",
+      "der": "Conexión USB a cualquier computadora.\nIntegración con programas de producción musical.\nLibrerías de sonido personalizadas.",
+      "nota": "Mensajes MIDI de ejemplo",
+      "notas": "Dos modalidades con el mismo instrumento. La distribución estéreo respeta la espacialidad acústica del bandoneón."
+    },
+    {
+      "activa": true,
+      "tipo": "cifra",
+      "mantener": 9,
+      "kicker": "Viabilidad",
+      "titulo": "Accesible para empezar. *Serio para aprender.*",
+      "prefijo": "≈",
+      "numero": "25",
+      "unidad": "%",
+      "texto": "del costo de un bandoneón tradicional.",
+      "barras": "Bandoneón tradicional | 100\nBandoneAR | 25",
+      "nota": "No lo reemplaza: quien empieza acá puede seguir allá.",
+      "notas": "El costo como condición de acceso. El objetivo es facilitar el salto al instrumento tradicional, no sustituirlo."
+    },
+    {
+      "activa": true,
+      "tipo": "video",
+      "mantener": 60,
+      "kicker": "Demostración",
+      "titulo": "BandoneAR en uso.",
+      "video": "../assets/video/proyecto_video_final.mp4",
+      "imagen": "../assets/img/orquestabandonear.jpg",
+      "notas": "El video arranca solo al llegar a esta escena. Siguiente para continuar."
+    },
+    {
+      "activa": true,
+      "tipo": "texto",
+      "mantener": 8,
+      "kicker": "Trabajo futuro",
+      "titulo": "Próximos pasos.",
+      "cuerpo": "",
+      "puntos": "Fuelle artesanal de luthier hecho a medida.\nLibrerías de sonido personalizadas.\nUso en escuelas: que aprender bandoneón sea tan cotidiano como la flauta dulce.",
+      "notas": "Líneas de continuidad del proyecto."
+    },
+    {
+      "activa": true,
+      "tipo": "cierre",
+      "mantener": 15,
+      "kicker": "Conclusiones",
+      "titulo": "Un instrumento terminado, pensado para *aprender*.",
+      "puntos": "Conserva la ergonomía, la botonera y el tacto: la técnica es transferible.\nEl sonido digital desacopla el aprendizaje del costo y la escasez del instrumento.\nFunciona solo o integrado a un estudio vía MIDI.",
+      "final": "¿Preguntas?",
+      "equipo": "Brenda · Maxi · Antonio · Leo · Franco",
+      "institucion": "Expo Proyecto 2026 · DIIT · Universidad Nacional de La Matanza",
+      "notas": "Cierre y preguntas."
+    }
+  ],
+  "estilo": {
+    "tema": "noche",
+    "logo": "paleta",
+    "transicion": "pliegues",
+    "desenfoque": true,
+    "velocidad": 1,
+    "grano": true,
+    "cromo": true,
+    "institucion": "Expo Proyecto 2026 · DIIT · UNLaM"
+  }
+}

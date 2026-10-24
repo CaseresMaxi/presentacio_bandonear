@@ -670,7 +670,7 @@
       return ac.startRendering();
     }
     window.renderAudio = async () => {
-      const buf = await buildAudio();
+      const buf = await buildAudio(), SR = buf.sampleRate;
       // WAV 16 bits estéreo
       const L = buf.getChannelData(0), R = buf.getChannelData(1), n = L.length, bytes = new DataView(new ArrayBuffer(44 + n * 4));
       const str = (o, s) => [...s].forEach((c, i) => bytes.setUint8(o + i, c.charCodeAt(0)));

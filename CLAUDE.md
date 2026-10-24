@@ -27,7 +27,8 @@ Lo que se edita en las páginas vive en `localStorage`, no en archivos:
 `bandonear-motion` (motion), `bandonear-presentacion` (clásica), `bandonear-logo-editor`
 (logo), `bandonear-poster-cfg` y `bandonear-poster-obs` (póster). Para moverlo de máquina se usa «Exportar .json» /
 «Importar .json» en las presentaciones y el zip del editor del logo (`ajustes.json`).
-Si aparece un `.json` exportado en el repo, es estado a importar, no código.
+`presentacion/exportado/` tiene el `.json` de cada presentación tal como está en el
+código; es estado para importar, no código.
 
 ## Motion: cómo está armado
 
