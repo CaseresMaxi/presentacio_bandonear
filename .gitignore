@@ -3,3 +3,6 @@
 *~
 # Canciones transcriptas para practicar (pueden tener derechos de autor)
 practica/canciones.js
+
+# Salida del empaquetador de la landing (landing/empaquetar.py): se regenera
+dist/
