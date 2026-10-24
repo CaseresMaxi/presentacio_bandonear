@@ -46,8 +46,9 @@ código; es estado para importar, no código.
   El guion tiene versión: si se cambia el contenido por defecto, sumar una función a `MIGRACIONES` en
   `timeline-escenas.js` para que el estado guardado en el navegador se ponga al día (solo pisa lo que no se editó).
 - URL: `?escena=N&paso=M`, `?t=segundos` (congela), `&tema=`, `&ui=0`.
-- Para presentar: `presentacion/presentar.html` (= `timeline.html?presentar`): sin la barra de controles,
-  sin cursor y sin atajos de edición; solo flechas, espacio, Re Pág/Av Pág, Inicio, Fin, F y T (tema;
+- Para presentar: `presentacion/presentar.html` (= `timeline.html?presentar`): sin la barra de controles
+  (arriba aparece una barra con el tema y la pantalla completa al llevar el mouse al borde),
+  sin atajos de edición; solo flechas, espacio, Re Pág/Av Pág, Inicio, Fin, F y T (tema;
   también `presentar.html?tema=carmin`). Cada escena
   se dibuja con `pasos: "todo"` (las listas entran completas de una): un punto clave por diapositiva.
 - El encabezado dibuja el lockup vectorial con `buildSVG`, sigue el logo de cada escena
