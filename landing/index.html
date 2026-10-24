@@ -228,6 +228,7 @@
       .how{height:auto} .how .sticky{position:relative; min-height:0}
       .how-grid{grid-template-columns:1fr}
       .readout{grid-template-columns:1fr 1fr 1fr}
+      .how-art{display:none}
     }
 
     /* ---------- Modos ---------- */
@@ -349,10 +350,12 @@
     .names span{padding:12px 22px; border:1px solid var(--line); border-radius:999px; font-weight:600; background:var(--panel)}
     footer{border-top:1px solid var(--line); padding:40px 0}
     footer .wrap{display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; color:var(--muted); font-size:14px}
+    /* dev:inicio */
     .palettes{display:flex; gap:10px; align-items:center}
     .palettes button{width:26px; height:26px; border-radius:50%; border:2px solid var(--line); cursor:pointer; padding:0; transition:transform .25s var(--ease)}
     .palettes button:hover{transform:scale(1.12)}
     .palettes button.on{border-color:var(--text)}
+    /* dev:fin */
 
     /* Movimiento reducido: todo aparece en su lugar, sin animaciones */
     @media (prefers-reduced-motion: reduce){
@@ -490,7 +493,7 @@
             <div class="flow-row ours" id="flowOurs"><span class="tag">BandoneAR</span><span class="step">Botón</span><span class="arrow">+</span><span class="step">Dirección</span><span class="arrow">+</span><span class="step">Velocidad</span><span class="arrow">→</span><span class="step">Sonido</span></div>
           </div>
         </div>
-        <div class="reveal zoom">
+        <div class="reveal zoom how-art">
           <svg class="bellows" id="bellows" viewBox="0 0 1000 420" role="img" aria-label="El fuelle se abre y se cierra al bajar por la página">
             <g id="pleats"></g>
             <g id="leftHead"></g>
@@ -670,6 +673,7 @@
   <footer>
     <div class="wrap">
       <span>© 2026 BandoneAR</span>
+      <!-- dev:inicio (selectores para probar paletas y logos; no van en producción) -->
       <div class="palettes" aria-label="Paleta de colores">
         <span>Paleta</span>
         <button data-palette="noche" title="Noche" style="background:#d7a54a"></button>
@@ -686,6 +690,7 @@
         <button data-logo="mono" title="Monocromo" style="background:#ffffff"></button>
         <button data-logo="editor" title="El último diseño del editor del logo" style="background:#24242a; color:#f4f1eb; font-size:12px">ed</button>
       </div>
+      <!-- dev:fin -->
     </div>
   </footer>
 
@@ -693,25 +698,27 @@
   <script>
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // ---------- Paleta (se recuerda en este navegador) ----------
+    // ---------- Paleta y logo ----------
+    // En producción la paleta es Noche y el logo sigue a la paleta. Los selectores del pie
+    // (el bloque marcado como de desarrollo) son para probar variantes: el empaquetador los saca.
     const root = document.documentElement;
-    const setPalette = (p) => {
-      root.dataset.palette = p;
-      applyLogo();
-      document.querySelectorAll('[data-palette]:not(html)').forEach((b) => b.classList.toggle('on', b.dataset.palette === p));
-      try { localStorage.setItem('bandonear-landing-palette', p); } catch (e) {}
-    };
-    let saved = null;
-    try { saved = localStorage.getItem('bandonear-landing-palette'); } catch (e) {}
-    document.querySelectorAll('button[data-palette]').forEach((b) => b.onclick = () => setPalette(b.dataset.palette));
-
-    // ---------- Colores del logo (se recuerdan en este navegador) ----------
-    // Variantes del logo: ajustes del editor (logo/logo.js) para fondo oscuro y para
-    // fondo claro ("programa"). "paleta" sigue a la paleta activa y "editor" usa el
-    // último diseño guardado en logo/index.html en este navegador.
     const L = window.BandoneARLogo;
     const P = L.PRESETS;
     const PALETA = { noche: P.noche, carmin: P.carmin, programa: P.programa };
+    let logoCfg = () => PALETA[root.dataset.palette] || P.noche;
+
+    function applyLogo() {
+      const c = { ...L.DEFAULTS, ...logoCfg() };
+      const B = L.isoBox(c);
+      document.querySelectorAll('[data-iso]').forEach((slot) => {
+        slot.innerHTML = `<svg viewBox="${B.x} 0 ${B.w} 80" aria-hidden="true">${L.isotipo(c)}</svg>`;
+      });
+      root.style.setProperty('--logo-acc', c.acento);
+    }
+
+    // dev:inicio
+    // Paleta y colores del logo elegidos en el pie (se recuerdan en este navegador). "editor"
+    // usa el último diseño guardado en logo/index.html.
     const LOGO_VARIANTS = {
       paleta: null,
       celeste: { dark: P.celeste, light: P['celeste claro'] },
@@ -723,8 +730,7 @@
     };
     let logo = 'paleta';
     try { logo = localStorage.getItem('bandonear-landing-logo') || 'paleta'; } catch (e) {}
-
-    function logoCfg() {
+    logoCfg = () => {
       const light = root.dataset.palette === 'programa';
       const lv = LOGO_VARIANTS[logo];
       if (lv === 'editor') {
@@ -732,23 +738,26 @@
       }
       if (!lv || lv === 'editor') return PALETA[root.dataset.palette] || P.noche;
       return light ? lv.light : lv.dark;
-    }
-
-    function applyLogo() {
-      const c = { ...L.DEFAULTS, ...logoCfg() };
-      const B = L.isoBox(c);
-      document.querySelectorAll('[data-iso]').forEach((slot) => {
-        slot.innerHTML = `<svg viewBox="${B.x} 0 ${B.w} 80" aria-hidden="true">${L.isotipo(c)}</svg>`;
-      });
-      root.style.setProperty('--logo-acc', c.acento);
+    };
+    const marcar = () => {
+      document.querySelectorAll('button[data-palette]').forEach((b) => b.classList.toggle('on', b.dataset.palette === root.dataset.palette));
       document.querySelectorAll('button[data-logo]').forEach((b) => b.classList.toggle('on', b.dataset.logo === logo));
-    }
+    };
+    const setPalette = (p) => {
+      root.dataset.palette = p;
+      applyLogo(); marcar();
+      try { localStorage.setItem('bandonear-landing-palette', p); } catch (e) {}
+    };
+    document.querySelectorAll('button[data-palette]').forEach((b) => b.onclick = () => setPalette(b.dataset.palette));
     document.querySelectorAll('button[data-logo]').forEach((b) => b.onclick = () => {
       logo = b.dataset.logo;
       try { localStorage.setItem('bandonear-landing-logo', logo); } catch (e) {}
-      applyLogo();
+      applyLogo(); marcar();
     });
-    setPalette(saved || 'noche');
+    try { root.dataset.palette = localStorage.getItem('bandonear-landing-palette') || 'noche'; } catch (e) {}
+    marcar();
+    // dev:fin
+    applyLogo();
 
     // ---------- Titular del hero palabra por palabra ----------
     document.querySelectorAll('[data-split]').forEach((el) => {

@@ -3,7 +3,7 @@
 
     python3 landing/empaquetar.py [carpeta de salida]     # por defecto: dist/netlify
 
-Genera index.html autocontenido: fuentes, favicon, imágenes, el script del logo y el video,
+Genera index.html de producción (sin lo marcado como dev:inicio / dev:fin) y autocontenido: fuentes, favicon, imágenes, el script del logo y el video,
 embebidos.
 
 Las imágenes se pasan a WebP (como mucho 1600 px de ancho) y el video a 720p antes de
@@ -65,8 +65,16 @@ def comunes(html, desde):
     return html
 
 
+def produccion(html):
+    """Saca lo de desarrollo: lo que está entre dev:inicio y dev:fin, en HTML, CSS o JS."""
+    html, n = re.subn(r'[ \t]*(?:<!--|/\*|//) dev:inicio.*?dev:fin(?: -->| \*/)?[ \t]*\n', '', html, flags=re.S)
+    if n == 0 or 'dev:' in html:
+        sys.exit('landing: no se encontraron bien las marcas dev:inicio / dev:fin')
+    return html
+
+
 def landing():
-    html = (RAIZ / 'landing' / 'index.html').read_text(encoding='utf-8')
+    html = produccion((RAIZ / 'landing' / 'index.html').read_text(encoding='utf-8'))
     html = comunes(html, RAIZ / 'landing')
     # El video va al final, en base64: el resto de la página carga primero y el video se arma
     # como Blob recién cuando terminó de cargar todo
