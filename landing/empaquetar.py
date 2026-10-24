@@ -3,13 +3,11 @@
 
     python3 landing/empaquetar.py [carpeta de salida]     # por defecto: dist/netlify
 
-Genera dos archivos autocontenidos:
-  index.html     la landing: fuentes, favicon, imágenes, el script del logo y el video, embebidos
-  practica.html  la práctica con MIDI, a la que lleva el botón «Practicá con tu BandoneAR»
+Genera index.html autocontenido: fuentes, favicon, imágenes, el script del logo y el video,
+embebidos.
 
 Las imágenes se pasan a WebP (como mucho 1600 px de ancho) y el video a 720p antes de
 embeberlos, para que la página no pese 80 MB. Necesita ImageMagick (magick) y ffmpeg.
-practica/canciones.js no se incluye: tiene canciones con derechos de autor.
 """
 import base64
 import re
@@ -70,7 +68,6 @@ def comunes(html, desde):
 def landing():
     html = (RAIZ / 'landing' / 'index.html').read_text(encoding='utf-8')
     html = comunes(html, RAIZ / 'landing')
-    html = html.replace('href="../practica/index.html"', 'href="practica.html"')
     # El video va al final, en base64: el resto de la página carga primero y el video se arma
     # como Blob recién cuando terminó de cargar todo
     mp4 = video(RAIZ / 'assets' / 'video' / 'proyecto_video_final.mp4')
@@ -93,17 +90,9 @@ def landing():
     return html
 
 
-def practica():
-    html = (RAIZ / 'practica' / 'index.html').read_text(encoding='utf-8')
-    html = comunes(html, RAIZ / 'practica')
-    html = html.replace('href="../landing/index.html"', 'href="index.html"')
-    html = html.replace('<script src="canciones.js"></script>', '')
-    return html
-
-
 def main():
     SALIDA.mkdir(parents=True, exist_ok=True)
-    for nombre, html in (('index.html', landing()), ('practica.html', practica())):
+    for nombre, html in (('index.html', landing()),):
         sueltos = re.findall(r'(?:src|href|poster)="(\.\./[^"]+)"|url\(\'(\.\./[^\']+)\'\)', html)
         if sueltos:
             sys.exit(f'{nombre}: quedan referencias sin embeber: {sueltos}')
