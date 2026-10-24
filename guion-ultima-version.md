@@ -22,7 +22,7 @@ Quién es cada persona lo deciden ustedes. Una sugerencia: que la Persona 1 sea 
 
 ---
 
-## Persona 1 · Origen de la idea (diapositivas 1 a 5, ~2:20)
+## Persona 1 · Origen de la idea (diapositivas 1 a 5, ~2:10)
 
 **1. Portada: BandoneAR** · ~25 s
 
@@ -48,7 +48,7 @@ Quién es cada persona lo deciden ustedes. Una sugerencia: que la Persona 1 sea 
 
 ---
 
-## Persona 2 · ¿Es viable? (diapositivas 6 a 9, ~2:10)
+## Persona 2 · ¿Es viable? (diapositivas 6 a 9, ~2:00)
 
 **6. Etapa 02: ¿Es viable?** · ~10 s
 
@@ -70,7 +70,7 @@ Quién es cada persona lo deciden ustedes. Una sugerencia: que la Persona 1 sea 
 
 ---
 
-## Persona 3 · El fuelle y la solución (diapositivas 10 a 13, ~2:15)
+## Persona 3 · El fuelle y la solución (diapositivas 10 a 13, ~2:25)
 
 **10. Que el fuelle se sienta como el real** · ~45 s
 
@@ -92,7 +92,7 @@ Quién es cada persona lo deciden ustedes. Una sugerencia: que la Persona 1 sea 
 
 ---
 
-## Persona 4 · Software, tacto y conexiones (diapositivas 14 a 16, ~2:00)
+## Persona 4 · Software, tacto y conexiones (diapositivas 14 a 16, ~2:05)
 
 **14. De la tecla al sonido, con FluidSynth** · ~60 s
 
@@ -110,7 +110,7 @@ Quién es cada persona lo deciden ustedes. Una sugerencia: que la Persona 1 sea 
 
 ---
 
-## Persona 5 · Desafíos y pase a la demo (diapositivas 17 a 20, ~1:20)
+## Persona 5 · Desafíos y pase a la demo (diapositivas 17 a 20, ~1:15)
 
 **17. Etapa 04: Desafíos y decisiones** · ~5 s
 
