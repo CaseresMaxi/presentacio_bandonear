@@ -11,6 +11,7 @@ se comenta en castellano rioplatense.
 | `index.html` | Deck comercial original (15 min), todo inline |
 | `presentacion/index.html` | Presentación técnica "video" con editor; contenido en `escenas.js` |
 | `presentacion/motion.html` + `motion-tipos.js` | Presentación motion graphics: una sola línea de tiempo con puntos clave (→ avanza, ← rebobina, Shift salta) |
+| `presentacion/timeline.html` + `timeline-escenas.js` + `timeline-tipos.js` | Presentación timeline: el desarrollo del proyecto por etapas (origen, viabilidad, solución, desafíos, demo) sobre el motor de motion, con un riel de etapas en el pie. Las ilustraciones son SVG generado en `timeline-tipos.js` (sin fotos), editables y animadas con `tick` |
 | `poster/index.html` | Póster A1 con panel de parámetros; `bash poster/exportar.sh [cfg]` genera PNG 300 dpi y PDF en `poster/salida/` |
 | `landing/index.html` | Landing con sección Aprendé |
 | `logo/index.html` | Editor del logo vectorial; `logo.js` (`BandoneARLogo`) + `glifos.js` (wordmark en curvas, generado por `generar_glifos.py`) |
@@ -24,7 +25,7 @@ Los renders (`poster/salida/`, `reel/salida/`) se versionan a propósito.
 ## Estado del navegador
 
 Lo que se edita en las páginas vive en `localStorage`, no en archivos:
-`bandonear-motion` (motion), `bandonear-presentacion` (clásica), `bandonear-logo-editor`
+`bandonear-motion` (motion), `bandonear-timeline` (timeline), `bandonear-presentacion` (clásica), `bandonear-logo-editor`
 (logo), `bandonear-poster-cfg` y `bandonear-poster-obs` (póster). Para moverlo de máquina se usa «Exportar .json» /
 «Importar .json» en las presentaciones y el zip del editor del logo (`ajustes.json`).
 `presentacion/exportado/` tiene el `.json` de cada presentación tal como está en el
@@ -38,6 +39,8 @@ código; es estado para importar, no código.
   `data-s` (paso), `data-at`/`data-dur`/`data-stagger`, `data-k` (elemento compartido
   para el morph entre escenas consecutivas), `data-par`, `data-dim`, `data-f` (campo editable).
 - Campos extra por escena: `pasos`, `entrada`, `logo`, `ocultar`, `correcciones`.
+- Timeline: mismo motor (copiado en `timeline.html`), más el campo `fase` por escena, `estilo.fases`
+  (etapas del riel) y `data-out="a-b"` (aparta un elemento en esos pasos, para los zooms de cámara).
 - URL: `?escena=N&paso=M`, `?t=segundos` (congela), `&tema=`, `&ui=0`.
 - El encabezado dibuja el lockup vectorial con `buildSVG`, sigue el logo de cada escena
   y, si hay diseño guardado en el editor del logo, lo usa por defecto.

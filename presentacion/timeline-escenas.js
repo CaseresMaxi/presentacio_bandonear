@@ -1,0 +1,272 @@
+// Guion de la presentación timeline (timeline.html): el desarrollo del proyecto paso a
+// paso, como está en el documento «Presentación comercial». Suma sus tipos de escena a
+// los de escenas.js (qué se edita de cada uno) y reemplaza el guion por defecto.
+// Cada escena lleva "fase": la etapa del riel en la que cae (0 = fuera del riel).
+(function () {
+  const P = window.PRESENTACION;
+  const K = ['kicker', 'text', 'Antetítulo'], TT = ['titulo', 'area', 'Título'];
+
+  Object.assign(P.TIPOS, {
+    'tl-portada': {
+      nombre: 'Portada de la línea de tiempo',
+      campos: [K, ['titulo', 'text', 'Título (*AR* en color)'], ['subtitulo', 'area', 'Subtítulo'], ['equipo', 'text', 'Equipo'], ['institucion', 'text', 'Institución']],
+    },
+    hito: {
+      nombre: 'Etapa (apertura de capítulo)',
+      campos: [K, TT, ['cuerpo', 'area', 'Pregunta o descripción de la etapa']],
+    },
+    guia: {
+      nombre: 'Guía de papel (botonera dibujada)',
+      campos: [K, TT, ['cuerpo', 'area', 'Párrafo'], ['puntos', 'lines', 'Puntos (uno por punto clave)'],
+        ['botones', 'lines', 'Botones: "número | nota al abrir / nota al cerrar | x, y" por línea'], ['nota', 'text', 'Nota al pie']],
+    },
+    instrumentos: {
+      nombre: 'Instrumentos y su versión digital',
+      campos: [K, TT, ['cuerpo', 'area', 'Párrafo'], ['pares', 'pairs', 'Pares: "acústico | digital" (el ícono sale del nombre: piano, batería, violín, guitarra, bandoneón)'],
+        ['respuesta', 'text', 'Respuesta para el bandoneón (último paso)']],
+    },
+    anatomia: {
+      nombre: 'Anatomía del bandoneón (recorrido de cámara)',
+      campos: [K, TT, ['partes', 'pairs', 'Partes, en orden: cabezal izquierdo, fuelle, cabezal derecho, máquina ("título | detalle")'], ['nota', 'text', 'Nota al pie']],
+    },
+    mecanismo: {
+      nombre: 'La máquina por dentro (corte animado)',
+      campos: [K, TT, ['puntos', 'lines', 'Pasos (uno por punto clave)'],
+        ['partes', 'lines', 'Rótulos, en orden: botón, brazo, zapata, ranura, voz al abrir, voz al cerrar']],
+    },
+    traduccion: {
+      nombre: 'De lo mecánico a lo electrónico',
+      campos: [K, TT, ['izqTitulo', 'text', 'Columna izquierda'], ['derTitulo', 'text', 'Columna derecha'], ['pares', 'pairs', 'Filas: "en el bandoneón | en BandoneAR"']],
+    },
+    'fuelle-desafio': {
+      nombre: 'Fuelle y encoder (animado)',
+      campos: [K, TT, ['cuerpo', 'area', 'Párrafo'], ['puntos', 'lines', 'Puntos (uno por línea)']],
+    },
+    veredicto: {
+      nombre: 'Veredicto (dos sellos)',
+      campos: [K, TT, ['items', 'pairs', 'Sellos: "título | detalle" (dos líneas)'], ['nota', 'text', 'Nota al pie']],
+    },
+    componentes: {
+      nombre: 'Componentes y su función',
+      campos: [K, TT, ['items', 'pairs', 'Componentes: "componente | qué cumple del bandoneón" (hasta 10, en orden con el dibujo)']],
+    },
+    switch: {
+      nombre: 'Switch mecánico (corte animado)',
+      campos: [K, TT, ['cuerpo', 'area', 'Párrafo'], ['puntos', 'lines', 'Puntos (uno por línea)'], ['partes', 'lines', 'Rótulos, en orden: vástago, resorte, carcasa, contactos']],
+    },
+    desafios: {
+      nombre: 'Desafíos y decisiones (tres filas)',
+      campos: [K, TT, ['items', 'lines', 'Desafíos: "ícono | título | detalle" por línea. Íconos: lupa, herramientas, impresora, teclado, fuelle, encoder, switch, pcb, construccion']],
+    },
+    demo: {
+      nombre: 'Demo en vivo',
+      campos: [K, TT, ['cuerpo', 'area', 'Párrafo'], ['nota', 'text', 'Rótulo del monitor']],
+    },
+  });
+
+  const FASES = ['Origen de la idea', '¿Es viable?', 'La solución', 'Desafíos y decisiones', 'Demo'];
+  const EQUIPO = 'Brenda · Maxi · Antonio · Leo · Franco';
+  const INSTITUCION = 'Expo Proyecto 2026 · DIIT · Universidad Nacional de La Matanza';
+  const arq = P.ESCENAS.find((s) => s.tipo === 'arquitectura');
+
+  // Botonera derecha como en la guía de papel: número, nota al abrir / al cerrar, posición
+  const GUIA = `15 | b‴ / a‴ | 300, 95
+16 | g♯‴ | 390, 80
+17 | g‴ / f♯‴ | 485, 92
+18 | f‴ | 572, 112
+4/4 | c♯′ / c′ | 262, 160
+0/0 | a‴ / g‴ | 350, 150
+1/1 | f♯‴ / a♯‴ | 438, 148
+2/2 | e‴ / c‴ | 522, 160
+3/3 | d♯‴ | 612, 178
+* | c′ / d′ | 222, 222
+⌖ | d′ / c♯′ | 312, 214
+0/1 | g′ / g♯′ | 396, 208
+1/2 | a♯″ / a♯′ | 482, 214
+2/3 | c‴ / c″ | 562, 228
+3/4 | d‴ | 650, 246
+6/0 | b | 180, 292
++ | e′ / f♯′ | 272, 284
+0 | c♯″ / f♯″ | 352, 274
+1 | f♯′ / g′ | 432, 280
+2 | a′ / b′ | 514, 290
+3 | c″ / d″ | 594, 302
+4 | e″ / g″ | 678, 316
+8/0 | a | 126, 372
+4/0 | f′ | 210, 350
+2/0 | a♯′ / e′ | 296, 340
+5 | g♯′ / a′ | 376, 330
+6 | b′ / c♯″ | 458, 338
+7 | d″ / e″ | 538, 350
+8 | g♯″ / a″ | 616, 364
+9 | b″ / c♯‴ | 696, 380
+7/0 | a♯ | 156, 444
+5/0 | d♯′ | 240, 420
+3/0 | f″ | 326, 412
+10 | d♯″ / e″ | 408, 406
+11 | f♯″ / g♯″ | 486, 412
+12 | a″ / b″ | 566, 422
+13 | c♯‴ / e‴ | 642, 436
+14 | g″ / d♯″ | 720, 456`;
+
+  const ESCENAS = [
+    {
+      tipo: 'tl-portada', mantener: 7, fase: 0,
+      kicker: 'Expo Proyecto 2026 · DIIT · UNLaM',
+      titulo: 'Bandone*AR*',
+      subtitulo: 'De una guía de papel a un instrumento: el desarrollo del proyecto, paso a paso.',
+      equipo: EQUIPO, institucion: 'Universidad Nacional de La Matanza',
+      notas: 'Presentarnos. Vamos a contar el proyecto como lo vivimos: de dónde salió la idea, si era viable, cómo lo resolvimos, qué nos costó y, al final, el instrumento en vivo.',
+    },
+    {
+      tipo: 'hito', mantener: 5, fase: 1,
+      kicker: 'Etapa 01',
+      titulo: 'Origen de *la idea*.',
+      cuerpo: 'Por qué surge y qué problema ataca.',
+      notas: 'En esta primera sección explicamos el origen de la idea, por qué surge y qué problemática ataca.',
+    },
+    {
+      tipo: 'guia', mantener: 12, fase: 1,
+      kicker: 'Cómo empezó',
+      titulo: 'Aprender con *una guía de papel*.',
+      cuerpo: 'Un integrante del equipo, aficionado al tango, estaba aprendiendo bandoneón. No había alternativas para practicar: se estudia con guías como esta.',
+      puntos: 'Cada círculo es un botón, con su número.\nY cada botón da *dos notas*: una al abrir el fuelle y otra al cerrarlo.',
+      botones: GUIA,
+      nota: 'Botonera del lado derecho, redibujada de una guía de estudio.',
+      notas: 'La idea surgió de que un integrante del grupo es aficionado al tango y estaba aprendiendo con el bandoneón. Nos mostró que no existían alternativas para tocar el instrumento y que se usan guías de papel como esta. Arriba de cada botón, su número; adentro, la nota al abrir y la nota al cerrar.',
+    },
+    {
+      tipo: 'texto', mantener: 9, fase: 1,
+      kicker: 'El problema',
+      titulo: 'Una cuestión de *accesibilidad*.',
+      cuerpo: '',
+      puntos: 'Los bandoneones son extremadamente costosos: miles de dólares, incluso para estudiar.\nCasi no se fabrican: hay pocos luthiers y la mayoría son usados restaurados.\nSin un instrumento propio, la práctica no se sostiene.',
+      notas: 'Esto en sí representa un problema de accesibilidad, porque los bandoneones son extremadamente costosos. Eso nos llevó a pensar en una alternativa económicamente viable.',
+    },
+    {
+      tipo: 'instrumentos', mantener: 11, fase: 1,
+      kicker: 'La pregunta',
+      titulo: 'Los demás instrumentos ya tienen *su versión digital*.',
+      cuerpo: 'Más baratas y fáciles de conseguir: así se democratiza un instrumento, su aprendizaje y su aporte cultural.',
+      pares: 'Piano | Teclado digital\nBatería | Batería electrónica\nViolín | Violín eléctrico\nBandoneón | ?',
+      respuesta: 'BandoneAR',
+      notas: 'Analizando la problemática nos dimos cuenta de que el resto de los instrumentos tiene alternativas digitales de menor costo y mayor accesibilidad. Eso permite la democratización del instrumento, su aprendizaje y su aporte cultural. Al bandoneón le faltaba la suya.',
+    },
+    {
+      tipo: 'hito', mantener: 5, fase: 2,
+      kicker: 'Etapa 02',
+      titulo: '¿Es *viable*?',
+      cuerpo: 'Antes de diseñar nada, entender el instrumento por dentro.',
+      notas: 'A partir de la idea, con el equipo analizamos las posibilidades de implementación.',
+    },
+    {
+      tipo: 'anatomia', mantener: 12, fase: 2,
+      kicker: 'Entender el instrumento',
+      titulo: 'Cómo está construido un *bandoneón*.',
+      partes: 'Cabezal izquierdo | 33 botones · las notas graves\nFuelle | Actúa como un pulmón: aspira al abrir, sopla al cerrar\nCabezal derecho | 38 botones · las notas agudas e intermedias\nLa máquina | Brazos, zapatas y voces de acero dentro de cada cabezal',
+      nota: 'Bisonoro: cada botón da una nota al abrir el fuelle y otra al cerrarlo.',
+      notas: 'Lo primero fue entender el funcionamiento real del instrumento: cómo está construido, qué particularidades tiene y cómo se toca. Recorrer las partes: dos cabezales con distinta cantidad de botones, el fuelle que mueve el aire y la máquina adentro de cada cabezal.',
+    },
+    {
+      tipo: 'mecanismo', mantener: 12, fase: 2,
+      kicker: 'La máquina por dentro',
+      titulo: 'Del botón *al sonido*.',
+      puntos: 'Al apretar el botón, el brazo levanta la zapata y destapa la ranura.\nEl fuelle hace pasar el aire: abriendo vibra una voz de acero…\n…y cerrando, la otra. Por eso cada botón tiene dos notas.',
+      partes: 'Botón de nácar\nBrazo\nZapata\nRanura\nVoz al abrir\nVoz al cerrar',
+      notas: 'Profundizar en el mecanismo: el botón acciona un brazo que levanta una zapata. Con la ranura abierta, el aire que mueve el fuelle hace vibrar una lengüeta de acero. Hay una voz para cada sentido del fuelle: de ahí el comportamiento bisonoro.',
+    },
+    {
+      tipo: 'traduccion', mantener: 11, fase: 2,
+      kicker: 'Replicarlo en electrónica',
+      titulo: 'De lo mecánico a *lo electrónico*.',
+      izqTitulo: 'En el bandoneón',
+      derTitulo: 'En BandoneAR',
+      pares: 'Botones y brazos | Switches mecánicos lineales\nLa máquina de cada cabezal | Un microcontrolador por teclado: teclados MIDI\nVoces de acero y aire | Síntesis digital del sonido\nPresión de aire del fuelle | Un encoder que lee el gesto\nCaja de madera | Cabezales impresos en 3D',
+      notas: 'Una vez entendido el funcionamiento del bandoneón, empezamos a analizar cómo replicar sus funciones de manera electrónica. Lo que sabíamos: los teclados pasarían a ser teclados MIDI, con un microcontrolador en cada uno, y no íbamos a depender de la presión del aire para simular el fuelle.',
+    },
+    {
+      tipo: 'fuelle-desafio', mantener: 11, fase: 2,
+      kicker: 'El mayor desafío',
+      titulo: 'Que el fuelle se *sienta* como el real.',
+      cuerpo: 'No queríamos solo aprender teclados y notas: el instrumento tiene que acompañar el movimiento, la postura y el agarre.',
+      puntos: 'Sin aire: un encoder lee la apertura, el cierre y la velocidad.\nEl gesto define la dirección y la dinámica de cada nota.\nAsí la evolución hacia el bandoneón tradicional es natural.',
+      notas: 'El mayor desafío era lograr la similitud en el movimiento y el feeling que da mover el fuelle. Nuestra idea es que sea un instrumento que sirva no solo para aprender los teclados y las notas, sino que acompañe el movimiento, la postura y el agarre, y que eso permita una evolución natural hacia un bandoneón tradicional.',
+    },
+    {
+      tipo: 'veredicto', mantener: 8, fase: 2,
+      kicker: 'Conclusión de la etapa',
+      titulo: 'Era viable. *En los dos frentes.*',
+      items: 'Técnicamente viable | Teclados MIDI con un microcontrolador por cabezal y un fuelle que no depende del aire.\nEconómicamente viable | Componentes accesibles: cerca del 25 % de lo que cuesta un bandoneón tradicional.',
+      nota: 'Con eso, pasamos a diseñar la solución.',
+      notas: 'Finalmente detectamos que era tanto técnica como económicamente viable.',
+    },
+    {
+      tipo: 'hito', mantener: 5, fase: 3,
+      kicker: 'Etapa 03',
+      titulo: 'La *solución*.',
+      cuerpo: 'Cada componente, hilado a una función del bandoneón.',
+      notas: 'Presentamos la solución: la lista de componentes principales y qué parte del bandoneón reemplaza cada uno.',
+    },
+    {
+      tipo: 'componentes', mantener: 14, fase: 3,
+      kicker: 'Componentes principales',
+      titulo: 'Cada pieza cumple *una función del bandoneón*.',
+      items: 'Cabezales impresos en 3D | La caja de madera de cada lado\n71 switches mecánicos lineales | Los botones: 38 a la derecha, 33 a la izquierda\nTeclas impresas a medida | Misma altura, distancia y distribución\nMicrocontrolador por cabezal | La máquina: lee cada botón (teclado MIDI)\nEncoder rotativo | El aire: apertura, cierre y velocidad del fuelle\nFuelle | El gesto, la postura y el agarre\nSíntesis digital | Las voces: la nota según botón y sentido\nAmplificador y parlantes estéreo | Graves a la izquierda, agudos a la derecha\nBatería integrada | Se toca en cualquier lugar\nUSB-MIDI y jack 3,5 mm | Computadora, auriculares o amplificación',
+      notas: 'Recorrer la lista completa de componentes y, para cada uno, qué función del bandoneón cumple. La numeración coincide con el dibujo.',
+    },
+    {
+      tipo: 'switch', mantener: 10, fase: 3,
+      kicker: 'El tacto',
+      titulo: 'Un switch mecánico *lineal* bajo cada botón.',
+      cuerpo: 'Elegimos switches lineales porque su recorrido es parejo, sin escalón: lo más parecido a la pulsación de un bandoneón.',
+      puntos: 'Respuesta rápida y precisa.\nTeclas impresas a medida encima de cada switch.\nLa memoria muscular se transfiere al instrumento real.',
+      partes: 'Vástago\nResorte\nCarcasa\nContactos',
+      notas: 'El switch es lo que hace que el tacto se parezca al original. Mostrar el recorrido: baja parejo, sin el clic de un switch táctil.',
+    },
+    {
+      ...arq, mantener: 12, fase: 3,
+      kicker: 'Cómo se conecta todo',
+      notas: 'Recorrer el diagrama de izquierda a derecha. Dos entradas físicas, un núcleo de procesamiento y dos caminos de salida: autónomo y MIDI.',
+    },
+    {
+      tipo: 'hito', mantener: 5, fase: 4,
+      kicker: 'Etapa 04',
+      titulo: 'Desafíos y *decisiones*.',
+      cuerpo: 'Un proyecto mayormente de hardware: lo que nos costó y cómo lo resolvimos.',
+      notas: 'Contar los desafíos con honestidad: es lo que más aprendimos.',
+    },
+    {
+      tipo: 'desafios', mantener: 14, fase: 4,
+      kicker: 'Lo que aprendimos',
+      titulo: 'Nueve desafíos, *nueve decisiones*.',
+      items: 'lupa | Investigar el hardware | Estudiar a fondo cada componente y cómo funciona\nherramientas | Equipo y herramientas | Conseguir herramientas y componentes\nimpresora | Impresión 3D | El tiempo de espera de cada pieza, junto con el diseño\nteclado | Disposición del teclado | Respetar la distribución exacta del original\nfuelle | Montaje del fuelle | Unirlo a los cabezales sin perder el gesto\nencoder | Encoder | Leer el movimiento del fuelle con precisión\nswitch | Switches | Elegir el tipo de switch según el tacto\npcb | PCB propia | Posible de armar, pero inviable a nivel económico\nconstruccion | Construcción del fuelle | Fabricarlo con pliegues que respondan como el real',
+      notas: 'Al ser mayormente un proyecto de hardware, tuvimos que investigar profundamente sobre los componentes y cómo funcionan. Después: adquirir equipo, los tiempos de impresión 3D, la disposición del teclado, el montaje del fuelle, el encoder, los switches, la posibilidad de una PCB (que descartamos por costo) y la construcción del fuelle.',
+    },
+    {
+      tipo: 'hito', mantener: 5, fase: 5,
+      kicker: 'Etapa 05',
+      titulo: 'Demo del *BandoneAR*.',
+      cuerpo: 'El instrumento, en vivo.',
+      notas: 'Pasamos a la demostración.',
+    },
+    {
+      tipo: 'demo', mantener: 60, fase: 5,
+      kicker: 'En vivo',
+      titulo: 'Ahora, *a tocarlo*.',
+      cuerpo: 'Un integrante del equipo lo toca: botonera, fuelle y sonido, en tiempo real.',
+      nota: 'Mensajes MIDI de ejemplo',
+      notas: 'Un integrante demuestra el bandoneón. Priorizar claridad sobre virtuosismo: mostrar el fuelle abriendo y cerrando y cómo cambia la nota.',
+    },
+    {
+      tipo: 'cierre', mantener: 15, fase: 0,
+      kicker: 'Conclusiones',
+      titulo: 'De una guía de papel a *un instrumento*.',
+      puntos: 'Conserva la ergonomía, la botonera y el tacto: la técnica es transferible.\nEl sonido digital desacopla el aprendizaje del costo y la escasez.\nFunciona solo o integrado a un estudio vía MIDI.',
+      final: '¿Preguntas?',
+      equipo: EQUIPO, institucion: INSTITUCION,
+      notas: 'Cierre y preguntas.',
+    },
+  ];
+
+  window.PRESENTACION = { ...P, ESCENAS, FASES };
+})();
