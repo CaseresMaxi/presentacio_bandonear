@@ -47,8 +47,13 @@
       campos: [K, TT, ['items', 'pairs', 'Sellos: "título | detalle" (dos líneas)'], ['nota', 'text', 'Nota al pie']],
     },
     componentes: {
-      nombre: 'Componentes y su función',
-      campos: [K, TT, ['items', 'pairs', 'Componentes: "componente | qué cumple del bandoneón" (hasta 10, en orden con el dibujo)']],
+      nombre: 'Componentes y su función (BandoneAR en 3D)',
+      campos: [K, TT, ['items', 'pairs', 'Componentes: "componente | qué cumple del bandoneón" (hasta 10). Los números siguen a: cabezal, switches, teclas, Pico, encoder, fuelle, Pi Zero, parlante, batería, puertos']],
+    },
+    software: {
+      nombre: 'Software: de la tecla al sonido (FluidSynth)',
+      campos: [K, TT, ['etapas', 'pairs', 'Etapas, en orden: matrices, Picos, Pi Zero, FluidSynth, audio ("título | detalle")'],
+        ['enlaces', 'lines', 'Rótulos de las conexiones (cuatro, uno por línea)'], ['consola', 'lines', 'Registro de ejemplo (una línea por evento)'], ['nota', 'text', 'Rótulo de la onda']],
     },
     switch: {
       nombre: 'Switch mecánico (corte animado)',
@@ -59,14 +64,28 @@
       campos: [K, TT, ['items', 'lines', 'Desafíos: "ícono | título | detalle" por línea. Íconos: lupa, herramientas, impresora, teclado, fuelle, encoder, switch, pcb, construccion']],
     },
     demo: {
-      nombre: 'Demo en vivo',
+      nombre: 'Demo en vivo (BandoneAR en 3D de fondo)',
       campos: [K, TT, ['cuerpo', 'area', 'Párrafo'], ['nota', 'text', 'Rótulo del monitor']],
     },
   });
 
   const FASES = ['Origen de la idea', '¿Es viable?', 'La solución', 'Desafíos y decisiones', 'Demo'];
   const EQUIPO = 'Brenda · Maxi · Antonio · Leo · Franco';
-  const INSTITUCION = 'Expo Proyecto 2026 · DIIT · Universidad Nacional de La Matanza';
+  const INSTITUCION = 'Proyecto Final 2026 · DIIT · Universidad Nacional de La Matanza';
+  const ENCABEZADO = 'Proyecto Final 2026 · DIIT · UNLaM';
+  const COMPONENTES = 'Cabezales impresos en 3D | La caja de madera de cada lado\n71 switches, un diodo cada uno | Los botones: 38 a la derecha, 33 a la izquierda\nTeclas impresas a medida | Misma altura, distancia y distribución\nUna Raspberry Pi Pico por cabezal | La máquina: escanea la botonera y el fuelle\nEncoder con hilo | El aire: un hilo atado al cabezal derecho lo hace girar\nFuelle | El gesto, la postura y el agarre\nRaspberry Pi Zero con FluidSynth | Las voces: genera el sonido de cada nota\nDos MAX98357A y parlantes | Estéreo: graves a la izquierda, agudos a la derecha\nBatería integrada | Se toca en cualquier lugar\nUSB-MIDI y jack 3,5 mm | Computadora, auriculares o amplificación';
+  const BLOQUES = 'Botonera | 71 switches · 38 der. / 33 izq.\nFuelle | Encoder con hilo: apertura y cierre\nProcesamiento | 2 Pico + Pi Zero · mapeo bisonoro\nSíntesis | FluidSynth en la Pi Zero\nUSB-MIDI | Modo controlador\nAmplificador | 2 MAX98357A · parlantes estéreo\nSalida auxiliar | Jack 3,5 mm\nComputadora | Producción musical (DAW)';
+  const TRADUCCION = 'Botones y brazos | Switches mecánicos lineales\nLa máquina de cada cabezal | Una Raspberry Pi Pico por teclado: teclados MIDI\nVoces de acero y aire | FluidSynth: síntesis por software\nPresión de aire del fuelle | Un encoder con hilo que lee el gesto\nCaja de madera | Cabezales impresos en 3D';
+  const SOFTWARE = {
+    tipo: 'software', mantener: 14, fase: 3,
+    kicker: 'El software',
+    titulo: 'De la tecla al sonido, *con FluidSynth*.',
+    etapas: 'Matrices de botones | Filas y columnas, con un diodo por switch\nDos Raspberry Pi Pico | Escanean cada lado; la izquierda lee además el fuelle, el volumen y la llave\nRaspberry Pi Zero | Recibe todo por UART y arma cada nota: botón + sentido del fuelle\nFluidSynth | Sintetizador por software: hace sonar la nota con un SoundFont de bandoneón\nAudio estéreo | Dos MAX98357A por I2S, uno por parlante',
+    enlaces: 'escaneo\nUART\nnotas MIDI\nI2S',
+    consola: 'pico-der   botón 23 ↓\npico-izq   fuelle +0,38 · abre\npi-zero    note_on  ch1 69 vel 91\nfluidsynth noteon 0 69 91\npico-izq   fuelle −0,21 · cierra\npi-zero    note_off ch1 69 · note_on ch1 71\nfluidsynth noteoff 0 69 · noteon 0 71 74\npico-der   botón 23 ↑\nfluidsynth noteoff 0 71',
+    nota: 'FluidSynth · SoundFont (.sf2)',
+    notas: 'Contar el recorrido del software. Las matrices de botones las leen dos Raspberry Pi Pico, una por cabezal; la izquierda además lee el encoder del fuelle, el volumen y la llave, y recibe a la derecha por UART. Todo llega a una Raspberry Pi Zero, que arma cada nota según el botón y el sentido del fuelle y se la pasa a FluidSynth, el sintetizador por software que genera el sonido de bandoneón a partir de un SoundFont. El audio sale por I2S a dos amplificadores MAX98357A, uno por parlante.',
+  };
   const arq = P.ESCENAS.find((s) => s.tipo === 'arquitectura');
 
   // Botonera derecha como en la guía de papel: número, nota al abrir / al cerrar, posición
@@ -112,7 +131,7 @@
   const ESCENAS = [
     {
       tipo: 'tl-portada', mantener: 7, fase: 0,
-      kicker: 'Expo Proyecto 2026 · DIIT · UNLaM',
+      kicker: 'Proyecto Final 2026 · Grupo 106 · UNLaM',
       titulo: 'Bandone*AR*',
       subtitulo: 'De una guía de papel a un instrumento: el desarrollo del proyecto, paso a paso.',
       equipo: EQUIPO, institucion: 'Universidad Nacional de La Matanza',
@@ -181,7 +200,7 @@
       titulo: 'De lo mecánico a *lo electrónico*.',
       izqTitulo: 'En el bandoneón',
       derTitulo: 'En BandoneAR',
-      pares: 'Botones y brazos | Switches mecánicos lineales\nLa máquina de cada cabezal | Un microcontrolador por teclado: teclados MIDI\nVoces de acero y aire | Síntesis digital del sonido\nPresión de aire del fuelle | Un encoder que lee el gesto\nCaja de madera | Cabezales impresos en 3D',
+      pares: TRADUCCION,
       notas: 'Una vez entendido el funcionamiento del bandoneón, empezamos a analizar cómo replicar sus funciones de manera electrónica. Lo que sabíamos: los teclados pasarían a ser teclados MIDI, con un microcontrolador en cada uno, y no íbamos a depender de la presión del aire para simular el fuelle.',
     },
     {
@@ -189,7 +208,7 @@
       kicker: 'El mayor desafío',
       titulo: 'Que el fuelle se *sienta* como el real.',
       cuerpo: 'No queríamos solo aprender teclados y notas: el instrumento tiene que acompañar el movimiento, la postura y el agarre.',
-      puntos: 'Sin aire: un encoder lee la apertura, el cierre y la velocidad.\nEl gesto define la dirección y la dinámica de cada nota.\nAsí la evolución hacia el bandoneón tradicional es natural.',
+      puntos: 'Sin aire: un encoder adentro del cabezal, con un hilo atado al otro, lee la apertura, el cierre y la velocidad.\nEl gesto define la dirección y la dinámica de cada nota.\nAsí la evolución hacia el bandoneón tradicional es natural.',
       notas: 'El mayor desafío era lograr la similitud en el movimiento y el feeling que da mover el fuelle. Nuestra idea es que sea un instrumento que sirva no solo para aprender los teclados y las notas, sino que acompañe el movimiento, la postura y el agarre, y que eso permita una evolución natural hacia un bandoneón tradicional.',
     },
     {
@@ -211,9 +230,10 @@
       tipo: 'componentes', mantener: 14, fase: 3,
       kicker: 'Componentes principales',
       titulo: 'Cada pieza cumple *una función del bandoneón*.',
-      items: 'Cabezales impresos en 3D | La caja de madera de cada lado\n71 switches mecánicos lineales | Los botones: 38 a la derecha, 33 a la izquierda\nTeclas impresas a medida | Misma altura, distancia y distribución\nMicrocontrolador por cabezal | La máquina: lee cada botón (teclado MIDI)\nEncoder rotativo | El aire: apertura, cierre y velocidad del fuelle\nFuelle | El gesto, la postura y el agarre\nSíntesis digital | Las voces: la nota según botón y sentido\nAmplificador y parlantes estéreo | Graves a la izquierda, agudos a la derecha\nBatería integrada | Se toca en cualquier lugar\nUSB-MIDI y jack 3,5 mm | Computadora, auriculares o amplificación',
-      notas: 'Recorrer la lista completa de componentes y, para cada uno, qué función del bandoneón cumple. La numeración coincide con el dibujo.',
+      items: COMPONENTES,
+      notas: 'Recorrer la lista completa de componentes y, para cada uno, qué función del bandoneón cumple. Los números siguen a cada parte en el modelo 3D.',
     },
+    SOFTWARE,
     {
       tipo: 'switch', mantener: 10, fase: 3,
       kicker: 'El tacto',
@@ -226,6 +246,7 @@
     {
       ...arq, mantener: 12, fase: 3,
       kicker: 'Cómo se conecta todo',
+      bloques: BLOQUES,
       notas: 'Recorrer el diagrama de izquierda a derecha. Dos entradas físicas, un núcleo de procesamiento y dos caminos de salida: autónomo y MIDI.',
     },
     {
@@ -268,5 +289,34 @@
     },
   ];
 
-  window.PRESENTACION = { ...P, ESCENAS, FASES };
+  // Migraciones del estado guardado en el navegador (versión → cómo pasar a la siguiente).
+  // Solo cambian lo que sigue igual al texto original: lo editado a mano se respeta.
+  const VIEJO = {
+    encabezado: 'Expo Proyecto 2026 · DIIT · UNLaM',
+    institucion: 'Expo Proyecto 2026 · DIIT · Universidad Nacional de La Matanza',
+    componentes: 'Cabezales impresos en 3D | La caja de madera de cada lado\n71 switches mecánicos lineales | Los botones: 38 a la derecha, 33 a la izquierda\nTeclas impresas a medida | Misma altura, distancia y distribución\nMicrocontrolador por cabezal | La máquina: lee cada botón (teclado MIDI)\nEncoder rotativo | El aire: apertura, cierre y velocidad del fuelle\nFuelle | El gesto, la postura y el agarre\nSíntesis digital | Las voces: la nota según botón y sentido\nAmplificador y parlantes estéreo | Graves a la izquierda, agudos a la derecha\nBatería integrada | Se toca en cualquier lugar\nUSB-MIDI y jack 3,5 mm | Computadora, auriculares o amplificación',
+    traduccion: 'Botones y brazos | Switches mecánicos lineales\nLa máquina de cada cabezal | Un microcontrolador por teclado: teclados MIDI\nVoces de acero y aire | Síntesis digital del sonido\nPresión de aire del fuelle | Un encoder que lee el gesto\nCaja de madera | Cabezales impresos en 3D',
+    fuelle: 'Sin aire: un encoder lee la apertura, el cierre y la velocidad.',
+  };
+  const MIGRACIONES = [
+    // 1 → 2: software y FluidSynth, datos del armado real, "Proyecto Final"
+    (doc) => {
+      const cambiar = (tipo, campo, viejo, nuevo) => doc.escenas.forEach((x) => { if (x.tipo === tipo && x[campo] === viejo) x[campo] = nuevo; });
+      if (doc.estilo.institucion === VIEJO.encabezado) doc.estilo.institucion = ENCABEZADO;
+      cambiar('tl-portada', 'kicker', VIEJO.encabezado, 'Proyecto Final 2026 · Grupo 106 · UNLaM');
+      cambiar('cierre', 'institucion', VIEJO.institucion, INSTITUCION);
+      cambiar('componentes', 'items', VIEJO.componentes, COMPONENTES);
+      cambiar('traduccion', 'pares', VIEJO.traduccion, TRADUCCION);
+      cambiar('arquitectura', 'bloques', arq.bloques, BLOQUES);
+      doc.escenas.forEach((x) => { if (x.tipo === 'fuelle-desafio' && typeof x.puntos === 'string') x.puntos = x.puntos.replace(VIEJO.fuelle, ESCENAS.find((e) => e.tipo === 'fuelle-desafio').puntos.split('\n')[0]); });
+      // La escena de software va después de la de componentes (o al final de la etapa 3)
+      if (!doc.escenas.some((x) => x.tipo === 'software')) {
+        let i = doc.escenas.findIndex((x) => x.tipo === 'componentes');
+        if (i < 0) i = doc.escenas.map((x) => +x.fase === 3).lastIndexOf(true);
+        doc.escenas.splice(i < 0 ? doc.escenas.length : i + 1, 0, { activa: true, ...JSON.parse(JSON.stringify(SOFTWARE)) });
+      }
+    },
+  ];
+
+  window.PRESENTACION = { ...P, ESCENAS, FASES, ENCABEZADO, VERSION: MIGRACIONES.length + 1, MIGRACIONES };
 })();

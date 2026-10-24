@@ -1,11 +1,12 @@
 {
+  "version": 2,
   "escenas": [
     {
       "activa": true,
       "tipo": "tl-portada",
       "mantener": 7,
       "fase": 0,
-      "kicker": "Expo Proyecto 2026 · DIIT · UNLaM",
+      "kicker": "Proyecto Final 2026 · Grupo 106 · UNLaM",
       "titulo": "Bandone*AR*",
       "subtitulo": "De una guía de papel a un instrumento: el desarrollo del proyecto, paso a paso.",
       "equipo": "Brenda · Maxi · Antonio · Leo · Franco",
@@ -99,7 +100,7 @@
       "titulo": "De lo mecánico a *lo electrónico*.",
       "izqTitulo": "En el bandoneón",
       "derTitulo": "En BandoneAR",
-      "pares": "Botones y brazos | Switches mecánicos lineales\nLa máquina de cada cabezal | Un microcontrolador por teclado: teclados MIDI\nVoces de acero y aire | Síntesis digital del sonido\nPresión de aire del fuelle | Un encoder que lee el gesto\nCaja de madera | Cabezales impresos en 3D",
+      "pares": "Botones y brazos | Switches mecánicos lineales\nLa máquina de cada cabezal | Una Raspberry Pi Pico por teclado: teclados MIDI\nVoces de acero y aire | FluidSynth: síntesis por software\nPresión de aire del fuelle | Un encoder con hilo que lee el gesto\nCaja de madera | Cabezales impresos en 3D",
       "notas": "Una vez entendido el funcionamiento del bandoneón, empezamos a analizar cómo replicar sus funciones de manera electrónica. Lo que sabíamos: los teclados pasarían a ser teclados MIDI, con un microcontrolador en cada uno, y no íbamos a depender de la presión del aire para simular el fuelle."
     },
     {
@@ -110,7 +111,7 @@
       "kicker": "El mayor desafío",
       "titulo": "Que el fuelle se *sienta* como el real.",
       "cuerpo": "No queríamos solo aprender teclados y notas: el instrumento tiene que acompañar el movimiento, la postura y el agarre.",
-      "puntos": "Sin aire: un encoder lee la apertura, el cierre y la velocidad.\nEl gesto define la dirección y la dinámica de cada nota.\nAsí la evolución hacia el bandoneón tradicional es natural.",
+      "puntos": "Sin aire: un encoder adentro del cabezal, con un hilo atado al otro, lee la apertura, el cierre y la velocidad.\nEl gesto define la dirección y la dinámica de cada nota.\nAsí la evolución hacia el bandoneón tradicional es natural.",
       "notas": "El mayor desafío era lograr la similitud en el movimiento y el feeling que da mover el fuelle. Nuestra idea es que sea un instrumento que sirva no solo para aprender los teclados y las notas, sino que acompañe el movimiento, la postura y el agarre, y que eso permita una evolución natural hacia un bandoneón tradicional."
     },
     {
@@ -141,8 +142,21 @@
       "fase": 3,
       "kicker": "Componentes principales",
       "titulo": "Cada pieza cumple *una función del bandoneón*.",
-      "items": "Cabezales impresos en 3D | La caja de madera de cada lado\n71 switches mecánicos lineales | Los botones: 38 a la derecha, 33 a la izquierda\nTeclas impresas a medida | Misma altura, distancia y distribución\nMicrocontrolador por cabezal | La máquina: lee cada botón (teclado MIDI)\nEncoder rotativo | El aire: apertura, cierre y velocidad del fuelle\nFuelle | El gesto, la postura y el agarre\nSíntesis digital | Las voces: la nota según botón y sentido\nAmplificador y parlantes estéreo | Graves a la izquierda, agudos a la derecha\nBatería integrada | Se toca en cualquier lugar\nUSB-MIDI y jack 3,5 mm | Computadora, auriculares o amplificación",
-      "notas": "Recorrer la lista completa de componentes y, para cada uno, qué función del bandoneón cumple. La numeración coincide con el dibujo."
+      "items": "Cabezales impresos en 3D | La caja de madera de cada lado\n71 switches, un diodo cada uno | Los botones: 38 a la derecha, 33 a la izquierda\nTeclas impresas a medida | Misma altura, distancia y distribución\nUna Raspberry Pi Pico por cabezal | La máquina: escanea la botonera y el fuelle\nEncoder con hilo | El aire: un hilo atado al cabezal derecho lo hace girar\nFuelle | El gesto, la postura y el agarre\nRaspberry Pi Zero con FluidSynth | Las voces: genera el sonido de cada nota\nDos MAX98357A y parlantes | Estéreo: graves a la izquierda, agudos a la derecha\nBatería integrada | Se toca en cualquier lugar\nUSB-MIDI y jack 3,5 mm | Computadora, auriculares o amplificación",
+      "notas": "Recorrer la lista completa de componentes y, para cada uno, qué función del bandoneón cumple. Los números siguen a cada parte en el modelo 3D."
+    },
+    {
+      "activa": true,
+      "tipo": "software",
+      "mantener": 14,
+      "fase": 3,
+      "kicker": "El software",
+      "titulo": "De la tecla al sonido, *con FluidSynth*.",
+      "etapas": "Matrices de botones | Filas y columnas, con un diodo por switch\nDos Raspberry Pi Pico | Escanean cada lado; la izquierda lee además el fuelle, el volumen y la llave\nRaspberry Pi Zero | Recibe todo por UART y arma cada nota: botón + sentido del fuelle\nFluidSynth | Sintetizador por software: hace sonar la nota con un SoundFont de bandoneón\nAudio estéreo | Dos MAX98357A por I2S, uno por parlante",
+      "enlaces": "escaneo\nUART\nnotas MIDI\nI2S",
+      "consola": "pico-der   botón 23 ↓\npico-izq   fuelle +0,38 · abre\npi-zero    note_on  ch1 69 vel 91\nfluidsynth noteon 0 69 91\npico-izq   fuelle −0,21 · cierra\npi-zero    note_off ch1 69 · note_on ch1 71\nfluidsynth noteoff 0 69 · noteon 0 71 74\npico-der   botón 23 ↑\nfluidsynth noteoff 0 71",
+      "nota": "FluidSynth · SoundFont (.sf2)",
+      "notas": "Contar el recorrido del software. Las matrices de botones las leen dos Raspberry Pi Pico, una por cabezal; la izquierda además lee el encoder del fuelle, el volumen y la llave, y recibe a la derecha por UART. Todo llega a una Raspberry Pi Zero, que arma cada nota según el botón y el sentido del fuelle y se la pasa a FluidSynth, el sintetizador por software que genera el sonido de bandoneón a partir de un SoundFont. El audio sale por I2S a dos amplificadores MAX98357A, uno por parlante."
     },
     {
       "activa": true,
@@ -162,7 +176,7 @@
       "mantener": 12,
       "kicker": "Cómo se conecta todo",
       "titulo": "Entradas, procesamiento y salidas.",
-      "bloques": "Botonera | 71 switches · 38 der. / 33 izq.\nFuelle | Encoder: apertura y cierre\nProcesamiento | Lectura y mapeo bisonoro\nSíntesis | Generación digital del sonido\nUSB-MIDI | Modo controlador\nAmplificador | Parlantes estéreo\nSalida auxiliar | Jack 3,5 mm\nComputadora | Producción musical (DAW)",
+      "bloques": "Botonera | 71 switches · 38 der. / 33 izq.\nFuelle | Encoder con hilo: apertura y cierre\nProcesamiento | 2 Pico + Pi Zero · mapeo bisonoro\nSíntesis | FluidSynth en la Pi Zero\nUSB-MIDI | Modo controlador\nAmplificador | 2 MAX98357A · parlantes estéreo\nSalida auxiliar | Jack 3,5 mm\nComputadora | Producción musical (DAW)",
       "nota": "El sonido es cien por ciento digital: el fuelle no mueve aire, controla el gesto, la postura y la dinámica.",
       "notas": "Recorrer el diagrama de izquierda a derecha. Dos entradas físicas, un núcleo de procesamiento y dos caminos de salida: autónomo y MIDI.",
       "fase": 3
@@ -218,7 +232,7 @@
       "puntos": "Conserva la ergonomía, la botonera y el tacto: la técnica es transferible.\nEl sonido digital desacopla el aprendizaje del costo y la escasez.\nFunciona solo o integrado a un estudio vía MIDI.",
       "final": "¿Preguntas?",
       "equipo": "Brenda · Maxi · Antonio · Leo · Franco",
-      "institucion": "Expo Proyecto 2026 · DIIT · Universidad Nacional de La Matanza",
+      "institucion": "Proyecto Final 2026 · DIIT · Universidad Nacional de La Matanza",
       "notas": "Cierre y preguntas."
     }
   ],
@@ -230,7 +244,7 @@
     "velocidad": 1,
     "grano": true,
     "cromo": true,
-    "institucion": "Expo Proyecto 2026 · DIIT · UNLaM",
+    "institucion": "Proyecto Final 2026 · DIIT · UNLaM",
     "fases": "Origen de la idea\n¿Es viable?\nLa solución\nDesafíos y decisiones\nDemo"
   }
 }

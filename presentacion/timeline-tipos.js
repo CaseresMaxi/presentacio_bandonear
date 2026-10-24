@@ -41,7 +41,7 @@
       <polygon class="bn-caja" points="${oct(x0, 60, x1, 460, 34)}"/>
       <polygon class="bn-filete" points="${oct(x0 + 16, 76, x1 - 16, 444, 26)}"/>
       <g class="bn-calado"><circle cx="${cx}" cy="372" r="16"/>${ros}</g>
-      <rect class="bn-correa" x="${x0 + 34}" y="252" width="212" height="18" rx="9"/>
+      <rect class="bn-correa" x="${x0 + 34}" y="290" width="212" height="16" rx="8"/>
       <g class="bn-botones">${botonera(cx, filas).map(([x, y]) => `<circle class="bk" cx="${f2(x)}" cy="${f2(y)}" r="9"/>`).join('')}</g>
     </g>`;
   }
@@ -305,7 +305,7 @@
       },
     },
 
-    // ---------- El fuelle y el encoder ----------
+    // ---------- El fuelle y el encoder: el hilo tira del centro del cabezal derecho ----------
     'fuelle-desafio': {
       pasos: 'todo',
       render: (d) => {
@@ -318,14 +318,17 @@
         <div class="fd-card" data-k="hero" data-shape="box" data-m="pop" data-at=".4" data-dur="1">
           <svg class="fd" viewBox="0 0 880 640">
             <g class="fd-fuelle"></g>
-            <rect class="fd-cab" x="40" y="130" width="130" height="330" rx="16"/>
-            <g class="fd-der"><rect class="fd-cab" x="0" y="130" width="130" height="330" rx="16"/></g>
-            <g class="fd-enc" transform="translate(105 92)"><circle r="44"/><g class="rueda">${Array.from({ length: 16 }, (_, i) => { const a = (i / 16) * Math.PI * 2; return `<line x1="${f2(Math.cos(a) * 26)}" y1="${f2(Math.sin(a) * 26)}" x2="${f2(Math.cos(a) * 38)}" y2="${f2(Math.sin(a) * 38)}"/>`; }).join('')}</g><circle r="8" class="eje"/></g>
-            <text class="ll" x="160" y="74">ENCODER</text>
-            <g transform="translate(40 520)">
+            <rect class="fd-cab" x="20" y="120" width="170" height="350" rx="18"/>
+            <rect class="fd-ventana" x="44" y="200" width="122" height="190" rx="10"/>
+            <g class="fd-der"><rect class="fd-cab" x="0" y="120" width="170" height="350" rx="18"/><circle class="fd-nudo" cx="14" cy="295" r="9"/></g>
+            <line class="fd-hilo" x1="140" y1="273" x2="400" y2="295"/>
+            <g class="fd-enc" transform="translate(105 295)"><circle r="40" class="cuerpo"/><circle r="24" class="carretel"/><g class="rueda">${Array.from({ length: 12 }, (_, i) => { const a = (i / 12) * Math.PI * 2; return `<line x1="${f2(Math.cos(a) * 28)}" y1="${f2(Math.sin(a) * 28)}" x2="${f2(Math.cos(a) * 36)}" y2="${f2(Math.sin(a) * 36)}"/>`; }).join('')}<line class="marca" x1="0" y1="0" x2="0" y2="-22"/></g><circle r="5" class="eje"/></g>
+            <text class="ll" x="20" y="96">ENCODER · ADENTRO DEL CABEZAL</text>
+            <text class="ll fd-lh" x="300" y="268">HILO</text>
+            <g transform="translate(40 540)">
               <text class="ll" x="0" y="0">POSICIÓN</text><rect class="trk" x="160" y="-16" width="600" height="16" rx="8"/><rect class="pos" x="160" y="-16" width="0" height="16" rx="8"/>
-              <text class="ll" x="0" y="50">VELOCIDAD</text><rect class="trk" x="160" y="34" width="600" height="16" rx="8"/><rect class="vel" x="460" y="34" width="0" height="16" rx="8"/>
-              <text class="fd-dir" x="0" y="104"></text>
+              <text class="ll" x="0" y="44">VELOCIDAD</text><rect class="trk" x="160" y="28" width="600" height="16" rx="8"/><rect class="vel" x="460" y="28" width="0" height="16" rx="8"/>
+              <text class="fd-dir" x="0" y="92"></text>
             </g>
           </svg>
         </div>`;
@@ -335,22 +338,25 @@
         if (!svg) return;
         const pos = (x) => 0.5 + 0.42 * Math.sin(x * 1.05) + 0.06 * Math.sin(x * 2.7);
         const o = pos(t), v = (pos(t + 0.02) - pos(t - 0.02)) / 0.04;
-        const x0 = 170, x1 = 170 + 260 + o * 330, n = 12, w = (x1 - x0) / n;
-        let top = `M${x0} 150`, bot = `M${x0} 440`, folds = '';
+        const x0 = 190, x1 = 190 + 230 + o * 300, n = 12, w = (x1 - x0) / n;
+        let top = `M${x0} 140`, bot = `M${x0} 450`, folds = '';
         for (let i = 0; i < n; i++) {
           const a = x0 + i * w;
-          top += ` L${f2(a + w / 2)} ${i % 2 ? 150 : 128} L${f2(a + w)} 150`;
-          bot += ` L${f2(a + w / 2)} ${i % 2 ? 440 : 462} L${f2(a + w)} 440`;
-          folds += `<line x1="${f2(a + w)}" y1="150" x2="${f2(a + w)}" y2="440"/>`;
+          top += ` L${f2(a + w / 2)} ${i % 2 ? 140 : 118} L${f2(a + w)} 140`;
+          bot += ` L${f2(a + w / 2)} ${i % 2 ? 450 : 472} L${f2(a + w)} 450`;
+          folds += `<line x1="${f2(a + w)}" y1="140" x2="${f2(a + w)}" y2="450"/>`;
         }
-        svg.querySelector('.fd-fuelle').innerHTML = `<path class="fd-body" d="M${x0} 150 H${f2(x1)} V440 H${x0} Z"/><g class="fd-folds">${folds}</g><path class="fd-edge" d="${top}"/><path class="fd-edge" d="${bot}"/>`;
+        svg.querySelector('.fd-fuelle').innerHTML = `<path class="fd-body" d="M${x0} 140 H${f2(x1)} V450 H${x0} Z"/><g class="fd-folds">${folds}</g><path class="fd-edge" d="${top}"/><path class="fd-edge" d="${bot}"/>`;
         svg.querySelector('.fd-der').setAttribute('transform', `translate(${f2(x1)} 0)`);
-        svg.querySelector('.fd-enc .rueda').setAttribute('transform', `rotate(${f2(o * 540)})`);
+        // El hilo sale tangente del carretel y llega al centro del cabezal derecho
+        const h = svg.querySelector('.fd-hilo'); h.setAttribute('x2', f2(x1 + 14)); h.setAttribute('y2', 295);
+        svg.querySelector('.fd-lh').setAttribute('x', f2((140 + x1) / 2 - 20));
+        svg.querySelector('.fd-enc .rueda').setAttribute('transform', `rotate(${f2(o * 720)})`);
         svg.querySelector('.pos').setAttribute('width', f2(600 * o));
         const vw = Math.max(-1, Math.min(1, v / 0.6)) * 300;
         const vel = svg.querySelector('.vel');
         vel.setAttribute('x', f2(vw < 0 ? 460 + vw : 460)); vel.setAttribute('width', f2(Math.abs(vw)));
-        svg.querySelector('.fd-dir').textContent = v >= 0 ? 'abre ▲ · nota de abrir' : 'cierra ▼ · nota de cerrar';
+        svg.querySelector('.fd-dir').textContent = v >= 0 ? 'abre ▲ · el hilo se desenrolla' : 'cierra ▼ · el resorte lo enrolla';
       },
     },
 
@@ -373,39 +379,84 @@
       tick(root, t) { root.querySelectorAll('.sello .anillo').forEach((c) => c.setAttribute('transform', `rotate(${f2(t * 12)} 100 100)`)); },
     },
 
-    // ---------- Componentes y su función ----------
+    // ---------- Componentes y su función: BandoneAR en 3D, en corte ----------
     componentes: {
       pasos: 'todo',
       render: (d) => {
         const ps = pairs(d.items).slice(0, 10), uno = modo(d, 'todo') === 'uno';
         const st = (i, at = 0) => (uno ? `data-s="${i + 1}" data-at="${f2(0.05 + at)}"` : `data-at="${f2(0.8 + i * 0.18 + at)}"`);
-        // Posición de cada número sobre el dibujo (viewBox 0 0 900 600)
-        const MK = [[40, 112], [848, 140], [292, 140], [120, 278], [450, 74], [450, 496], [290, 298], [222, 372], [772, 384], [884, 346]];
-        const pins = (x, y) => [0, 1, 2, 3].map((i) => `<path d="M${x + 8 + i * 12} ${y} v-8 M${x + 8 + i * 12} ${y + 50} v8 M${x} ${y + 8 + i * 12} h-8 M${x + 50} ${y + 8 + i * 12} h8"/>`).join('');
         return `
         <div class="pad">${kicker(d)}${titulo(d, 0.12, 'md wide')}</div>
-        <div class="cp-art" data-k="hero" data-shape="box" data-m="pop" data-at=".3" data-dur="1">
-          <svg class="cp" viewBox="0 0 900 600">
-            <rect class="cab" x="40" y="110" width="260" height="370" rx="26"/><rect class="cab" x="600" y="110" width="260" height="370" rx="26"/>
-            <path class="fu" d="M300 150 ${Array.from({ length: 10 }, (_, i) => `L${330 + i * 30 - 15} ${i % 2 ? 150 : 132} L${330 + i * 30} 150`).join(' ')} V440 ${Array.from({ length: 10 }, (_, i) => `L${600 - i * 30 - 15} ${i % 2 ? 440 : 458} L${600 - i * 30 - 30} 440`).join(' ')} Z"/>
-            ${Array.from({ length: 9 }, (_, i) => `<line class="fu-l" x1="${330 + i * 30}" y1="150" x2="${330 + i * 30}" y2="440"/>`).join('')}
-            <g class="teclas">${Array.from({ length: 3 }, (_, r) => Array.from({ length: 6 }, (_, i) => `<circle cx="${80 + i * 34 + (r % 2) * 17}" cy="${168 + r * 32}" r="11"/>`).join('')).join('')}</g>
-            <g class="sw">${Array.from({ length: 3 }, (_, r) => Array.from({ length: 6 }, (_, i) => `<rect x="${630 + i * 34 + (r % 2) * 17}" y="${156 + r * 32}" width="22" height="22" rx="4"/>`).join('')).join('')}</g>
-            <g class="chipg"><rect x="80" y="280" width="50" height="50" rx="6"/>${pins(80, 280)}<rect x="640" y="280" width="50" height="50" rx="6"/>${pins(640, 280)}</g>
-            <path class="onda" d="M160 306 q12 -26 24 0 t24 0 t24 0 t24 0 t24 0"/>
-            <g class="parl"><circle cx="170" cy="410" r="40"/><circle cx="170" cy="410" r="24"/><circle cx="170" cy="410" r="8"/><circle cx="780" cy="300" r="30"/><circle cx="780" cy="300" r="16"/></g>
-            <g class="bat"><rect x="640" y="388" width="120" height="50" rx="8"/><rect x="760" y="402" width="10" height="22" rx="3"/><rect class="carga" x="650" y="398" width="70" height="30" rx="4"/></g>
-            <g class="puertos"><rect x="860" y="320" width="22" height="18" rx="3"/><rect x="860" y="356" width="22" height="14" rx="7"/></g>
-            <g class="enc"><circle cx="450" cy="116" r="26"/>${Array.from({ length: 10 }, (_, i) => { const a = (i / 10) * Math.PI * 2; return `<line x1="${f2(450 + Math.cos(a) * 14)}" y1="${f2(116 + Math.sin(a) * 14)}" x2="${f2(450 + Math.cos(a) * 22)}" y2="${f2(116 + Math.sin(a) * 22)}"/>`; }).join('')}</g>
-            ${ps.map((p, i) => { const [x, y] = MK[i]; return `<g class="mk-n" data-f="items" data-m="pop" ${st(i, 0.15)}><circle cx="${x}" cy="${y}" r="19"/><text x="${x}" y="${y + 7}">${i + 1}</text></g>`; }).join('')}
-          </svg>
+        <div class="cp-art" data-k="hero" data-m="zoom" data-at=".2" data-dur="1.4">
+          ${ps.map((p, i) => `<div class="cp-mk" data-f="items" data-m="pop" ${st(i, 0.15)}><b>${i + 1}</b></div>`).join('')}
         </div>
         <ol class="cp-list">${ps.map((p, i) => `<li class="pt" data-f="items" data-k="item-${i}" data-shape="bar" data-m="left" ${st(i)}${uno ? ' data-dim' : ''}><span class="num">${i + 1}</span><span><b>${md(p.t)}</b><small>${md(p.d)}</small></span></li>`).join('')}</ol>`;
       },
       tick(root, t) {
-        root.querySelector('.cp .enc')?.setAttribute('transform', `rotate(${f2(Math.sin(t * 1.1) * 90)} 450 116)`);
-        const c = root.querySelector('.cp .carga'); if (c) c.setAttribute('width', f2(20 + 80 * ((t * 0.25) % 1)));
-        const o = root.querySelector('.cp .onda'); if (o) o.setAttribute('transform', `translate(0 ${f2(Math.sin(t * 5) * 3)})`);
+        const box = root.querySelector('.cp-art');
+        const m = box && window.BandoneAR3D?.en(box, 'componentes', { corte: true, encuadre: { az: 38, el: 20, dist: 82, vaiven: 0.16, y: -1.5 } });
+        if (!m) return;
+        m.cuadro(t, { acento: getComputedStyle(root).getPropertyValue('--accent').trim() });
+        // Cada número sigue a su parte: el orden es el de la lista
+        const A = m.anclas(), K = ['cabezal', 'switches', 'teclas', 'pico', 'encoder', 'fuelle', 'pizero', 'parlante', 'bateria', 'puertos'];
+        box.querySelectorAll('.cp-mk').forEach((el, i) => { const p = A[K[i]]; if (p) { el.style.left = p[0] + 'px'; el.style.top = p[1] + 'px'; } });
+      },
+    },
+
+    // ---------- El software: de la tecla al sonido, con FluidSynth ----------
+    software: {
+      pasos: 'uno',
+      render: (d) => {
+        const et = pairs(d.etapas).slice(0, 5), en = lines(d.enlaces), uno = modo(d, 'uno') === 'uno';
+        const PASO = [0, 0, 1, 2, 2];
+        // data-at nunca negativo: si no, el elemento asoma en el punto clave anterior
+        const st = (i, at = 0) => (uno ? `data-s="${PASO[i]}" data-at="${f2(Math.max(0, (PASO[i] ? 0.1 : 0.7) + (i === 1 || i === 4 ? 0.35 : 0) + at))}"` : `data-at="${f2(0.8 + i * 0.3 + at)}"`);
+        const ICON = [
+          Array.from({ length: 3 }, (_, r) => Array.from({ length: 4 }, (_, c) => `<rect x="${12 + c * 18}" y="${14 + r * 22}" width="11" height="11" rx="2"/><path class="fino" d="M${17 + c * 18} ${25 + r * 22} v6"/>`).join('')).join('') + '<path class="fino" d="M6 36 H86 M6 58 H86"/>',
+          '<rect x="8" y="22" width="76" height="46" rx="5"/><rect x="34" y="34" width="22" height="22" rx="2" class="fill"/>' + Array.from({ length: 8 }, (_, i) => `<path class="fino" d="M${14 + i * 9} 22 v-7 M${14 + i * 9} 68 v7"/>`).join('') + '<rect x="80" y="38" width="9" height="14" rx="2"/>',
+          '<rect x="4" y="26" width="84" height="40" rx="6"/><rect x="40" y="36" width="20" height="20" rx="2" class="fill"/>' + Array.from({ length: 10 }, (_, i) => `<circle cx="${12 + i * 8}" cy="31" r="1.8" class="fill"/>`).join('') + '<rect x="12" y="56" width="10" height="8" rx="1"/><rect x="66" y="56" width="10" height="8" rx="1"/>',
+          '<path class="onda-ico" d="M4 46 C14 16 22 16 30 46 S46 76 54 46 S70 16 78 46 S86 60 88 46"/><circle cx="66" cy="22" r="7" class="fill"/><path d="M73 22 V4 l10 4"/>',
+          '<path d="M10 34 h14 l20 -18 v58 l-20 -18 h-14 z"/><path class="o1" d="M56 30 q10 15 0 30"/><path class="o2" d="M66 22 q18 23 0 46"/><path class="o3" d="M76 14 q26 31 0 62"/>',
+        ];
+        return `${marca(1)}${marca(2)}
+        <div class="pad">${kicker(d)}${titulo(d, 0.12, 'md wide')}</div>
+        <svg class="links sw-links" viewBox="0 0 1920 1080">${[0, 1, 2, 3].map((i) => `<path data-m="draw" data-dur=".5" ${st(i + 1, -0.15)} d="M${440 + i * 335} 470 H${475 + i * 335}"/>`).join('')}<g class="packets"></g></svg>
+        ${[0, 1, 2, 3].map((i) => (en[i] ? `<div class="sw-en" style="left:${457 + i * 335}px" data-f="enlaces" data-m="fade" ${st(i + 1, 0)}>${esc(en[i])}</div>` : '')).join('')}
+        ${et.map((e, i) => `
+          <div class="sw-card${i === 3 ? ' fs' : ''}" style="left:${140 + i * 335}px" data-f="etapas" data-k="item-${i}" data-shape="box" data-m="up" ${st(i)}>
+            <svg class="ico sw-ico i${i}" viewBox="0 0 92 92">${ICON[i]}</svg>
+            <b>${md(e.t)}</b><span>${md(e.d)}</span>
+          </div>`).join('')}
+        <div class="sw-cons" data-f="consola" data-m="up" ${uno ? 'data-s="1" data-at=".5"' : 'data-at="2"'}><small>Registro de ejemplo</small><pre data-l="${esc(JSON.stringify(lines(d.consola)))}"></pre></div>
+        <div class="sw-onda" data-m="up" ${uno ? 'data-s="2" data-at=".6"' : 'data-at="2.4"'}><small data-f="nota">${md(d.nota)}</small><svg viewBox="0 0 560 150"><path class="w"/><path class="w2"/></svg><b class="sw-nota"></b></div>`;
+      },
+      tick(root, t) {
+        const s1 = enPaso(root, 1), s2 = enPaso(root, 2);
+        const pre = root.querySelector('.sw-cons pre');
+        if (pre) {
+          const L = pre._l ??= JSON.parse(pre.dataset.l || '[]');
+          const k = Math.floor(t * 1.4), n = L.length || 1, rows = [];
+          for (let i = Math.max(0, k - 5); i <= k; i++) rows.push(L[i % n] || '');
+          pre.textContent = rows.join('\n');
+        }
+        const NOTAS = ['La 4', 'Si 4', 'Do 5', 'Re 5', 'Mi 5'], nk = Math.floor(t / 1.2) % NOTAS.length, env = 0.35 + 0.65 * Math.exp(-((t % 1.2) * 1.6));
+        const w = root.querySelector('.sw-onda .w'), w2 = root.querySelector('.sw-onda .w2');
+        if (w && s2) {
+          const f = 3 + nk * 0.4, pts = (amp, ph) => Array.from({ length: 141 }, (_, i) => { const x = i * 4, u = i / 140; return `${i ? 'L' : 'M'}${x} ${f2(75 + amp * env * (Math.sin(u * f * 6.28 + t * 9 + ph) * 0.7 + Math.sin(u * f * 12.56 + t * 5) * 0.3) * Math.sin(Math.PI * u))}`; }).join(' ');
+          w.setAttribute('d', pts(60, 0)); w2.setAttribute('d', pts(34, 1.7));
+          root.querySelector('.sw-nota').textContent = NOTAS[nk];
+        }
+        const g = root.querySelector('.sw-links .packets');
+        if (!g) return;
+        const paths = [...root.querySelectorAll('.sw-links path')];
+        if (!g.childElementCount) paths.forEach(() => g.appendChild(document.createElementNS(NS, 'circle')).setAttribute('r', 7));
+        paths.forEach((p, i) => {
+          const c = g.children[i];
+          if (!(p._p >= 1)) { c.style.opacity = 0; return; }
+          const len = p._len || (p._len = p.getTotalLength()), pt = p.getPointAtLength(len * ((t * 0.9 + i * 0.25) % 1));
+          c.setAttribute('cx', pt.x); c.setAttribute('cy', pt.y); c.style.opacity = p.style.opacity;
+        });
+        root.querySelectorAll('.sw-ico.i4 .o1, .sw-ico.i4 .o2, .sw-ico.i4 .o3').forEach((o, i) => { o.style.opacity = s2 ? f2(0.25 + 0.75 * Math.max(0, Math.sin(t * 5 - i * 0.9))) : 0.25; });
       },
     },
 
@@ -491,22 +542,27 @@
       },
     },
 
-    // ---------- Demo en vivo ----------
+    // ---------- Demo en vivo: BandoneAR en 3D de fondo, tocando ----------
     demo: {
       render: (d) => `
-        <div class="pad">${kicker(d)}${titulo(d, 0.12, 'md wide')}
-          ${d.cuerpo ? `<p class="body sm wide" data-f="cuerpo" data-m="up" data-at=".6">${md(d.cuerpo)}</p>` : ''}</div>
+        <div class="dm3d" data-k="hero" data-m="fade" data-at=".1" data-dur="1.6"></div>
+        <div class="dm-sombra" data-m="fade" data-at=".2" data-dur="1.2"></div>
+        <div class="pad dm-txt">${kicker(d)}${titulo(d, 0.12, 'md')}
+          ${d.cuerpo ? `<p class="body sm" data-f="cuerpo" data-m="up" data-at=".6">${md(d.cuerpo)}</p>` : ''}</div>
         <div class="vivo" data-m="pop" data-at=".9"><i></i>EN VIVO</div>
-        <div class="dm-art" data-k="hero" data-m="zoom" data-at=".4" data-dur="1.4">${bandoneon()}</div>
         <div class="dm-mon" data-m="up" data-at="1.2"><small data-f="nota">${md(d.nota)}</small><pre></pre></div>`,
       tick(root, t) {
-        respirar(root, t, 1.2); tocar(root, t, 0.28, 3);
+        const box = root.querySelector('.dm3d');
+        const m = box && window.BandoneAR3D?.en(box, 'demo', { ondas: true, encuadre: { az: 24, el: 12, dist: 118, vaiven: 0.32, corrimiento: 0.2, y: 0 } });
+        // Teclas: tres a la vez, cambian cada 0,3 s (33 a la izquierda, 38 a la derecha)
+        const k = Math.floor(t / 0.3), on = new Set([0, 1, 2].map((j) => Math.abs(Math.floor(Math.sin((k + j * 0.37) * 12.9898 + j * 78.233) * 43758.5453)) % 71));
+        if (m) m.cuadro(t, { abre: Math.sin(t * 1.3) * 0.6 + Math.sin(t * 0.41) * 0.25, acento: getComputedStyle(root).getPropertyValue('--accent').trim(), teclas: (hi, i) => on.has(hi ? 33 + i : i) });
         const pre = root.querySelector('.dm-mon pre');
         if (!pre) return;
-        const notes = [69, 71, 72, 74, 76, 74, 72, 71], k = Math.floor(t * 2.6), rows = [];
-        for (let i = Math.max(0, k - 5); i <= k; i++) {
-          const n = notes[i % notes.length], on = i % 2 === 0;
-          rows.push(`${on ? 'Note On ' : 'Note Off'}  ch 1  nota ${n}  vel ${on ? 64 + ((i * 13) % 50) : 0}`);
+        const notes = [69, 71, 72, 74, 76, 74, 72, 71], kk = Math.floor(t * 2.6), rows = [];
+        for (let i = Math.max(0, kk - 4); i <= kk; i++) {
+          const n = notes[i % notes.length], o = i % 2 === 0;
+          rows.push(`${o ? 'noteon ' : 'noteoff'} 0 ${n}${o ? ' ' + (64 + ((i * 13) % 50)) : ''}`);
         }
         pre.textContent = rows.join('\n');
       },

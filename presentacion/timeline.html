@@ -546,6 +546,45 @@
     .dm-mon{position:absolute; left:1330px; right:140px; top:480px; background:var(--code); border:1px solid var(--line); border-radius:22px; padding:24px 28px}
     .dm-mon small{font-size:16px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted)}
     .dm-mon pre{margin:12px 0 0; font:400 19px/1.6 ui-monospace,Menlo,monospace; color:var(--accent); min-height:180px}
+
+    /* ---------- BandoneAR en 3D ---------- */
+    .b3d{position:absolute; inset:0; width:100%; height:100%; display:block}
+    .cp-art{position:absolute; left:90px; top:250px; width:960px; height:690px}
+    .cp-mk{position:absolute; left:0; top:0; width:0; height:0; z-index:2}
+    .cp-mk b{position:absolute; left:-19px; top:-19px; width:38px; height:38px; border-radius:50%; background:var(--accent); color:#141414; border:3px solid var(--bg); display:grid; place-items:center; font:800 19px 'Inter',sans-serif; box-shadow:0 6px 18px rgba(0,0,0,.45)}
+    .dm3d{position:absolute; inset:0}
+    .dm-sombra{position:absolute; inset:0; pointer-events:none; background:linear-gradient(90deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 70%, transparent) 30%, transparent 55%)}
+    .dm-txt{right:auto; width:780px}
+    .dm-txt h2{font-size:88px}
+    .dm-mon{left:140px; right:auto; top:auto; bottom:150px; width:520px; background:color-mix(in srgb, var(--code) 80%, transparent); backdrop-filter:blur(6px)}
+    .dm-mon pre{min-height:150px; font-size:18px}
+
+    /* Fuelle: encoder adentro y el hilo */
+    .fd-ventana{fill:color-mix(in srgb, var(--bg) 55%, transparent); stroke:var(--accent); stroke-width:2; stroke-dasharray:6 6}
+    .fd-enc .cuerpo{fill:var(--panel-2); stroke:var(--strong); stroke-width:3}
+    .fd-enc .carretel{fill:var(--strong); stroke:none; opacity:.9}
+    .fd-enc .marca{stroke:var(--bg) !important; stroke-width:5 !important}
+    .fd-hilo{stroke:var(--accent-2); stroke-width:3}
+    .fd-nudo{fill:var(--accent-2)}
+    .fd-lh{fill:var(--accent-2)}
+
+    /* Software */
+    .sw-card{position:absolute; top:320px; width:300px; height:270px; border:1px solid var(--line); background:var(--panel); border-radius:22px; padding:24px 24px 20px; display:flex; flex-direction:column; gap:8px}
+    .sw-card.fs{border:2px solid var(--accent); background:color-mix(in srgb, var(--accent) 10%, var(--panel))}
+    .sw-card b{font-size:26px; color:var(--strong)}
+    .sw-card span{font-size:19px; line-height:1.38; color:var(--muted)}
+    .sw-ico{width:84px; height:84px; color:var(--accent); flex:none}
+    .sw-ico .onda-ico{stroke-width:4}
+    .sw-en{position:absolute; top:420px; transform:translateX(-50%); font-size:15px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); white-space:nowrap; background:var(--bg); padding:2px 8px; border-radius:6px; z-index:2}
+    .sw-links path{stroke-width:4}
+    .sw-cons{position:absolute; left:140px; top:630px; width:1000px; height:270px; background:var(--code); border:1px solid var(--line); border-radius:22px; padding:22px 30px}
+    .sw-cons small, .sw-onda small{font-size:15px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted)}
+    .sw-cons pre{margin:12px 0 0; font:400 22px/1.6 ui-monospace,'JetBrains Mono',Menlo,monospace; color:var(--lead)}
+    .sw-onda{position:absolute; left:1180px; right:140px; top:630px; height:270px; background:var(--panel); border:1px solid var(--line); border-radius:22px; padding:22px 26px}
+    .sw-onda svg{width:100%; height:170px; overflow:visible}
+    .sw-onda .w{fill:none; stroke:var(--accent); stroke-width:4}
+    .sw-onda .w2{fill:none; stroke:var(--accent-2); stroke-width:2.5; opacity:.7}
+    .sw-nota{position:absolute; right:26px; top:16px; font:italic 800 30px 'Playfair Display',serif; color:var(--strong)}
   </style>
 </head>
 <body>
@@ -657,6 +696,8 @@
   <script src="escenas.js"></script>
   <script src="timeline-escenas.js"></script>
   <script src="motion-tipos.js"></script>
+  <script src="../assets/vendor/three-0.149.0.min.js"></script>
+  <script src="bandonear-3d.js"></script>
   <script src="timeline-tipos.js"></script>
   <script>
     // El desarrollo del proyecto como una línea de tiempo: el mismo motor que motion.html
@@ -664,7 +705,7 @@
     // La presentación como un solo video: una línea de tiempo continua con puntos clave.
     // "Siguiente" reproduce hasta el próximo punto clave y ahí se detiene; "anterior"
     // rebobina. Cada cuadro sale de render(T): se puede pausar, rebobinar y recorrer.
-    const { TIPOS: BASE, ESCENAS, FASES, esc, lines } = window.PRESENTACION;
+    const { TIPOS: BASE, ESCENAS, FASES, ENCABEZADO, VERSION, MIGRACIONES, esc, lines } = window.PRESENTACION;
     const TIPOS = window.MOTION.TIPOS;
     const L = window.BandoneARLogo;
     const $ = (id) => document.getElementById(id);
@@ -704,13 +745,22 @@
     const KEY = 'bandonear-timeline';
     // Si hay un diseño guardado en el editor de logo, ese es el logo de la presentación
     const HAY_DISENO = (() => { try { return !!localStorage.getItem('bandonear-logo-editor'); } catch (e) { return false; } })();
-    const ESTILO_DEF = { tema: 'noche', logo: HAY_DISENO ? 'editor' : 'paleta', transicion: 'pliegues', desenfoque: true, velocidad: 1, grano: true, cromo: true, institucion: 'Expo Proyecto 2026 · DIIT · UNLaM', fases: FASES.join('\n') };
+    const ESTILO_DEF = { tema: 'noche', logo: HAY_DISENO ? 'editor' : 'paleta', transicion: 'pliegues', desenfoque: true, velocidad: 1, grano: true, cromo: true, institucion: ENCABEZADO, fases: FASES.join('\n') };
     const clone = (o) => JSON.parse(JSON.stringify(o));
-    const fresh = () => ({ escenas: clone(ESCENAS).map((s) => ({ activa: true, ...s })), estilo: { ...ESTILO_DEF } });
+    const fresh = () => ({ version: VERSION, escenas: clone(ESCENAS).map((s) => ({ activa: true, ...s })), estilo: { ...ESTILO_DEF } });
+    // Lo guardado con una versión anterior del guion se pone al día sin perder lo editado
+    function migrar(d) {
+      for (let v = d.version || 1; v < VERSION; v++) MIGRACIONES[v - 1](d);
+      d.version = VERSION;
+      return d;
+    }
     let doc = fresh();
     try {
       const saved = JSON.parse(localStorage.getItem(KEY) || 'null');
-      if (saved && Array.isArray(saved.escenas)) doc = { escenas: saved.escenas, estilo: { ...ESTILO_DEF, ...saved.estilo } };
+      if (saved && Array.isArray(saved.escenas)) {
+        doc = migrar({ version: saved.version || 1, escenas: saved.escenas, estilo: { ...ESTILO_DEF, ...saved.estilo } });
+        if ((saved.version || 1) < VERSION) localStorage.setItem(KEY, JSON.stringify(doc));
+      }
       // "Según el tema" que nadie eligió a mano (venía por defecto): pasa al diseño del editor
       if (HAY_DISENO && doc.estilo.logo === 'paleta' && !doc.estilo.logoElegido) doc.estilo.logo = 'editor';
     } catch (e) {}
@@ -985,7 +1035,7 @@
           if (qIn < 1 && sc.sharedIn.has(a.e)) return;
           if (qOut > 0 && sc.sharedOut.has(a.e)) return;
           const t = sc.sharedIn.has(a.e) ? 1e9 : T - sc.stepStart[a.s] - a.at;
-          apply(a, t, qOut > 0 ? cl((qOut - a.order * 0.022) / 0.42) : 0, sc, od);
+          apply(a, t, qOut > 0 ? cl((qOut - Math.min(a.order * 0.022, 0.2)) / 0.42) : 0, sc, od);
         });
       });
 
@@ -1664,7 +1714,7 @@
 
     // ---------- Exportar / importar ----------
     function toast(msg) { const el = $('toast'); el.textContent = msg; el.classList.add('show'); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('show'), 2400); }
-    const replaceDoc = (data, msg) => { doc = { escenas: data.escenas, estilo: { ...ESTILO_DEF, ...data.estilo } }; save(); stage.dataset.theme = doc.estilo.tema; build(); T = 0; target = KEYS[0].t; renderSceneList(); renderStyleForm(); toast(msg); };
+    const replaceDoc = (data, msg) => { doc = migrar({ version: data.version || 1, escenas: data.escenas, estilo: { ...ESTILO_DEF, ...data.estilo } }); save(); stage.dataset.theme = doc.estilo.tema; build(); T = 0; target = KEYS[0].t; renderSceneList(); renderStyleForm(); toast(msg); };
     $('exportJson').onclick = () => {
       const a = document.createElement('a');
       a.href = URL.createObjectURL(new Blob([JSON.stringify(doc, null, 2)], { type: 'application/json' }));
