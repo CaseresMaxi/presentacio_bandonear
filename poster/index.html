@@ -363,7 +363,8 @@
   </div>
   <div class="toast ui" id="toast"></div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+  <!-- Generador de QR guardado en el repo: el póster y su exportación andan sin internet -->
+  <script src="../assets/vendor/qrcode-generator-1.4.4.js"></script>
   <script src="../logo/glifos.js"></script>
   <script src="../logo/logo.js"></script>
   <script>
@@ -416,7 +417,7 @@
       { group: 'Equipo y QR' },
       { key: 'equipo', label: 'Equipo', type: 'text', def: 'Brenda · Maxi · Antonio · Leo · Franco' },
       { key: 'docentes', label: 'Docentes (vacío = no se muestra)', type: 'textarea', def: '' },
-      { key: 'qrUrl', label: 'Link del QR (vacío = sin QR)', type: 'url', def: '' },
+      { key: 'qrUrl', label: 'Link del QR (vacío = sin QR)', type: 'url', def: 'https://bandonear.netlify.app' },
       { key: 'qrTitulo', label: 'Título junto al QR', type: 'text', def: 'Escuchalo.' },
       { key: 'qrSub', label: 'Texto junto al QR', type: 'text', def: 'Escaneá y mirá el video.' },
       { group: 'Marco' },
