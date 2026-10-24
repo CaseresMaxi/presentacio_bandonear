@@ -46,6 +46,8 @@ código; es estado para importar, no código.
   El guion tiene versión: si se cambia el contenido por defecto, sumar una función a `MIGRACIONES` en
   `timeline-escenas.js` para que el estado guardado en el navegador se ponga al día (solo pisa lo que no se editó).
 - URL: `?escena=N&paso=M`, `?t=segundos` (congela), `&tema=`, `&ui=0`.
+- Para presentar: `presentacion/presentar.html` (= `timeline.html?presentar`): sin la barra de controles,
+  sin cursor y sin atajos de edición; solo flechas, espacio, Re Pág/Av Pág, Inicio, Fin y F.
 - El encabezado dibuja el lockup vectorial con `buildSVG`, sigue el logo de cada escena
   y, si hay diseño guardado en el editor del logo, lo usa por defecto.
 - Correcciones: botón «Corregir» o tecla `C`, clic en la escena; se exportan en .md.

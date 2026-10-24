@@ -547,6 +547,9 @@
     .dm-mon small{font-size:16px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted)}
     .dm-mon pre{margin:12px 0 0; font:400 19px/1.6 ui-monospace,Menlo,monospace; color:var(--accent); min-height:180px}
 
+    /* Modo presentar: sin cursor sobre la presentación */
+    body.presentar, body.presentar .stage{cursor:none}
+
     /* ---------- Gracias y collage ---------- */
     .gr-txt{position:absolute; left:140px; top:0; bottom:0; width:640px; display:flex; flex-direction:column; justify-content:center}
     .gr-logo .logo-iso{height:120px}
@@ -1323,9 +1326,13 @@
       if (editorOpen) return selectAt(e);
       next();
     });
+    // Modo presentar (?presentar o presentar.html): sin controles ni atajos de edición.
+    // Quedan las flechas, espacio, Re Pág / Av Pág (los punteros de diapositivas), Inicio, Fin y F.
+    const PRESENTAR = new URLSearchParams(location.search).has('presentar');
     addEventListener('keydown', (e) => {
       if (e.target.closest?.('input, textarea, select')) return;
       const k = e.key;
+      if (PRESENTAR && !['ArrowRight', 'ArrowLeft', ' ', 'PageDown', 'PageUp', 'Home', 'End', 'f', 'F'].includes(k)) return;
       if (k === 'ArrowRight' || k === ' ' || k === 'PageDown') { e.preventDefault(); next(e.shiftKey); }
       else if (k === 'ArrowLeft' || k === 'PageUp') { e.preventDefault(); prev(e.shiftKey); }
       else if (k === 'Home') ACTIONS.first();
@@ -1346,6 +1353,7 @@
     });
     let hideTimer;
     function showControls() {
+      if (PRESENTAR) return;
       $('controls').classList.remove('hidden');
       clearTimeout(hideTimer);
       hideTimer = setTimeout(() => { if (!editorOpen) $('controls').classList.add('hidden'); }, 2600);
@@ -1777,7 +1785,8 @@
     // ?escena=4&paso=2 (desde 1) abre ese punto clave · ?t=12.5 congela ese instante · &tema= · &ui=0
     const q = new URLSearchParams(location.search);
     if (q.get('tema')) doc.estilo.tema = q.get('tema');
-    if (q.get('ui') === '0') $('controls').style.display = 'none';
+    if (q.get('ui') === '0' || PRESENTAR) $('controls').style.display = 'none';
+    if (PRESENTAR) document.body.classList.add('presentar');
     stage.dataset.theme = doc.estilo.tema;
     stage.classList.toggle('grain', !!doc.estilo.grano);
     fit();
