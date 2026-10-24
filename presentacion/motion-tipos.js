@@ -59,7 +59,7 @@
     arquitectura: {
       pasos: 'uno',
       // La cámara recorre el diagrama: entradas, procesamiento y, al final, el sistema completo
-      focos: (d) => (modo(d, 'uno') === 'uno' ? [{ x: 620, y: 540, s: 1.16 }, { x: 800, y: 540, s: 1.06 }, { x: 960, y: 540, s: 1 }] : []),
+      focos: (d) => (modo(d, 'uno') === 'uno' ? [{ x: 620, y: 478, s: 1.16 }, { x: 800, y: 462, s: 1.06 }, { x: 960, y: 540, s: 1 }] : []),
       render: (d) => {
         const b = pairs(d.bloques), uno = modo(d, 'uno') === 'uno';
         const BW = 350, BH = 130;
