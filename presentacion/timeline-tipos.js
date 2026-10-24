@@ -19,7 +19,8 @@
   const paso = (uno, i, base, desde = 1, dim = true) => (uno ? `data-s="${i + desde}" data-at=".05"${dim ? ' data-dim' : ''}` : `data-at="${f2(base + i * 0.16)}"`);
   // Marca oculta de un punto clave: el tick lee su opacidad para saber en qué paso está la escena
   const marca = (s) => `<i class="mk" data-mk="${s}" data-m="fade" data-s="${s}" data-dur=".4"></i>`;
-  const enPaso = (root, s) => +(root.querySelector(`[data-mk="${s}"]`)?.style.opacity || 0) > 0.5;
+  // Sin marca (todo junto, por ejemplo en el modo presentar) la animación corre completa desde el principio
+  const enPaso = (root, s) => { const m = root.querySelector(`[data-mk="${s}"]`); return !m || +(m.style.opacity || 0) > 0.5; };
 
   // ---------- El bandoneón, de frente ----------
   // viewBox 0 0 1000 520. Botones en arcos: 33 a la izquierda, 38 a la derecha.
@@ -227,7 +228,7 @@
       render: (d) => {
         const L = lines(d.partes), uno = modo(d, 'uno') === 'uno';
         const lab = (i, x, y, ax, ay, anchor = 'start') => `<g data-f="partes" data-m="fade" data-at="${f2(1.2 + i * 0.12)}"><path class="lead" d="M${ax} ${ay} L${x + (anchor === 'end' ? 8 : -8)} ${y - 8}"/><circle class="dot" cx="${ax}" cy="${ay}" r="5"/><text class="lbl" x="${x}" y="${y}" text-anchor="${anchor}">${esc(L[i] || '')}</text></g>`;
-        return `${marca(1)}${marca(2)}
+        return `${uno ? marca(1) + marca(2) : ''}
         <div class="m-col">${kicker(d)}${titulo(d, 0.12, 'md')}
           <ol class="points sm">${lines(d.puntos).map((p, i) => `<li class="pt" data-f="puntos" data-k="item-${i}" data-shape="bar" data-m="left" ${uno ? `data-s="${i + 1}" data-at=".05" data-dim` : `data-at="${f2(0.9 + i * 0.2)}"`}><span class="num">${nn(i + 1)}</span><span>${md(p)}</span></li>`).join('')}</ol>
         </div>
@@ -418,7 +419,7 @@
           '<path class="onda-ico" d="M4 46 C14 16 22 16 30 46 S46 76 54 46 S70 16 78 46 S86 60 88 46"/><circle cx="66" cy="22" r="7" class="fill"/><path d="M73 22 V4 l10 4"/>',
           '<path d="M10 34 h14 l20 -18 v58 l-20 -18 h-14 z"/><path class="o1" d="M56 30 q10 15 0 30"/><path class="o2" d="M66 22 q18 23 0 46"/><path class="o3" d="M76 14 q26 31 0 62"/>',
         ];
-        return `${marca(1)}${marca(2)}
+        return `${uno ? marca(1) + marca(2) : ''}
         <div class="pad">${kicker(d)}${titulo(d, 0.12, 'md wide')}</div>
         <svg class="links sw-links" viewBox="0 0 1920 1080">${[0, 1, 2, 3].map((i) => `<path data-m="draw" data-dur=".5" ${st(i + 1, -0.15)} d="M${440 + i * 335} 470 H${475 + i * 335}"/>`).join('')}<g class="packets"></g></svg>
         ${[0, 1, 2, 3].map((i) => (en[i] ? `<div class="sw-en" style="left:${457 + i * 335}px" data-f="enlaces" data-m="fade" ${st(i + 1, 0)}>${esc(en[i])}</div>` : '')).join('')}

@@ -761,6 +761,9 @@
 
     // ---------- Estado guardado (mismo formato que la presentación clásica) ----------
     const KEY = 'bandonear-timeline';
+    // Modo presentar (?presentar o presentar.html): sin controles ni atajos de edición, y cada
+    // escena muestra sus listas completas de una, sin un punto clave por ítem
+    const PRESENTAR = new URLSearchParams(location.search).has('presentar');
     // Si hay un diseño guardado en el editor de logo, ese es el logo de la presentación
     const HAY_DISENO = (() => { try { return !!localStorage.getItem('bandonear-logo-editor'); } catch (e) { return false; } })();
     const ESTILO_DEF = { tema: 'noche', logo: HAY_DISENO ? 'editor' : 'paleta', transicion: 'pliegues', desenfoque: true, velocidad: 1, grano: true, cromo: true, institucion: ENCABEZADO, fases: FASES.join('\n') };
@@ -861,8 +864,10 @@
       box.innerHTML = ''; $('ghosts').innerHTML = '';
       S = active().map((d, i) => {
         const tipo = TIPOS[d.tipo], el = document.createElement('section');
+        // En el modo presentar, todo junto: se dibuja con pasos "todo" (sin tocar lo guardado)
+        const dr = PRESENTAR && tipo?.pasos ? { ...d, pasos: 'todo' } : d;
         el.className = 'scene scene-' + d.tipo;
-        el.innerHTML = tipo ? tipo.render(d, { logo: (size) => logoHTML(size, d.logo), n: i + 1, fases: lines(doc.estilo.fases), fase: +d.fase || 0 }) : `<div class="pad"><h2>Tipo desconocido: ${esc(d.tipo)}</h2></div>`;
+        el.innerHTML = tipo ? tipo.render(dr, { logo: (size) => logoHTML(size, d.logo), n: i + 1, fases: lines(doc.estilo.fases), fase: +d.fase || 0 }) : `<div class="pad"><h2>Tipo desconocido: ${esc(d.tipo)}</h2></div>`;
         if (d.logo && !d.logo.startsWith('archivo:')) el.style.setProperty('--logo-acc', logoCfg(d.logo).acento);
         // Elementos ocultos desde el editor
         (d.ocultar || []).forEach((f) => el.querySelectorAll(`[data-f="${f}"]`).forEach((x) => x.remove()));
@@ -877,7 +882,7 @@
         const intro = Array.from({ length: steps }, (_, s) => anims.filter((a) => a.s === s)
           .reduce((m, a) => Math.max(m, a.at + a.dur + (a.parts ? Math.max(0, a.parts.length - 1) * a.st : 0)), 0.6));
         const dir = DIRS[d.entrada] ? d.entrada : AUTO[(i + AUTO.length - 1) % AUTO.length];
-        return { d, i, el, tipo, anims, steps, intro, dir, foci: tipo?.focos?.(d) || [], keyed: new Map(), sharedIn: new Set(), sharedOut: new Set() };
+        return { d, i, el, tipo, anims, steps, intro, dir, foci: tipo?.focos?.(dr) || [], keyed: new Map(), sharedIn: new Set(), sharedOut: new Set() };
       });
       // Línea de tiempo: [transición] → punto clave → punto clave… → transición → …
       TR = []; KEYS = [];
@@ -1326,9 +1331,8 @@
       if (editorOpen) return selectAt(e);
       next();
     });
-    // Modo presentar (?presentar o presentar.html): sin controles ni atajos de edición.
+    // Modo presentar: sin controles ni atajos de edición.
     // Quedan las flechas, espacio, Re Pág / Av Pág (los punteros de diapositivas), Inicio, Fin y F.
-    const PRESENTAR = new URLSearchParams(location.search).has('presentar');
     addEventListener('keydown', (e) => {
       if (e.target.closest?.('input, textarea, select')) return;
       const k = e.key;
