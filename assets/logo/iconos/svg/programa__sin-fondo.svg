@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-9.6 -9.6 139.2 99.2" role="img" aria-label="BandoneAR">
+<title>BandoneAR</title>
+
+<path d="M6 17 L16 8 H30 L36 17 V63 L30 72 H16 L6 63 Z" fill="none" stroke="#140f0c" stroke-width="4" stroke-linejoin="round"/><g fill="#140f0c"><circle cx="15" cy="27" r="2.4"/><circle cx="15" cy="37" r="2.4"/><circle cx="15" cy="47" r="2.4"/><circle cx="15" cy="57" r="2.4"/><circle cx="21.5" cy="32" r="2.4"/><circle cx="21.5" cy="42" r="2.4"/><circle cx="21.5" cy="52" r="2.4"/><circle cx="28" cy="27" r="2.4"/><circle cx="28" cy="37" r="2.4"/><circle cx="28" cy="47" r="2.4"/><circle cx="28" cy="57" r="2.4"/></g>
+<path fill="#140f0c" d="M42 12 L48 8 V72 L42 68Z"/><path fill="#412e12" d="M52 12 L58 8 V72 L52 68Z"/><path fill="#6d4c19" d="M62 12 L68 8 V72 L62 68Z"/><path fill="#9a6b1f" d="M72 12 L78 8 V72 L72 68Z"/>
+
+<path d="M84 17 L94 8 H108 L114 17 V63 L108 72 H94 L84 63 Z" fill="none" stroke="#9a6b1f" stroke-width="4" stroke-linejoin="round"/><g fill="#9a6b1f"><rect x="92" y="25" width="5" height="5" rx="1"/><rect x="101" y="25" width="5" height="5" rx="1"/><rect x="92" y="34" width="5" height="5" rx="1"/><rect x="101" y="34" width="5" height="5" rx="1"/><rect x="92" y="43" width="5" height="5" rx="1"/><rect x="101" y="43" width="5" height="5" rx="1"/><rect x="92" y="52" width="5" height="5" rx="1"/><rect x="101" y="52" width="5" height="5" rx="1"/></g>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="31.6 -6.4 56.8 92.8" role="img" aria-label="BandoneAR">
+<title>BandoneAR</title>
+<rect x="31.6" y="-6.4" width="56.8" height="92.8" rx="0" fill="#0d0d0f"/>
+
+<path fill="#74acdf" d="M42 8 L48.5 8 V72 L42 72Z"/><path fill="#74acdf" d="M71.5 8 L78 8 V72 L71.5 72Z"/><mask id="solcorte102" maskUnits="userSpaceOnUse" x="0" y="0" width="120" height="80"><rect width="120" height="80" fill="#fff"/><circle cx="60" cy="40" r="9.25" fill="#000"/></mask><g mask="url(#solcorte102)"><path fill="#ffffff" d="M51.83 8 L58.33 8 V72 L51.83 72Z"/><path fill="#ffffff" d="M61.67 8 L68.17 8 V72 L61.67 72Z"/></g><clipPath id="solbarras101"><path d="M51.83 8 L58.33 8 V72 L51.83 72Z"/><path d="M61.67 8 L68.17 8 V72 L61.67 72Z"/></clipPath>
+<circle cx="60" cy="40" r="7.5" fill="#f6b40e" clip-path="url(#solbarras101)"/>
+
+</svg>
