@@ -15,7 +15,7 @@ se comenta en castellano rioplatense.
 | `landing/index.html` | Landing con sección Aprendé |
 | `logo/index.html` | Editor del logo vectorial; `logo.js` (`BandoneARLogo`) + `glifos.js` (wordmark en curvas, generado por `generar_glifos.py`) |
 | `assets/logo/*.svg` | Isotipo y lockups horizontal/vertical por variante (generados con `generar_logo.py`) |
-| `assets/logo/paquetes/*.zip` | Un zip por variante de color: SVG + PNG 2048 px de horizontal, vertical e isotipo, con y sin fondo, más `ajustes.json`. Exportados con «Todas las variantes (.zip)» del editor |
+| `assets/logo/paquetes/*.zip` | Un zip por variante (12, incluida «celeste barrotes perspectiva», la del sol entre barrotes con pliegues en perspectiva): SVG + PNG 2048 px de horizontal, vertical e isotipo, con y sin fondo, más `ajustes.json`. Exportados con «Todas las variantes (.zip)» del editor |
 | `reel/index.html` | Reel «Un pliegue que respira»; `node reel/render.mjs beats\|full` renderiza en `reel/salida/` |
 
 Ramas: `main` es la buena. `expo-final` y `experimental-motion` ya están mergeadas.

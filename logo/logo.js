@@ -12,6 +12,7 @@
     'celeste con sol': { tinta: '#ffffff', acento: '#74acdf', fondo: '#0d0d0f', sol: 'mayo', pliegues: 'bandera' },
     'celeste con sol claro': { tinta: '#140f0c', acento: '#3f86c6', fondo: '#f3eadc', sol: 'mayo', pliegues: 'bandera' },
     'celeste barrotes': { tinta: '#ffffff', acento: '#74acdf', fondo: '#0d0d0f', sol: 'barrotes', pliegues: 'bandera', inclinacion: 0, grosorPliegue: 6.5, solTam: 7.5, solRecorte: 1.75, cabezales: 'contorno' },
+    'celeste barrotes perspectiva': { tinta: '#ffffff', acento: '#74acdf', fondo: '#0d0d0f', sol: 'barrotes', pliegues: 'bandera', inclinacion: 4, grosorPliegue: 7.5, solTam: 5, solRecorte: 0, cabezales: 'contorno' },
     'barrotes solos': { tinta: '#ffffff', acento: '#74acdf', fondo: '#0d0d0f', sol: 'barrotes', pliegues: 'bandera', inclinacion: 0, grosorPliegue: 6.5, solTam: 7.5, solRecorte: 1.75, cabezales: 'ninguno' },
     'mono blanco': { tinta: '#ffffff', acento: '#ffffff', fondo: '#0d0d0f' },
     'mono negro': { tinta: '#000000', acento: '#000000', fondo: '#ffffff' },
