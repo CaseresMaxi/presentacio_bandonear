@@ -625,7 +625,7 @@
         <kbd>→</kbd> <kbd>Espacio</kbd> reproducir hasta el próximo punto clave<br>
         <kbd>←</kbd> rebobinar al punto clave anterior<br>
         <kbd>Shift</kbd> + flecha: saltar sin animar · <kbd>Inicio</kbd> <kbd>Fin</kbd><br>
-        <kbd>P</kbd> congelar · <kbd>A</kbd> automático · <kbd>R</kbd> repetir el tramo<br>
+        <kbd>P</kbd> congelar · <kbd>A</kbd> automático · <kbd>V</kbd> de corrido · <kbd>R</kbd> repetir el tramo<br>
         <kbd>N</kbd> notas · <kbd>T</kbd> tema · <kbd>M</kbd> desenfoque · <kbd>E</kbd> editor<br>
         <kbd>C</kbd> marcar una corrección · con el editor abierto, clic en un elemento para editarlo<br>
         <kbd>F</kbd> pantalla completa · <kbd>H</kbd> esta ayuda
@@ -642,6 +642,7 @@
           <button class="cbtn" data-c="replay" title="Repetir el tramo (R)">↺</button>
           <span class="clock" id="clock"></span>
           <span class="spacer"></span>
+          <button class="cbtn" data-c="corrido" id="btnCorrido" title="Verla de corrido, sin frenar en los puntos clave (V)">▶▶ De corrido</button>
           <button class="cbtn" data-c="auto" id="btnAuto" title="Automático (A)">Auto</button>
           <button class="cbtn" data-c="notes" id="btnNotes" title="Notas (N)">Notas</button>
           <button class="cbtn" data-c="theme" title="Tema (T)">Tema</button>
@@ -1180,18 +1181,21 @@
     const EPS = 1e-4;
     const keyAt = (t) => KEYS.find((k) => Math.abs(k.t - t) < EPS);
     function next(jumpTo = false) {
+      if (corrido) setCorrido(false, false);
       const from = Math.max(T, target), k = KEYS.find((x) => x.t > from + EPS);
       if (!k) { if (auto) toggleAuto(false); return; }
       target = k.t; if (jumpTo) T = target;
       if (startedAt === null) startedAt = performance.now();
     }
     function prev(jumpTo = false) {
+      if (corrido) setCorrido(false, false);
       const from = Math.min(T, target), ks = KEYS.filter((x) => x.t < from - EPS);
       target = ks.length ? ks[ks.length - 1].t : 0; if (jumpTo) T = target;
     }
-    function seek(t, play = false) { T = cl(t, 0, TOTAL); target = play ? target : T; }
+    function seek(t, play = false) { if (corrido) setCorrido(false, false); T = cl(t, 0, TOTAL); target = play ? target : T; }
     // Repite el tramo que lleva al punto clave actual
     function replay() {
+      if (corrido) setCorrido(false, false);
       const i = KEYS.findIndex((k) => k.t >= T - EPS), k = KEYS[Math.max(0, i)];
       const sc = S[k.i];
       T = k.s === 0 ? sc.tIn : sc.stepStart[k.s]; target = k.t;
@@ -1210,6 +1214,8 @@
           const dir = target > T ? 1 : -1, sp = (dir > 0 ? 1 : 2.6) * doc.estilo.velocidad;
           T = dir > 0 ? Math.min(target, T + dt * sp) : Math.max(target, T - dt * sp);
           vel = sp * dir; holdSince = null;
+        } else if (corrido) {
+          setCorrido(false, false); toast('Fin');
         } else if (auto) {
           const k = keyAt(T);
           holdSince ??= now;
@@ -1276,7 +1282,23 @@
     }
 
     // ---------- Controles ----------
-    function toggleAuto(v = !auto) { auto = v; holdSince = null; $('btnAuto').classList.toggle('on', auto); toast(auto ? 'Automático: sigue solo después de cada punto clave' : 'Modo presentador: avanzás vos'); if (auto && keyAt(T) === undefined && T === target) next(); }
+    // De corrido: reproduce toda la línea de tiempo sin frenar en los puntos clave
+    let corrido = false;
+    function setCorrido(v = !corrido, avisar = true) {
+      corrido = v;
+      $('btnCorrido').classList.toggle('on', v);
+      if (v) {
+        if (auto) toggleAuto(false);
+        if (paused) togglePause(false);
+        if (T >= TOTAL - EPS) T = 0;
+        target = TOTAL;
+        if (startedAt === null) startedAt = performance.now();
+      }
+      if (avisar) toast(v ? 'De corrido: sigue hasta el final sin frenar' : 'De corrido: detenido');
+      // Al cortarlo, frena en el próximo punto clave (o, si lo cortó una flecha, deja que ella elija)
+      if (!v) { const k = KEYS.find((x) => x.t >= T - EPS); target = avisar && k ? k.t : T; }
+    }
+    function toggleAuto(v = !auto) { if (v && corrido) setCorrido(false, false); auto = v; holdSince = null; $('btnAuto').classList.toggle('on', auto); toast(auto ? 'Automático: sigue solo después de cada punto clave' : 'Modo presentador: avanzás vos'); if (auto && keyAt(T) === undefined && T === target) next(); }
     function togglePause(v = !paused) { paused = v; $('btnPause').textContent = paused ? '▶' : '❚❚'; }
     function cycleTheme() {
       const temas = ['noche', 'carmin', 'programa', 'plano'];
@@ -1284,8 +1306,8 @@
       applyStyle(); save(); toast('Tema: ' + doc.estilo.tema);
     }
     const ACTIONS = {
-      next: () => next(), prev: () => prev(), replay,
-      first: () => { T = 0; target = KEYS[0]?.t || 0; },
+      next: () => next(), prev: () => prev(), replay, corrido: () => setCorrido(),
+      first: () => { T = 0; target = corrido ? TOTAL : KEYS[0]?.t || 0; },
       last: () => seek(TOTAL),
       pause: () => togglePause(), auto: () => toggleAuto(), theme: cycleTheme,
       notes: () => { $('notes').classList.toggle('on'); $('btnNotes').classList.toggle('on'); },
@@ -1310,6 +1332,7 @@
       else if (k === 'End') ACTIONS.last();
       else if (/^[pP]$/.test(k)) togglePause();
       else if (/^[aA]$/.test(k)) toggleAuto();
+      else if (/^[vV]$/.test(k)) setCorrido();
       else if (/^[rR]$/.test(k)) replay();
       else if (/^[nN]$/.test(k)) ACTIONS.notes();
       else if (/^[tT]$/.test(k)) cycleTheme();
