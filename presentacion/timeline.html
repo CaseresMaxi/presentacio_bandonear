@@ -1332,11 +1332,11 @@
       next();
     });
     // Modo presentar: sin controles ni atajos de edición.
-    // Quedan las flechas, espacio, Re Pág / Av Pág (los punteros de diapositivas), Inicio, Fin y F.
+    // Quedan las flechas, espacio, Re Pág / Av Pág (los punteros de diapositivas), Inicio, Fin, F y T (tema).
     addEventListener('keydown', (e) => {
       if (e.target.closest?.('input, textarea, select')) return;
       const k = e.key;
-      if (PRESENTAR && !['ArrowRight', 'ArrowLeft', ' ', 'PageDown', 'PageUp', 'Home', 'End', 'f', 'F'].includes(k)) return;
+      if (PRESENTAR && !['ArrowRight', 'ArrowLeft', ' ', 'PageDown', 'PageUp', 'Home', 'End', 'f', 'F', 't', 'T'].includes(k)) return;
       if (k === 'ArrowRight' || k === ' ' || k === 'PageDown') { e.preventDefault(); next(e.shiftKey); }
       else if (k === 'ArrowLeft' || k === 'PageUp') { e.preventDefault(); prev(e.shiftKey); }
       else if (k === 'Home') ACTIONS.first();

@@ -4,9 +4,11 @@
   <meta charset="utf-8" />
   <title>BandoneAR — Presentar</title>
   <!-- Abre la presentación timeline en modo presentar: sin la barra de controles ni los
-       atajos de edición. Avanza con → / espacio / clic y vuelve con ←. F: pantalla completa. -->
-  <meta http-equiv="refresh" content="0; url=timeline.html?presentar" />
-  <script>location.replace('timeline.html?presentar');</script>
+       atajos de edición. Avanza con → / espacio / clic y vuelve con ←. F: pantalla completa.
+       T cambia el tema de color (queda guardado). También: presentar.html?tema=carmin
+       (noche, carmin, programa o plano). -->
+  <script>location.replace('timeline.html?presentar' + location.search.replace(/^\?/, '&') + location.hash);</script>
+  <noscript><meta http-equiv="refresh" content="0; url=timeline.html?presentar" /></noscript>
 </head>
 <body style="background:#0d0d0f"></body>
 </html>
