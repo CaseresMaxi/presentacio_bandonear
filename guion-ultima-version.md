@@ -1,135 +1,177 @@
 # Guion · última versión
 
-Presentación timeline de BandoneAR (`presentacion/timeline.html`) · 24 de octubre de 2026
+Presentación timeline de BandoneAR (`presentacion/timeline.html`) · cinco oradores · **15 minutos como máximo, con la demo incluida**. Hablado, son unos 10 minutos y medio entre los cinco.
 
-La presentación timeline de BandoneAR (22 diapositivas) dura **unos 9 minutos** hablada entre cinco personas. La demo en vivo va aparte, después: en la diapositiva 20 se le pasa la palabra a quien toca, y las conclusiones y el agradecimiento se dicen al terminar la demo.
+## El reloj
 
-| Persona | Diapositivas | Tema | Tiempo |
-| --- | --- | --- | --- |
-| Persona 1 | 1 a 5 | Portada y origen de la idea | ~1:50 |
-| Persona 2 | 6 a 9 | ¿Es viable? El instrumento por dentro | ~1:30 |
-| Persona 3 | 10 a 13 | El fuelle, el veredicto y los componentes | ~1:40 |
-| Persona 4 | 14 a 16 | Software, switches y conexiones | ~1:35 |
-| Persona 5 | 17 a 22 | Desafíos, pase a la demo, conclusiones y gracias | ~1:50 |
-| **Total** | **22** | | **~8:25 + ~20 s de pases ≈ 8:45** |
+| Persona | Diapositivas | Tema | Lectura | En vivo |
+| --- | --- | --- | --- | --- |
+| Persona 1 | 1 a 5 | Portada y origen de la idea | 1:54 | ~2:10 |
+| Persona 2 | 6 a 9 | ¿Es viable? El instrumento por dentro | 1:43 | ~2:00 |
+| Persona 3 | 10 a 13 | El fuelle, el veredicto y los componentes | 2:05 | ~2:25 |
+| Persona 4 | 14 a 16 | Software, tacto y conexiones | 1:50 | ~2:05 |
+| Persona 5 | 17 a 20 | Desafíos y pase a la demo | 1:07 | ~1:15 |
+| Quien toca | 20 | Demo en vivo | | ~2:30 |
+| Persona 5 | 21 y 22 | Conclusiones y gracias | 0:33 | ~0:40 |
+| | | Pases entre personas | | ~0:30 |
+| **Total** | **22** | | **9:12** | **~13:35** |
 
-Los tiempos salen de leer cada texto a un ritmo tranquilo (unas 130 palabras por minuto) y dejan unos 15 segundos de margen para llegar a 9. No incluyen la demo ni las preguntas.
+«Lectura» es el texto leído de corrido a 130 palabras por minuto, que es un ritmo tranquilo. «En vivo» suma un 15 % por las pausas, por esperar que entre cada animación y por apretar la flecha. Quedan unos **85 segundos de margen** para llegar a 15. Las preguntas no están contadas: si entran dentro de los 15 minutos, usen ese margen y apliquen los recortes del final.
 
-Quién es cada persona lo deciden ustedes. Una sugerencia: que la Persona 1 sea quien aprendió bandoneón con la guía de papel, porque cuenta esa historia, y que esa misma persona toque en la demo.
+Quién es cada persona lo deciden ustedes. Una sugerencia: que la Persona 1 sea quien aprendió bandoneón con la guía de papel, porque cuenta esa historia en primera persona, y que esa misma persona toque en la demo.
 
-## Persona 1 · Origen de la idea (diapositivas 1 a 5, ~1:50)
+---
 
-**1. Portada: BandoneAR** · ~20 s
+## Persona 1 · Origen de la idea (diapositivas 1 a 5, ~2:20)
 
-> Buenas tardes. Somos el grupo 106: Brenda, Maxi, Antonio, Leo y Franco. Les presentamos BandoneAR, un bandoneón digital, contado como lo vivimos: la idea, si era viable, la solución y lo que nos costó.
+**1. Portada: BandoneAR** · ~25 s
+
+> Buenas tardes. Somos el grupo 106: Brenda, Maxi, Antonio, Leo y Franco. Les presentamos BandoneAR, un bandoneón digital pensado para aprender. Lo vamos a contar como lo vivimos: de dónde salió la idea, si era posible hacerlo, cómo lo resolvimos, qué nos costó y, al final, el instrumento tocando en vivo.
 
 **2. Etapa 01: Origen de la idea** · ~5 s
 
-> Primero, de dónde salió la idea.
+> Empecemos por el principio: de dónde salió la idea.
 
-**3. Aprender con una guía de papel** · ~35 s
+**3. Aprender con una guía de papel** · ~45 s
 
-> Uno de nosotros, aficionado al tango, estaba aprendiendo bandoneón, y nos mostró cómo se estudia: con guías de papel como esta. Cada círculo es un botón, y cada botón da dos notas: una al abrir el fuelle y otra al cerrarlo. Para practicar, no había alternativa al instrumento real.
+> Todo empezó porque uno de nosotros, aficionado al tango, se puso a aprender bandoneón. Y nos mostró cómo se estudia: con guías de papel como esta. Cada círculo es un botón, con su número arriba. *(→)* Y adentro de cada círculo hay dos notas, porque el bandoneón es bisonoro: el mismo botón da una nota al abrir el fuelle y otra distinta al cerrarlo. *(→)* Para practicar con esto, sin el instrumento en la mano, no había ninguna alternativa.
 
-**4. Una cuestión de accesibilidad** · ~25 s
+**4. Una cuestión de accesibilidad** · ~35 s
 
-> Y ese es el problema. Un bandoneón cuesta miles de dólares, casi no se fabrican y la mayoría son usados restaurados. Sin instrumento propio, la práctica no se sostiene.
+> Y ahí está el problema, que es de accesibilidad. *(→)* Un bandoneón cuesta miles de dólares, incluso uno para estudiar. *(→)* Casi no se fabrican: hay pocos luthiers y la mayoría de los que se consiguen son usados restaurados. *(→)* Y sin un instrumento propio, la práctica no se sostiene. Mucha gente que quiere aprender se queda en el camino.
 
-**5. Los demás instrumentos ya tienen su versión digital** · ~25 s
+**5. Los demás instrumentos ya tienen su versión digital** · ~30 s
 
-> El piano tiene el teclado digital; la batería, la electrónica; el violín, el eléctrico. Son más baratos y democratizan el aprendizaje. Al bandoneón le faltaba la suya: BandoneAR. *(Pase)* Ahora Persona 2 les cuenta si era posible.
+> Entonces nos preguntamos qué pasa con otros instrumentos. El piano tiene el teclado digital; la batería, la electrónica; el violín, el eléctrico. Son más baratos y fáciles de conseguir, y así se democratiza el instrumento y su aprendizaje. *(→)* Al bandoneón le faltaba la suya. *(→)* Esa es BandoneAR.
+>
+> *(Pase)* Ahora [Persona 2] les cuenta si era posible hacerlo.
 
-## Persona 2 · ¿Es viable? (diapositivas 6 a 9, ~1:30)
+---
 
-**6. Etapa 02: ¿Es viable?** · ~5 s
+## Persona 2 · ¿Es viable? (diapositivas 6 a 9, ~2:10)
 
-> Para saber si se podía, primero entendimos el instrumento por dentro.
+**6. Etapa 02: ¿Es viable?** · ~10 s
 
-**7. Cómo está construido un bandoneón** · ~30 s
+> Antes de diseñar nada, teníamos que entender el instrumento por dentro: cómo está construido, qué particularidades tiene y cómo se toca.
 
-> Tiene dos cabezales: el izquierdo, con 33 botones para los graves, y el derecho, con 38 para los agudos. En el medio, el fuelle, que funciona como un pulmón. Y adentro de cada cabezal, la máquina: brazos, zapatas y voces de acero.
+**7. Cómo está construido un bandoneón** · ~40 s
 
-**8. Del botón al sonido** · ~25 s
+> Un bandoneón tiene tres partes. *(→)* El cabezal izquierdo, con 33 botones para las notas graves. *(→)* El fuelle, en el medio, que funciona como un pulmón: aspira aire al abrirse y lo sopla al cerrarse. *(→)* El cabezal derecho, con 38 botones para las agudas e intermedias. *(→)* Y adentro de cada cabezal, la máquina: brazos, zapatas y voces de acero. *(→)* Por eso decimos que es bisonoro: cada botón da una nota abriendo y otra cerrando.
 
-> Al apretar un botón, un brazo destapa una ranura y el aire del fuelle hace vibrar una voz de acero: una abriendo y otra cerrando. Por eso cada botón tiene dos notas; se dice que es bisonoro.
+**8. Del botón al sonido** · ~35 s
 
-**9. De lo mecánico a lo electrónico** · ~30 s
+> Veamos la máquina en acción. *(→)* Al apretar el botón, un brazo levanta la zapata y destapa una ranura. *(→)* El aire que mueve el fuelle pasa por esa ranura y hace vibrar una lengüeta de acero, que es la voz. *(→)* Si el fuelle cierra, el aire va al revés y suena otra voz. Esa es la mecánica que teníamos que reproducir.
 
-> Después buscamos el equivalente electrónico de cada parte. Los botones, switches mecánicos. La máquina, una Raspberry Pi Pico por cabezal. Las voces, síntesis por software con FluidSynth. El aire, un encoder. Y la caja de madera, cabezales impresos en 3D. *(Pase)* Persona 3 les cuenta la parte más difícil.
+**9. De lo mecánico a lo electrónico** · ~45 s
 
-## Persona 3 · El fuelle y la solución (diapositivas 10 a 13, ~1:40)
+> Con eso claro, buscamos el equivalente electrónico de cada parte. *(→)* Los botones y sus brazos pasan a ser switches mecánicos. *(→)* La máquina de cada cabezal, una Raspberry Pi Pico, que convierte cada lado en un teclado MIDI. *(→)* Las voces de acero, síntesis por software con FluidSynth. *(→)* La presión del aire, un encoder que lee el movimiento. *(→)* Y la caja de madera, cabezales impresos en 3D.
+>
+> *(Pase)* [Persona 3] les cuenta la parte más difícil.
 
-**10. Que el fuelle se sienta como el real** · ~35 s
+---
 
-> El mayor desafío fue el fuelle: tenía que acompañar el movimiento, la postura y el agarre, no solo las notas. Como no hay aire, un encoder dentro de un cabezal, con un hilo atado al otro, lee si abrís o cerrás y a qué velocidad. Así el paso al bandoneón tradicional es natural.
+## Persona 3 · El fuelle y la solución (diapositivas 10 a 13, ~2:15)
 
-**11. Era viable, en los dos frentes** · ~15 s
+**10. Que el fuelle se sienta como el real** · ~45 s
 
-> Conclusión: era viable. Técnicamente, con teclados MIDI y ese fuelle sin aire. Y económicamente, por cerca del 25 % de lo que cuesta un bandoneón.
+> El mayor desafío fue el fuelle. No queríamos un aparato que solo enseñe a apretar botones: el instrumento tiene que acompañar el movimiento, la postura y el agarre, porque eso también se aprende. Como acá no hay aire, pusimos un encoder adentro de un cabezal, con un hilo atado al centro del otro. Cuando el fuelle abre, el hilo se desenrolla y el encoder gira; cuando cierra, se enrolla. Así sabemos para qué lado va y a qué velocidad, y con eso definimos la nota y la intensidad. El gesto es el mismo que en el bandoneón real, y por eso el paso al tradicional es natural.
+
+**11. Era viable, en los dos frentes** · ~20 s
+
+> La conclusión de esta etapa fue que era viable. *(→)* Técnicamente, con teclados MIDI y un fuelle que no depende del aire. *(→)* Y económicamente, porque los componentes son accesibles: cerca del 25 % de lo que cuesta un bandoneón tradicional.
 
 **12. Etapa 03: La solución** · ~5 s
 
-> Vamos a la solución.
+> Con eso, pasamos a construirlo.
 
-**13. Componentes principales** · ~45 s
+**13. Componentes principales** · ~65 s
 
-> Los cabezales están impresos en 3D, con 71 switches: 38 a la derecha y 33 a la izquierda, cada uno con su tecla impresa a medida. Una Raspberry Pi Pico por cabezal lee la botonera, y el encoder con hilo lee el fuelle. Una Raspberry Pi Zero genera el sonido y lo saca por dos parlantes: graves a la izquierda, agudos a la derecha. Tiene batería, jack de 3,5 mm y USB-MIDI. *(Pase)* Persona 4 les cuenta cómo funciona por dentro.
+> Acá lo ven en 3D y en corte, y cada número sigue a su pieza. Los cabezales están impresos en 3D. Adentro hay 71 switches, 38 a la derecha y 33 a la izquierda, cada uno con su diodo y con una tecla impresa a medida, a la misma altura y distancia que en el original. Una Raspberry Pi Pico por cabezal escanea la botonera, y el encoder con su hilo lee el fuelle. El sonido lo genera una Raspberry Pi Zero con FluidSynth y sale por dos amplificadores y dos parlantes: graves a la izquierda y agudos a la derecha, como en el bandoneón. Además tiene batería, jack de 3,5 milímetros y USB-MIDI.
+>
+> *(Pase)* [Persona 4] les cuenta cómo funciona por dentro.
 
-## Persona 4 · Software, tacto y conexiones (diapositivas 14 a 16, ~1:35)
+---
 
-**14. De la tecla al sonido, con FluidSynth** · ~40 s
+## Persona 4 · Software, tacto y conexiones (diapositivas 14 a 16, ~2:00)
 
-> Las dos Pico escanean las matrices de botones; la izquierda además lee el fuelle y recibe a la derecha por UART. La Raspberry Pi Zero arma cada nota con dos datos: qué botón y hacia dónde va el fuelle. FluidSynth la hace sonar con un SoundFont de bandoneón. En la consola se ve: mismo botón, otra nota cuando el fuelle cambia de sentido.
+**14. De la tecla al sonido, con FluidSynth** · ~60 s
+
+> Sigamos un botón desde que se aprieta hasta que suena. Los botones están cableados en matrices de filas y columnas, con un diodo por switch para que no se confundan cuando se aprietan varios a la vez. Las dos Pico escanean esas matrices; la izquierda además lee el fuelle, el volumen y la llave de encendido, y recibe lo de la derecha por UART. *(→)* Todo llega a la Raspberry Pi Zero, que arma cada nota con dos datos: qué botón y hacia dónde va el fuelle. En el registro se ve: el mismo botón da otra nota cuando el fuelle cambia de sentido. *(→)* Esa nota la hace sonar FluidSynth, un sintetizador por software, con un banco de sonidos de bandoneón, y el audio sale por I2S a los dos amplificadores, uno por parlante.
 
 **15. Un switch mecánico lineal bajo cada botón** · ~25 s
 
-> Para el tacto elegimos switches mecánicos lineales: recorrido parejo, sin escalón ni clic, lo más parecido a la pulsación del original. Lo que la mano aprende acá sirve en el instrumento real.
+> Para el tacto elegimos switches mecánicos lineales. El recorrido es parejo, sin escalón ni clic, que es lo más parecido a la pulsación de un bandoneón. Y eso importa, porque lo que la mano aprende acá sirve en el instrumento real.
 
-**16. Cómo se conecta todo** · ~30 s
+**16. Cómo se conecta todo** · ~35 s
 
-> En resumen: dos entradas, la botonera y el fuelle; el procesamiento en las Pico y la Pi Zero; y dos salidas. Una autónoma, con parlantes o auriculares, y otra como controlador USB-MIDI para usarlo en la computadora. *(Pase)* Persona 5 les cuenta lo que nos costó.
+> En resumen, el sistema tiene dos entradas: la botonera y el fuelle. *(→)* El procesamiento está en las Pico y en la Pi Zero, que hacen el mapeo bisonoro y la síntesis. *(→)* Y hay dos caminos de salida: uno autónomo, con sus parlantes o auriculares, y otro como controlador USB-MIDI, para usarlo con cualquier programa de música en la computadora.
+>
+> *(Pase)* [Persona 5] les cuenta lo que nos costó.
 
-## Persona 5 · Desafíos, demo y cierre (diapositivas 17 a 22, ~1:50)
+---
+
+## Persona 5 · Desafíos y pase a la demo (diapositivas 17 a 20, ~1:20)
 
 **17. Etapa 04: Desafíos y decisiones** · ~5 s
 
-> Ahora, lo que nos costó.
+> Ahora, lo que nos costó, que es también lo que más aprendimos.
 
-**18. Nueve desafíos, nueve decisiones** · ~50 s
+**18. Nueve desafíos, nueve decisiones** · ~65 s
 
-> Al ser un proyecto de hardware, tuvimos que investigar a fondo cada componente y conseguir herramientas. La impresión 3D llevó tiempo, y el teclado tenía que respetar exactamente la distribución original. El fuelle fue lo más difícil: construirlo, montarlo y leerlo con precisión con el encoder. Y evaluamos una PCB propia, pero era inviable por costo, así que cableamos todo a mano.
+> Al ser un proyecto mayormente de hardware, tuvimos que investigar a fondo cada componente y cómo funciona, y conseguir las herramientas y los materiales. La impresión 3D llevó su tiempo, porque cada pieza suma horas de diseño y de impresión. *(→)* El teclado tenía que respetar exactamente la distribución del original. El fuelle fue lo más difícil: montarlo sin perder el gesto y leerlo con precisión con el encoder. Y probamos tipos de switch hasta dar con el tacto. *(→)* Evaluamos hacer una placa de circuito propia, pero era inviable por costo, así que cableamos las matrices a mano sobre placas perforadas. Y construimos un fuelle con pliegues que respondan como el real.
 
 **19. Etapa 05: Demo del BandoneAR** · ~5 s
 
 > Y ahora, lo que estaban esperando.
 
-**20. Ahora, a tocarlo** · ~10 s, y después la demo
+**20. Ahora, a tocarlo** · ~10 s
 
-> [Nombre] lo va a tocar en vivo: fíjense cómo cambia la nota cuando el fuelle abre y cierra.
+> [Nombre] lo va a tocar en vivo. Fíjense cómo cambia la nota cuando el fuelle abre y cierra.
 
-Acá arranca la demo en vivo, que va aparte de los 9 minutos.
+### Demo en vivo · ~2:30
 
-**21. Conclusiones** · ~30 s (al terminar la demo)
+Esta escena queda de fondo, con el instrumento en 3D tocando y los mensajes MIDI. Un guion corto para quien toca, para que no se coma el tiempo:
 
-> BandoneAR conserva la botonera, el tacto y el gesto del fuelle, así que lo que se aprende acá sirve en el instrumento real. El sonido digital separa el aprendizaje del costo. Y funciona solo o conectado por MIDI. Empezamos con una guía de papel y terminamos con un instrumento. ¿Preguntas?
+1. **~20 s.** Mostrarlo y nombrar las partes con la mano: los dos cabezales, el fuelle y la correa.
+2. **~40 s.** Un solo botón, abriendo y cerrando el fuelle despacio: la misma tecla, dos notas.
+3. **~30 s.** La dinámica: el mismo botón con el fuelle lento y después rápido, para que se escuche el cambio de intensidad.
+4. **~60 s.** Una escala o una frase corta de tango. Mejor clara que virtuosa.
+
+Si algo falla, no lo arreglen en vivo: digan «les mostramos el video después» y sigan con las conclusiones.
+
+---
+
+## Persona 5 · Cierre (diapositivas 21 y 22, ~40 s)
+
+**21. Conclusiones** · ~30 s
+
+> BandoneAR conserva la botonera, el tacto y el gesto del fuelle, así que lo que se aprende acá sirve en el instrumento real. *(→)* El sonido digital separa el aprendizaje del costo y de la escasez del instrumento. Y funciona solo o conectado por MIDI. Empezamos con una guía de papel y terminamos con un instrumento. *(→)* ¿Preguntas?
 
 **22. ¡Gracias!** · ~10 s
 
-> Gracias a los docentes, a nuestras familias y a todos los que nos acompañaron.
+> Gracias a los docentes, a nuestras familias y a todos los que nos acompañaron en este proyecto.
+
+---
 
 ## Pases y ensayo
 
-Cada bloque termina con una frase de pase (marcada *(Pase)*) que nombra a quien sigue; reemplacen «Persona N» por el nombre real.
+Cada bloque termina con una frase de pase que nombra a quien sigue; reemplacen [Persona N] por el nombre real.
 
 | Pase | Después de la diapositiva | Frase |
 | --- | --- | --- |
-| 1 → 2 | 5 | «Ahora [nombre] les cuenta si era posible.» |
+| 1 → 2 | 5 | «Ahora [nombre] les cuenta si era posible hacerlo.» |
 | 2 → 3 | 9 | «[nombre] les cuenta la parte más difícil.» |
 | 3 → 4 | 13 | «[nombre] les cuenta cómo funciona por dentro.» |
 | 4 → 5 | 16 | «[nombre] les cuenta lo que nos costó.» |
 | 5 → demo | 20 | «[nombre] lo va a tocar en vivo.» |
 
-- No hace falta decirlo palabra por palabra: lo importante son los datos (71 botones, 38 y 33, cerca del 25 % del costo, FluidSynth, el encoder con hilo).
-- Ensayen una vez de corrido con cronómetro, hasta la diapositiva 20. Si pasan de 9 minutos, recorten primero la 18 (desafíos) y la 13 (componentes), que son las más largas.
-- Avancen con → apenas terminan de hablar: la timeline se frena en cada punto clave y no pasa sola.
-- Prueben la demo antes, en el mismo lugar: batería cargada, volumen y la pantalla mostrando los mensajes MIDI.
+- **Cuándo avanzar.** *(→)* marca cuándo apretar la flecha para el siguiente punto clave de la misma diapositiva. La timeline se frena en cada punto y no pasa sola, así que si se olvidan de avanzar, la pantalla queda atrasada. Conviene que una sola persona maneje la compu toda la presentación, con el guion impreso.
+- **Si se pasan de tiempo**, recorten en este orden:
+  1. La diapositiva 18 a tres desafíos: impresión 3D, fuelle y PCB (−30 s).
+  2. La 13, sin la última oración (−10 s).
+  3. La demo, sin el paso 3 (−30 s).
+  4. La 14, sin la explicación de los diodos (−10 s).
+- **Datos que no se pueden perder**, aunque no lo digan palabra por palabra: 71 botones (38 y 33), bisonoro, cerca del 25 % del costo, encoder con hilo, dos Pico más una Pi Zero, FluidSynth.
+- **Ensayo.** Hagan dos pasadas completas con cronómetro, demo incluida. La primera, para ver dónde se traban; la segunda, para medir. Si la segunda da más de 14 minutos, apliquen los recortes.
+- **Tiempo por persona.** Que cada uno cronometre su bloque contra la columna «En vivo». Si alguien se pasa más de 20 segundos, recorta en su propio bloque y no le come tiempo al siguiente.
+- **Antes de empezar**, en el mismo lugar: batería cargada, volumen probado, la timeline abierta en pantalla completa (tecla F) y en la diapositiva 1.
