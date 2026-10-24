@@ -87,11 +87,13 @@
           di.position.set(s * (T / 2 - 1.8), y - 0.45, z * -s + 0.4); g.add(di);
         });
       }
-      // Correa de cuero: una banda que se separa de la tapa en el medio
-      const curva = new T3.CatmullRomCurve3(Array.from({ length: 9 }, (_, i) => { const u = i / 8; return new T3.Vector3(s * (T / 2 + 0.5 + 1.9 * Math.sin(Math.PI * u)), H / 2 - 1.6 - u * (H - 3.2), 0); }));
+      // Correa de cuero horizontal, como en un bandoneón: cruza la tapa debajo de la botonera
+      // y se separa en el medio para que entre la mano
+      const yc = -1.4;
+      const curva = new T3.CatmullRomCurve3(Array.from({ length: 9 }, (_, i) => { const u = i / 8; return new T3.Vector3(s * (T / 2 + 0.5 + 1.9 * Math.sin(Math.PI * u)), 0, W / 2 - 1.6 - u * (W - 3.2)); }));
       const correa = new T3.Mesh(new T3.TubeGeometry(curva, 40, 0.42, 8, false), mat(CUERO, { roughness: 0.7 }));
-      correa.scale.z = 2.6; correa.position.z = -s * -W * 0.3; g.add(correa);
-      [H / 2 - 1.6, -H / 2 + 1.6].forEach((y) => { const h = new T3.Mesh(new T3.BoxGeometry(0.6, 1.2, 2.6), mat(0x8a8a8a, { metalness: 0.6 })); h.position.set(s * (T / 2 + 0.4), y, -s * -W * 0.3); g.add(h); });
+      correa.scale.y = 2.6; correa.position.y = yc; g.add(correa);
+      [W / 2 - 1.6, -W / 2 + 1.6].forEach((z) => { const h = new T3.Mesh(new T3.BoxGeometry(0.6, 2.6, 1.2), mat(0x8a8a8a, { metalness: 0.6 })); h.position.set(s * (T / 2 + 0.4), yc, z); g.add(h); });
       return { g, botones, pos };
     }
     const izq = cabezal(-1), der = cabezal(1);

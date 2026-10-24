@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "escenas": [
     {
       "activa": true,
@@ -234,6 +234,20 @@
       "equipo": "Brenda · Maxi · Antonio · Leo · Franco",
       "institucion": "Proyecto Final 2026 · DIIT · Universidad Nacional de La Matanza",
       "notas": "Cierre y preguntas."
+    },
+    {
+      "activa": true,
+      "tipo": "gracias",
+      "mantener": 20,
+      "fase": 0,
+      "kicker": "Fin",
+      "titulo": "¡Gracias!",
+      "cuerpo": "A los docentes, a nuestras familias y a todos los que nos acompañaron en este proyecto.",
+      "equipo": "Brenda · Maxi · Antonio · Leo · Franco",
+      "institucion": "Proyecto Final 2026 · DIIT · Universidad Nacional de La Matanza",
+      "fotos": "",
+      "huecos": 16,
+      "notas": "Agradecer. El collage se arma con las fotos que se carguen en \"Fotos del collage\" (una ruta por línea); los lugares vacíos se ven como marcos."
     }
   ],
   "estilo": {

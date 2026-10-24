@@ -63,6 +63,11 @@
       nombre: 'Desafíos y decisiones (tres filas)',
       campos: [K, TT, ['items', 'lines', 'Desafíos: "ícono | título | detalle" por línea. Íconos: lupa, herramientas, impresora, teclado, fuelle, encoder, switch, pcb, construccion']],
     },
+    gracias: {
+      nombre: 'Gracias (con collage de fotos)',
+      campos: [K, ['titulo', 'text', 'Título grande'], ['cuerpo', 'area', 'Texto de agradecimiento'], ['equipo', 'text', 'Equipo'], ['institucion', 'text', 'Institución'],
+        ['fotos', 'lines', 'Fotos del collage: una ruta por línea (por ejemplo ../assets/img/foto.jpg)'], ['huecos', 'number', 'Lugares del collage (los que no tienen foto quedan como marco vacío)']],
+    },
     demo: {
       nombre: 'Demo en vivo (BandoneAR en 3D de fondo)',
       campos: [K, TT, ['cuerpo', 'area', 'Párrafo'], ['nota', 'text', 'Rótulo del monitor']],
@@ -76,6 +81,15 @@
   const COMPONENTES = 'Cabezales impresos en 3D | La caja de madera de cada lado\n71 switches, un diodo cada uno | Los botones: 38 a la derecha, 33 a la izquierda\nTeclas impresas a medida | Misma altura, distancia y distribución\nUna Raspberry Pi Pico por cabezal | La máquina: escanea la botonera y el fuelle\nEncoder con hilo | El aire: un hilo atado al cabezal derecho lo hace girar\nFuelle | El gesto, la postura y el agarre\nRaspberry Pi Zero con FluidSynth | Las voces: genera el sonido de cada nota\nDos MAX98357A y parlantes | Estéreo: graves a la izquierda, agudos a la derecha\nBatería integrada | Se toca en cualquier lugar\nUSB-MIDI y jack 3,5 mm | Computadora, auriculares o amplificación';
   const BLOQUES = 'Botonera | 71 switches · 38 der. / 33 izq.\nFuelle | Encoder con hilo: apertura y cierre\nProcesamiento | 2 Pico + Pi Zero · mapeo bisonoro\nSíntesis | FluidSynth en la Pi Zero\nUSB-MIDI | Modo controlador\nAmplificador | 2 MAX98357A · parlantes estéreo\nSalida auxiliar | Jack 3,5 mm\nComputadora | Producción musical (DAW)';
   const TRADUCCION = 'Botones y brazos | Switches mecánicos lineales\nLa máquina de cada cabezal | Una Raspberry Pi Pico por teclado: teclados MIDI\nVoces de acero y aire | FluidSynth: síntesis por software\nPresión de aire del fuelle | Un encoder con hilo que lee el gesto\nCaja de madera | Cabezales impresos en 3D';
+  const GRACIAS = {
+    tipo: 'gracias', mantener: 20, fase: 0,
+    kicker: 'Fin',
+    titulo: '¡Gracias!',
+    cuerpo: 'A los docentes, a nuestras familias y a todos los que nos acompañaron en este proyecto.',
+    equipo: EQUIPO, institucion: INSTITUCION,
+    fotos: '', huecos: 16,
+    notas: 'Agradecer. El collage se arma con las fotos que se carguen en "Fotos del collage" (una ruta por línea); los lugares vacíos se ven como marcos.',
+  };
   const SOFTWARE = {
     tipo: 'software', mantener: 14, fase: 3,
     kicker: 'El software',
@@ -287,6 +301,7 @@
       equipo: EQUIPO, institucion: INSTITUCION,
       notas: 'Cierre y preguntas.',
     },
+    GRACIAS,
   ];
 
   // Migraciones del estado guardado en el navegador (versión → cómo pasar a la siguiente).
@@ -315,6 +330,10 @@
         if (i < 0) i = doc.escenas.map((x) => +x.fase === 3).lastIndexOf(true);
         doc.escenas.splice(i < 0 ? doc.escenas.length : i + 1, 0, { activa: true, ...JSON.parse(JSON.stringify(SOFTWARE)) });
       }
+    },
+    // 2 → 3: diapositiva final de agradecimiento con el collage
+    (doc) => {
+      if (!doc.escenas.some((x) => x.tipo === 'gracias')) doc.escenas.push({ activa: true, ...JSON.parse(JSON.stringify(GRACIAS)) });
     },
   ];
 

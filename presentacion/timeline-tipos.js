@@ -567,6 +567,45 @@
         pre.textContent = rows.join('\n');
       },
     },
+
+    // ---------- Gracias: agradecimiento y un collage de fotos que flotan ----------
+    gracias: {
+      render: (d, ctx) => {
+        const fotos = lines(d.fotos), n = Math.max(+d.huecos || 0, fotos.length, 1);
+        // Grilla suelta: columnas según la cantidad, con un corrimiento y un giro fijos por foto
+        const X0 = 830, Y0 = 110, AW = 970, AH = 840;
+        // Columnas que dejan las fotos más grandes y, a igual tamaño, menos lugares vacíos
+        let cols = 1, mejor = -1;
+        for (let c = 1; c <= 10; c++) { const r = Math.ceil(n / c), t = Math.min(AW / c, (AH / r) * 1.05) - (c * r - n) * 0.5; if (t > mejor) { mejor = t; cols = c; } }
+        const filas = Math.ceil(n / cols), cw = AW / cols, chh = AH / filas;
+        const fw = Math.min(cw * 0.98, chh * 0.92 * 1.05), fh = fw * 0.95;
+        const azar = (i, k) => { const x = Math.sin(i * 12.9898 + k * 78.233) * 43758.5453; return x - Math.floor(x); };
+        return `
+        <div class="gr-txt">
+          <div class="gr-logo" data-f="logo" data-m="pop" data-at=".2" data-dur="1.1">${ctx.logo('big')}</div>
+          ${kicker(d, 0.4)}
+          <h1 class="gr-tit" data-f="titulo" data-m="letters" data-at=".6">${md(d.titulo)}</h1>
+          ${d.cuerpo ? `<p class="body" data-f="cuerpo" data-m="up" data-at="1.3">${md(d.cuerpo)}</p>` : ''}
+          <div class="meta" data-f="equipo" data-m="up" data-at="1.7"><b>${esc(d.equipo)}</b><span>${esc(d.institucion)}</span></div>
+        </div>
+        <div class="gr-col">${Array.from({ length: n }, (_, i) => {
+          const c = i % cols, r = Math.floor(i / cols);
+          const x = X0 + c * cw + (cw - fw) / 2 + (azar(i, 1) - 0.5) * cw * 0.22, y = Y0 + r * chh + (chh - fh) / 2 + (azar(i, 2) - 0.5) * chh * 0.2;
+          const rot = (azar(i, 3) - 0.5) * 12, f = fotos[i];
+          return `<div class="gr-foto" style="left:${f2(x)}px; top:${f2(y)}px; width:${f2(fw)}px; height:${f2(fh)}px" data-f="fotos" data-m="pop" data-at="${f2(0.5 + azar(i, 4) * 1.6)}" data-dur="1">
+            <div class="gr-in" data-i="${i}" data-rot="${f2(rot)}">${f ? `<img src="${esc(f)}" alt="" loading="lazy">` : `<span>${nn(i + 1)}<small>foto</small></span>`}</div></div>`;
+        }).join('')}</div>`;
+      },
+      // Cada foto flota y se acerca despacio (paneo tipo Ken Burns)
+      tick(root, t) {
+        root.querySelectorAll('.gr-in').forEach((el) => {
+          const i = +el.dataset.i, a = t * 0.35 + i * 1.7;
+          el.style.transform = `translate(${f2(Math.sin(a) * 6)}px, ${f2(Math.cos(a * 0.8) * 8)}px) rotate(${f2(+el.dataset.rot + Math.sin(a * 0.6) * 1.5)}deg)`;
+          const img = el.firstElementChild;
+          if (img?.tagName === 'IMG') img.style.transform = `scale(${f2(1.08 + 0.06 * Math.sin(t * 0.18 + i))}) translate(${f2(Math.sin(t * 0.13 + i) * 2)}%, ${f2(Math.cos(t * 0.11 + i) * 2)}%)`;
+        });
+      },
+    },
   };
 
   Object.assign(window.MOTION.TIPOS, TIPOS);
