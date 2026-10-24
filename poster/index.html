@@ -404,9 +404,10 @@
 
     const SCHEMA = [
       { group: 'Logo' },
-      { key: 'logoFuente', label: 'Qué logo usar', type: 'select', options: ['integrado', 'editor'], def: 'integrado' },
+      { key: 'logoFuente', label: 'Qué logo usar', type: 'select', options: ['integrado', 'editor'], def: 'editor' },
       { type: 'action', label: 'Traer el logo del editor', hint: 'Copia el diseño guardado en logo/index.html. Abrí el editor en este mismo navegador.', run: importarLogo },
-      { key: 'logoEditor', label: 'Ajustes del editor (o pegá acá lo que copiaste con "Copiar ajustes")', type: 'textarea', def: '' },
+      // Por defecto, la variante «celeste barrotes» (assets/logo/paquetes/bandonear-logo-celeste-barrotes/ajustes.json)
+      { key: 'logoEditor', label: 'Ajustes del editor (o pegá acá lo que copiaste con "Copiar ajustes")', type: 'textarea', def: '{"layout":"horizontal","isoEscala":1.3,"separacion":0.42,"margen":8,"tinta":"#ffffff","acento":"#74acdf","pliegues":"bandera","colorPalabra":"tinta","colorAR":"acento","sol":"barrotes","solTam":7.5,"solColor":"sol","solPropio":"#f6b40e","solGrosor":1.3,"solRecorte":1.75,"solY":0,"cabezales":"contorno","trazo":4,"esquinas":"round","nPliegues":4,"grosorPliegue":6.5,"inclinacion":0,"radioBoton":2.4,"tecla":5,"teclaRadio":1,"fondo":"#0d0d0f","fondoExport":"transparente","lienzo":"ajustado","radioFondo":0,"peso":800,"tracking":-20}' },
       { key: 'logoVersion', label: 'Versión (logo del editor)', type: 'select', options: ['horizontal', 'vertical', 'isotipo', 'palabra'], def: 'horizontal' },
       { key: 'logoAlto', label: 'Alto (logo del editor)', type: 'range', min: 100, max: 1000, step: 5, def: 290, css: '--logo-alto', unit: 'px' },
       { group: 'Textos' },
