@@ -1,0 +1,86 @@
+// Guion del stand: BandoneAR en loop, para la gente que pasa y mira.
+// Abrir con motion/index.html?kiosco (arranca solo, sin controles y vuelve a empezar).
+// Frases cortas y pausas largas: se lee de parado, a un par de metros.
+window.ESCENAS = [
+  {
+    tipo: 'portada', mantener: 8,
+    kicker: 'Expo Proyecto 2026 · UNLaM',
+    titulo: 'Bandone*AR*',
+    subtitulo: 'Un bandoneón digital y accesible, para aprender.',
+    autores: 'Brenda · Maxi · Antonio · Leo · Franco', contexto: 'Expo Proyecto 2026 · UNLaM',
+    imagen: '../proyecto/assets/img/bandonear-mesa.jpg',
+  },
+  {
+    tipo: 'imagen', mantener: 9, pasos: 'todo',
+    kicker: 'La voz del tango',
+    titulo: 'Gardel, Troilo, *Piazzolla*.',
+    puntos: 'Llegó en barco hacia 1870.\nLe dio al tango su sonido grave y melancólico.\nNo hay orquesta típica sin bandoneón.',
+    imagen: '../proyecto/assets/img/troilo.webp',
+  },
+  {
+    tipo: 'tarjetas', mantener: 10,
+    kicker: 'El problema',
+    titulo: 'Hoy tocar es un *privilegio*.',
+    items: 'Acceso | Ya casi no se fabrican: solo de luthier o usados restaurados.\nCosto | Miles de dólares, fuera del alcance de quien quiere empezar.\nAprendizaje | Pocos profesores, y sin instrumento propio la práctica no se sostiene.',
+  },
+  {
+    tipo: 'cita', mantener: 7,
+    texto: 'No es falta de ganas. Es falta de *acceso*.',
+    autor: 'El piano tiene el teclado barato', rol: 'El bandoneón no tenía esa puerta de entrada',
+  },
+  {
+    tipo: 'imagen', mantener: 10, pasos: 'todo',
+    kicker: 'El instrumento',
+    titulo: 'Este es Bandone*AR*.',
+    puntos: '71 botones, como el original: 38 a la derecha, 33 a la izquierda.\nCabezales impresos en 3D a medida.\nMisma ergonomía, distancia y distribución.',
+    imagen: '../proyecto/assets/img/bandonear-mesa.jpg',
+  },
+  {
+    tipo: 'imagen', mantener: 9, pasos: 'todo',
+    kicker: 'El tacto',
+    titulo: 'Se siente *igual*.',
+    puntos: 'Botonera en la distribución exacta del instrumento real.\nSwitches mecánicos lineales: recorrido parejo.\nLo que aprendés acá, la mano lo encuentra allá.',
+    imagen: '../proyecto/assets/img/tacto-switches.webp',
+  },
+  {
+    tipo: 'flujo', mantener: 12,
+    kicker: 'Cómo funciona',
+    titulo: 'Mismo gesto. Otro *corazón*.',
+    bloques: 'Tocás | Botón | 71 switches, uno por nota\nTocás | Fuelle | Un encoder mide dirección y velocidad\nLee | Raspberry Pi Pico | Una por cabezal, unidas por UART\nLee | Bisonoro | Una nota al abrir, otra al cerrar\nSuena | Raspberry Pi Zero | Sintetizador FluidSynth\nSuena | Parlantes | Estéreo: graves a la izquierda, agudos a la derecha',
+    nota: 'El sonido es cien por ciento digital: no depende del aire.',
+  },
+  {
+    tipo: 'columnas', mantener: 11,
+    kicker: 'Dos formas de tocarlo',
+    titulo: 'Solo, o *conectado*.',
+    izqTitulo: 'Modo autónomo',
+    izq: 'Batería integrada.\nSintetizador y amplificador internos.\nSalida de auriculares 3,5 mm.',
+    derTitulo: 'Controlador MIDI',
+    der: 'Se conecta por USB a cualquier computadora.\nSe integra a programas de producción musical.\nToca con librerías personalizadas.',
+    ocultar: ['monitorTitulo', 'monitor'],
+  },
+  {
+    tipo: 'cifra', mantener: 9,
+    kicker: 'Por qué tiene sentido',
+    titulo: 'Accesible para *empezar*.',
+    prefijo: '≈', numero: '25', unidad: '%', texto: 'del costo de un bandoneón tradicional.',
+    barras: 'Bandoneón tradicional | 100\nBandoneAR | 25',
+    unidadBarras: '% del costo',
+    nota: 'No lo reemplaza: quien empieza acá puede seguir allá.',
+  },
+  {
+    tipo: 'imagen', mantener: 9, pasos: 'todo',
+    kicker: 'Nuestra visión',
+    titulo: 'Tan cotidiano como la *flauta dulce*.',
+    puntos: 'Que aprender bandoneón sea tan accesible como en la escuela.\nDemocratizar el bandoneón es democratizar el tango.',
+    imagen: '../proyecto/assets/img/nenesaprendiendo.jpg',
+  },
+  {
+    tipo: 'cierre', mantener: 12,
+    kicker: 'Vení a probarlo',
+    titulo: 'Tocar tango no debería ser un *privilegio*.',
+    puntos: 'Acercate al stand y tocá.\nSeguinos en Instagram: @bandone.ar',
+    final: 'BandoneAR',
+    autores: 'Brenda · Maxi · Antonio · Leo · Franco', contexto: 'Expo Proyecto 2026 · UNLaM',
+  },
+];
