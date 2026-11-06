@@ -1,0 +1,173 @@
+{
+  "rev": 1793930969984,
+  "v": {
+    "escenas": [
+      {
+        "activa": true,
+        "tipo": "portada",
+        "mantener": 7,
+        "logo": "archivo:../proyecto/assets/logo/bandonear-celeste-con-sol.svg",
+        "kicker": "Producto y funcionalidad",
+        "titulo": "Bandone*AR*",
+        "subtitulo": "Un bandoneón digital, pensado para aprender.",
+        "autores": "Brenda · Maxi · Antonio · Leo · Franco",
+        "contexto": "Expo Proyecto 2026 · UNLaM",
+        "imagen": "../proyecto/assets/img/orquestabandonear.webp",
+        "notas": "Les presentamos BandoneAR: qué es, cómo se toca y qué puede hacer."
+      },
+      {
+        "activa": true,
+        "tipo": "imagen",
+        "mantener": 9,
+        "pasos": "uno",
+        "kicker": "El instrumento",
+        "titulo": "Este es Bandone*AR*.",
+        "puntos": "La botonera, el tacto y el fuelle del bandoneón real.\nEl sonido, cien por ciento digital.\nSuena solo o conectado a la computadora.",
+        "imagen": "../proyecto/assets/img/bandonear-mesa.webp",
+        "notas": "Un bandoneón electrónico pensado para aprender y tocar sin las barreras del instrumento tradicional. Conserva lo que la mano y el cuerpo tienen que aprender; lo que cambia es de dónde sale el sonido."
+      },
+      {
+        "activa": true,
+        "tipo": "libre",
+        "mantener": 9,
+        "transicion": "morph",
+        "kicker": "La botonera",
+        "titulo": "Todos los botones, *en su lugar*.",
+        "izq": "izquierda · graves",
+        "der": "derecha · agudas e intermedias",
+        "nota": "Misma distribución, altura y distancia que el original.",
+        "html": "<div class=\"pad\">{{kicker}}{{titulo}}</div>\n<div class=\"n71\" data-r=\"dato\" data-m=\"pop\" data-at=\".5\" data-dur=\"1\"><span data-m=\"count\" data-at=\".6\" data-dur=\"1.6\" data-to=\"71\">0</span><small>botones</small></div>\n<div class=\"lados\">\n  <div class=\"lado\" data-m=\"left\" data-s=\"1\" data-at=\".1\"><b>33</b><span data-f=\"izq\">{{izq}}</span></div>\n  <div class=\"lado\" data-m=\"right\" data-s=\"1\" data-at=\".35\"><b>38</b><span data-f=\"der\">{{der}}</span></div>\n</div>\n<p class=\"nota71\" data-f=\"nota\" data-m=\"up\" data-s=\"2\" data-at=\".1\">{{nota}}</p>",
+        "css": ".n71{position:absolute; left:140px; top:390px; font:var(--titulo-peso,800) 300px/1 var(--font-display); color:var(--accent); letter-spacing:-.03em; font-variant-numeric:lining-nums}\n.n71 small{display:block; margin-top:24px; font:500 44px/1 var(--font-body); color:var(--muted); letter-spacing:.02em}\n.lados{position:absolute; left:820px; right:140px; top:430px; display:grid; grid-template-columns:1fr 1fr; gap:60px}\n.lado{border-top:4px solid var(--line); padding-top:28px}\n.lado b{display:block; font:var(--titulo-peso,800) 150px/1 var(--font-display); font-variant-numeric:lining-nums; color:var(--strong)}\n.lado span{display:block; margin-top:16px; font-size:36px; line-height:1.3; color:var(--lead)}\n.nota71{position:absolute; left:820px; right:140px; top:820px; font-size:38px; line-height:1.35; color:var(--text)}",
+        "notas": "71 botones, como el original: 33 en el cabezal izquierdo, para las graves, y 38 en el derecho, para las agudas e intermedias. Los cabezales están impresos en 3D y replican la ergonomía, la distancia y la distribución física de los botones."
+      },
+      {
+        "activa": true,
+        "tipo": "imagen",
+        "mantener": 9,
+        "pasos": "todo",
+        "coreografia": "sobria",
+        "entrada": "izquierda",
+        "kicker": "El tacto",
+        "titulo": "Se siente *igual*.",
+        "puntos": "Un switch mecánico lineal bajo cada botón.\nRecorrido parejo, sin escalón ni clic.\nTeclas impresas a medida, a la altura del original.",
+        "imagen": "../proyecto/assets/img/tacto-switches.webp",
+        "notas": "Para el tacto elegimos switches mecánicos lineales: el recorrido es parejo, sin escalón ni clic, que es lo más parecido a la pulsación de un bandoneón. Lo que la mano aprende acá sirve en el instrumento real."
+      },
+      {
+        "activa": true,
+        "tipo": "libre",
+        "mantener": 10,
+        "transicion": "fundido",
+        "kicker": "Bisonoro",
+        "titulo": "Un botón, *dos notas*.",
+        "abre": "Mi",
+        "cierra": "Fa♯",
+        "html": "<div class=\"pad\">{{kicker}}{{titulo}}</div>\n<div class=\"bot-wrap\"><svg class=\"botonera\" viewBox=\"0 0 800 460\" data-m=\"fade\" data-at=\".7\" data-dur=\"1\"><circle class=\"b\" cx=\"249\" cy=\"44\" r=\"30\"/><circle class=\"b\" cx=\"331\" cy=\"44\" r=\"30\"/><circle class=\"b\" cx=\"413\" cy=\"44\" r=\"30\"/><circle class=\"b\" cx=\"495\" cy=\"44\" r=\"30\"/><circle class=\"b\" cx=\"208\" cy=\"118\" r=\"30\"/><circle class=\"b\" cx=\"290\" cy=\"118\" r=\"30\"/><circle class=\"b\" cx=\"372\" cy=\"118\" r=\"30\"/><circle class=\"b\" cx=\"454\" cy=\"118\" r=\"30\"/><circle class=\"b\" cx=\"536\" cy=\"118\" r=\"30\"/><circle class=\"b\" cx=\"167\" cy=\"192\" r=\"30\"/><circle class=\"b\" cx=\"249\" cy=\"192\" r=\"30\"/><circle class=\"b\" cx=\"331\" cy=\"192\" r=\"30\"/><circle class=\"b\" cx=\"413\" cy=\"192\" r=\"30\"/><circle class=\"b\" cx=\"495\" cy=\"192\" r=\"30\"/><circle class=\"b\" cx=\"577\" cy=\"192\" r=\"30\"/><circle class=\"b\" cx=\"126\" cy=\"266\" r=\"30\"/><circle class=\"b on\" cx=\"208\" cy=\"266\" r=\"30\" data-m=\"pop\" data-at=\"1.3\" data-dur=\".7\"/><circle class=\"b\" cx=\"290\" cy=\"266\" r=\"30\"/><circle class=\"b\" cx=\"372\" cy=\"266\" r=\"30\"/><circle class=\"b\" cx=\"454\" cy=\"266\" r=\"30\"/><circle class=\"b\" cx=\"536\" cy=\"266\" r=\"30\"/><circle class=\"b\" cx=\"618\" cy=\"266\" r=\"30\"/><circle class=\"b\" cx=\"85\" cy=\"340\" r=\"30\"/><circle class=\"b\" cx=\"167\" cy=\"340\" r=\"30\"/><circle class=\"b\" cx=\"249\" cy=\"340\" r=\"30\"/><circle class=\"b\" cx=\"331\" cy=\"340\" r=\"30\"/><circle class=\"b\" cx=\"413\" cy=\"340\" r=\"30\"/><circle class=\"b\" cx=\"495\" cy=\"340\" r=\"30\"/><circle class=\"b\" cx=\"577\" cy=\"340\" r=\"30\"/><circle class=\"b\" cx=\"659\" cy=\"340\" r=\"30\"/><circle class=\"b\" cx=\"126\" cy=\"414\" r=\"30\"/><circle class=\"b\" cx=\"208\" cy=\"414\" r=\"30\"/><circle class=\"b\" cx=\"290\" cy=\"414\" r=\"30\"/><circle class=\"b\" cx=\"372\" cy=\"414\" r=\"30\"/><circle class=\"b\" cx=\"454\" cy=\"414\" r=\"30\"/><circle class=\"b\" cx=\"536\" cy=\"414\" r=\"30\"/><circle class=\"b\" cx=\"618\" cy=\"414\" r=\"30\"/><circle class=\"b\" cx=\"700\" cy=\"414\" r=\"30\"/></svg><p class=\"bot-lbl\" data-m=\"fade\" data-at=\"1.1\">Mano derecha · 38 botones</p></div>\n<div class=\"sentidos\">\n  <div class=\"sent\" data-m=\"right\" data-s=\"1\" data-at=\".1\" data-dim><small>Abriendo el fuelle →</small><b data-f=\"abre\">{{abre}}</b></div>\n  <div class=\"sent\" data-m=\"left\" data-s=\"2\" data-at=\".1\"><small>← Cerrando el fuelle</small><b data-f=\"cierra\">{{cierra}}</b></div>\n</div>",
+        "css": ".bot-wrap{position:absolute; left:140px; top:400px; width:800px}\n.botonera{width:800px; height:460px; overflow:visible}\n.botonera .b{fill:var(--panel-2); stroke:var(--line); stroke-width:3}\n.botonera .b.on{fill:var(--accent); stroke:var(--accent-2); stroke-width:6}\n.bot-lbl{margin:18px 0 0; font-size:28px; color:var(--muted)}\n.sentidos{position:absolute; left:1080px; right:140px; top:420px; display:grid; gap:44px}\n.sent{border-left:6px solid var(--accent); padding:10px 0 10px 40px}\n.sent small{display:block; font-size:34px; color:var(--muted)}\n.sent b{display:block; margin-top:6px; font:var(--titulo-peso,800) 150px/1 var(--font-display); font-variant-numeric:lining-nums; color:var(--strong)}",
+        "notas": "El bandoneón es bisonoro: el mismo botón da una nota al abrir el fuelle y otra distinta al cerrarlo. Este, en la mano derecha, da Mi abriendo y Fa sostenido cerrando. BandoneAR lo reproduce igual."
+      },
+      {
+        "activa": true,
+        "tipo": "senales",
+        "mantener": 10,
+        "kicker": "El fuelle",
+        "titulo": "El mismo gesto, *sin aire*.",
+        "cuerpo": "Un encoder en un cabezal, con un hilo atado al otro: el fuelle abre, el hilo se desenrolla y el encoder gira.",
+        "puntos": "El sentido define la nota.\nLa velocidad, la intensidad.\nEl paso al bandoneón real es natural.",
+        "senales": "Apertura\nVelocidad\nIntensidad",
+        "indicador": "abre ▶ | cierra ◀",
+        "notas": "Acá no hay aire, así que el fuelle cumple un rol ergonómico y postural. Un encoder lee el movimiento en tiempo real: para qué lado va y a qué velocidad. Con eso definimos la nota y la intensidad. El gesto es el mismo que en el bandoneón real."
+      },
+      {
+        "activa": true,
+        "tipo": "flujo",
+        "mantener": 12,
+        "transicion": "corte",
+        "coreografia": "tecnica",
+        "kicker": "Cómo funciona",
+        "titulo": "De la tecla *al sonido*.",
+        "bloques": "Tocás | Botonera | 71 switches, un diodo por cada uno\nTocás | Fuelle | Encoder: sentido y velocidad\nLeen | Pico derecha | 38 botones, por UART\nLeen | Pico izquierda | 33 botones, fuelle, volumen y llave\nArma | Raspberry Pi Zero | Botón + sentido = nota\nSuena | FluidSynth | Banco de sonidos de bandoneón\nSuena | Dos parlantes | Graves a la izquierda, agudos a la derecha",
+        "nota": "El audio sale por I2S a dos amplificadores, uno por parlante.",
+        "notas": "Sigamos un botón. Las matrices de switches tienen un diodo por botón para que no se confundan al apretar varios. Cada Pico escanea su cabezal; la izquierda además lee el fuelle, el volumen y la llave, y recibe lo de la derecha por UART. La Pi Zero arma la nota con dos datos: qué botón y hacia dónde va el fuelle. FluidSynth la hace sonar con un banco de bandoneón."
+      },
+      {
+        "activa": true,
+        "tipo": "columnas",
+        "mantener": 11,
+        "kicker": "Dos formas de tocarlo",
+        "titulo": "Solo, o *conectado*.",
+        "izqTitulo": "Modo autónomo",
+        "izq": "Batería integrada.\nSintetizador y amplificador internos.\nParlantes estéreo: graves a la izquierda, agudos a la derecha.\nSalida de auriculares de 3,5 mm.",
+        "derTitulo": "Controlador USB-MIDI",
+        "der": "Se conecta por USB a cualquier computadora.\nFunciona con cualquier programa de música.\nToca con librerías de sonido propias.",
+        "monitorTitulo": "USB-MIDI · mensajes",
+        "monitor": "note_on   Mi4   vel 72   abre\nnote_off  Mi4\nnote_on   Fa♯4  vel 64   cierra\nnote_on   La3   vel 80   cierra\nnote_off  Fa♯4\nnote_off  La3\nnote_on   Do5   vel 90   abre\nnote_off  Do5",
+        "notas": "Modo autónomo: batería, sintetizador y amplificador internos, parlantes estéreo que respetan la espacialidad del bandoneón, y jack de 3,5 mm. Modo controlador: por USB a cualquier computadora, para usarlo con programas de producción musical y librerías propias."
+      },
+      {
+        "activa": true,
+        "tipo": "tarjetas",
+        "mantener": 11,
+        "coreografia": "cinetica",
+        "kicker": "Para practicar",
+        "titulo": "Una app que *te guía*.",
+        "items": "Tocar libre | Cada botón se ilumina con su nota, abriendo o cerrando.\nEscalas | Se enciende el botón que sigue: elegís mano y sentido del fuelle.\nCanciones | Las notas suben hasta la línea: escuchala o tocala con espera.\nTus canciones | Importá un .mid o escribila con notas; se ajusta a la botonera.",
+        "notas": "Además del instrumento, hicimos una app de práctica que se conecta por MIDI desde el navegador. Muestra cada botón con su nota en Do Re Mi o en cifrado americano, guía escalas iluminando el botón que sigue y tiene un modo canción: escuchar, o tocar y que espere a que aciertes."
+      },
+      {
+        "activa": true,
+        "tipo": "imagen",
+        "mantener": 9,
+        "pasos": "uno",
+        "coreografia": "editorial",
+        "transicion": "fundido",
+        "kicker": "Por qué así",
+        "titulo": "Lo que se aprende acá, *sirve allá*.",
+        "puntos": "La misma botonera.\nEl mismo tacto.\nEl mismo gesto del fuelle.",
+        "imagen": "../proyecto/assets/img/abuelo.webp",
+        "notas": "Cada decisión de diseño apunta a una transferencia directa al bandoneón tradicional. No queremos reemplazar al instrumento: queremos que quien empiece acá pueda seguir allá."
+      },
+      {
+        "activa": true,
+        "tipo": "cierre",
+        "mantener": 12,
+        "logo": "archivo:../proyecto/assets/logo/bandonear-celeste-barrotes-perspectiva.svg",
+        "kicker": "En resumen",
+        "titulo": "Un bandoneón *para aprender*.",
+        "puntos": "Conserva la botonera, el tacto y el gesto del fuelle.\nEl sonido digital separa el aprendizaje del costo.\nFunciona solo o conectado por MIDI, con una app que guía.",
+        "final": "¿Preguntas?",
+        "autores": "Brenda · Maxi · Antonio · Leo · Franco",
+        "contexto": "Expo Proyecto 2026 · UNLaM",
+        "notas": "Cerrar y abrir preguntas."
+      }
+    ],
+    "estilo": {
+      "tema": "noche",
+      "logo": "archivo:../proyecto/assets/logo/bandonear-horizontal-celeste-sol.svg",
+      "transicion": "franjas",
+      "desenfoque": true,
+      "velocidad": 1,
+      "grano": true,
+      "cromo": true,
+      "pie": "BandoneAR · producto y funcionalidad",
+      "duracion": 1.5,
+      "recorrido": 1,
+      "entrada": "expo",
+      "ritmo": 1,
+      "distancia": 1,
+      "coreografia": "tipo",
+      "variar": true,
+      "coreografias": [
+        "tipo",
+        "editorial",
+        "cinetica"
+      ],
+      "franjas": {
+        "n": 4,
+        "color": "mixto",
+        "grosor": 1
+      },
+      "estiloBase": "noche-dorada"
+    }
+  }
+}
