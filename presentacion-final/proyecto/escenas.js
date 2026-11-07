@@ -75,6 +75,57 @@ const GUIA = `15 | b‴ / a‴ | 300, 95
 13 | c♯‴ / e‴ | 642, 436
 14 | g″ / d♯″ | 720, 456`;
 
+// Los cuatro teclados del bandoneón (Rheinische 142): mano derecha (38 botones) e izquierda (33),
+// cada botón con su nota abriendo y otra cerrando (bisonoro). Es el mismo layout y el mismo cálculo de
+// posiciones, en domo, que practica/index.html. '' = hueco.
+const RHEINISCHE = {
+  right: {
+    open: [['', '', 'B6', 'G#6', 'G6', 'F6'], ['', '', 'C#4', 'A6', 'F#6', 'E6', 'D#6'], ['', 'C4', 'D4', 'G4', 'A#5', 'C6', 'D6'],
+      ['', 'B3', 'E4', 'C#5', 'F#4', 'A4', 'C5', 'E5'], ['A3', 'F4', 'A#4', 'G#4', 'B4', 'D5', 'G#5', 'B5'], ['', 'A#3', 'D#4', 'F5', 'D#5', 'F#5', 'A5', 'C#6', 'G5']],
+    close: [['', '', 'A6', 'G#6', 'F#6', 'F6'], ['', '', 'C4', 'G6', 'A#5', 'C6', 'D#6'], ['', 'D4', 'C#4', 'G#4', 'A#4', 'C5', 'D6'],
+      ['', 'B3', 'F#4', 'F#5', 'G4', 'B4', 'D5', 'G5'], ['A3', 'F4', 'E4', 'A4', 'C#5', 'E5', 'A5', 'C#6'], ['', 'A#3', 'D#4', 'F5', 'E5', 'G#5', 'B5', 'E6', 'D#5']],
+  },
+  left: {
+    open: [[], ['', '', 'G#2', 'A#2', 'C#3', 'F3', 'G#4'], ['E2', 'A2', 'G3', 'D#3', 'F4', 'A#3', 'F2'], ['', 'D3', 'A3', 'C4', 'E4', 'C3', 'G2'],
+      ['E3', 'G#3', 'B3', 'D4', 'F#4', 'C#4', 'F#2'], ['D2', 'B2', 'G4', 'A4', 'D#4', 'F#3', 'D#2', 'C2']],
+    close: [[], ['', '', 'G#2', 'A#2', 'D#3', 'D#4', 'G4'], ['D2', 'D3', 'A#3', 'C4', 'C#3', 'C3', 'F#2'], ['', 'G2', 'G3', 'B3', 'D4', 'F4', 'F#3'],
+      ['A2', 'E3', 'A3', 'C#4', 'E4', 'G#3', 'B2'], ['E2', 'E3', 'F#4', 'G#4', 'B4', 'F3', 'C#2', 'F2']],
+  },
+};
+// Los botones que se encienden, en orden (fila, columna): el mismo botón en abriendo y en cerrando,
+// para que se vea que cada uno da dos notas distintas
+const LUCES = { right: [[3, 2], [2, 4], [4, 5], [1, 3]], left: [[2, 1], [3, 3], [4, 2], [5, 4]] };
+const SOLFEO = { C: 'Do', D: 'Re', E: 'Mi', F: 'Fa', G: 'Sol', A: 'La', B: 'Si' };
+const solfeo = (n) => SOLFEO[n[0]] + (n[1] === '#' ? '<sup>♯</sup>' : '');
+const GEO = {};
+for (const mano of ['right', 'left']) {
+  const keys = RHEINISCHE[mano].open, cols = Math.max(...keys.map((r) => r.length)), filas = keys.filter((r) => r.length).length;
+  const offX = cols < 9 ? 39 * (9 - cols) : 0, offY = filas < 6 ? -32 * (6 - filas) : 0, gapX = cols >= 10 ? 65 : 79;
+  const bs = [];
+  keys.forEach((r, row) => r.forEach((n, col) => {
+    if (!n) return;
+    const x = offX + col * gapX + 40 - (row % 2) * 40, y = offY + row * 60 + (row / 2 + 1) * 15 * (1 - Math.sin((x / 320) * Math.PI / 2));
+    bs.push({ row, col, cx: x + 29, cy: y + 29 });
+  }));
+  const x0 = Math.min(...bs.map((b) => b.cx)) - 34, y0 = Math.min(...bs.map((b) => b.cy)) - 34;
+  GEO[mano] = { bs, x0, y0, w: Math.max(...bs.map((b) => b.cx)) + 34 - x0, h: Math.max(...bs.map((b) => b.cy)) + 34 - y0 };
+}
+// Escala común para que los cuatro quepan en una fila (ancho útil 1640 px, huecos y márgenes de cada tarjeta)
+const ESC = (1640 - 3 * 24 - 4 * 38) / (2 * (GEO.right.w + GEO.left.w));
+// Un teclado: botones <b class="bt"> con su posición en px y su nota; entran en ola (por fila y columna)
+// a partir de `t0`, y los de LUCES se encienden después, de a uno (una capa .luz que aparece).
+function teclado(mano, sentido, t0, t1) {
+  const g = GEO[mano], nombres = RHEINISCHE[mano][sentido];
+  const luces = LUCES[mano];
+  const bts = g.bs.map((b) => {
+    const k = luces.findIndex(([r, c]) => r === b.row && c === b.col), nota = solfeo(nombres[b.row][b.col]);
+    const at = (t0 + b.row * 0.09 + b.col * 0.025).toFixed(2);
+    const luz = k < 0 ? '' : `<span class="luz" data-m="pop" data-at="${(t1 + k * 0.35).toFixed(2)}" data-dur=".5">${nota}</span>`;
+    return `<b class="bt" style="left:${Math.round((b.cx - g.x0) * ESC)}px;top:${Math.round((b.cy - g.y0) * ESC)}px" data-m="pop" data-at="${at}" data-dur=".45">${nota}${luz}</b>`;
+  }).join('');
+  return `<div class="tabw" style="height:${Math.round(GEO.right.h * ESC)}px"><div class="tab" style="width:${Math.round(g.w * ESC)}px;height:${Math.round(g.h * ESC)}px">${bts}</div></div>`;
+}
+
 window.ESCENAS = [
   // ================= El acto =================
   {
@@ -98,7 +149,7 @@ window.ESCENAS = [
     css: `.precio{position:absolute; left:140px; top:380px; font:var(--titulo-peso,800) 320px/1 var(--font-display); font-variant-numeric:lining-nums; color:var(--accent); letter-spacing:-.03em}
 .precio small{font-size:110px; color:var(--muted); margin-left:36px; letter-spacing:0}
 .precio-sub{position:absolute; left:140px; top:760px; font-size:44px; color:var(--lead)}`,
-    notas: '«Esto sucede principalmente porque el bandoneón es un instrumento carísimo: el bandoneón usado más barato que podés encontrar arranca en 2.500 dólares.»',
+    notas: '«Esto sucede principalmente porque el bandoneón es un instrumento carísimo: el bandoneón usado más barato que podés encontrar arranca en 2.500 dólares.»\n\nEl precio sube hasta 2.500 dólares.',
   },
   {
     tipo: 'libre', mantener: 10, transicion: 'corte',
@@ -106,24 +157,27 @@ window.ESCENAS = [
     titulo: '¿Se puede aprender *así*?',
     remate: 'Y cuando lo aprendiste, hay que *reaprender* la postura y el movimiento.',
     html: `<div class="pad">{{kicker}}{{titulo}}</div>
-<div class="cuatro">${[['Derecha', 'abriendo', 38], ['Derecha', 'cerrando', 38], ['Izquierda', 'abriendo', 33], ['Izquierda', 'cerrando', 33]].map(([m, s, n], i) => `
-  <div class="tec" data-r="item" data-m="up" data-at="${(0.6 + i * 0.18).toFixed(2)}">
-    <div class="pts">${Array.from({ length: n }, (_, k) => `<i${(k * 7 + i * 11) % 13 === 0 ? ' class="on"' : ''}></i>`).join('')}</div>
+<div class="cuatro">${[['Derecha', 'abriendo', 'right', 'open', 0], ['Derecha', 'cerrando', 'right', 'close', 1], ['Izquierda', 'abriendo', 'left', 'open', 2], ['Izquierda', 'cerrando', 'left', 'close', 3]].map(([m, s, mano, sentido, i]) => `
+  <div class="tec" data-m="up" data-dim data-at="${(0.6 + i * 0.18).toFixed(2)}">
+    ${teclado(mano, sentido, 0.95 + i * 0.18, 2.75 + (mano === 'left' ? 0.17 : 0))}
     <b>${m}</b><span>${s}</span></div>`).join('')}
 </div>
-<p class="cuatro-n" data-r="dato" data-m="caer" data-at="1.6"><b>4</b> teclados para memorizar</p>
+<p class="cuatro-n" data-r="dato" data-m="caer" data-at="4.3"><b>4</b> teclados para memorizar</p>
 <p class="remate" data-f="remate" data-m="renglones" data-s="1" data-at=".1">{{remate}}</p>`,
-    css: `.cuatro{position:absolute; left:140px; right:140px; top:330px; display:grid; grid-template-columns:repeat(4,1fr); gap:36px}
-.tec{border:1px solid var(--line); background:var(--panel); border-radius:22px; padding:30px}
-.tec .pts{display:grid; grid-template-columns:repeat(8,1fr); gap:10px; margin-bottom:24px}
-.tec .pts i{display:block; aspect-ratio:1; border-radius:50%; background:var(--panel-2); border:2px solid var(--line)}
-.tec .pts i.on{background:var(--accent); border-color:var(--accent)}
-.tec b{display:block; font-size:32px; color:var(--strong)}
-.tec span{font-size:28px; color:var(--muted)}
+    css: `.cuatro{position:absolute; left:140px; right:140px; top:320px; display:grid; grid-template-columns:${GEO.right.w}fr ${GEO.right.w}fr ${GEO.left.w}fr ${GEO.left.w}fr; gap:24px}
+.tec{border:1px solid var(--line); background:var(--panel); border-radius:22px; padding:34px 18px 26px; display:flex; flex-direction:column; align-items:center; perspective:1100px}
+.tec .tabw{display:flex; align-items:center; justify-content:center; margin-bottom:30px}
+.tec .tab{position:relative; transform:rotateX(22deg)}
+.tec .tab::before{content:""; position:absolute; inset:-14px; border-radius:20px; background:linear-gradient(165deg,var(--panel-2),var(--bg)); border:1px solid var(--line); box-shadow:0 9px 0 rgba(0,0,0,.4), 0 26px 30px rgba(0,0,0,.5)}
+.tec .bt{position:absolute; width:${Math.round(56 * ESC)}px; height:${Math.round(56 * ESC)}px; margin:${-Math.round(28 * ESC)}px 0 0 ${-Math.round(28 * ESC)}px; border-radius:50%; background:radial-gradient(circle at 34% 28%, color-mix(in srgb,var(--text) 26%,var(--panel-2)), var(--panel-2) 64%); border:1px solid var(--line); box-shadow:0 4px 0 rgba(0,0,0,.55), 0 7px 7px rgba(0,0,0,.4); font:700 12px/${Math.round(56 * ESC)}px var(--font-body); text-align:center; color:var(--lead); letter-spacing:-.02em; font-style:normal}
+.tec .bt sup{font-size:.72em; line-height:0; vertical-align:.35em; margin-left:1px}
+.tec .luz{position:absolute; inset:-1px; border-radius:50%; background:radial-gradient(circle at 34% 28%, color-mix(in srgb,#fff 42%,var(--accent)), var(--accent) 68%); color:var(--bg); box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 38%,transparent), 0 0 20px var(--accent)}
+.tec > b{display:block; font-size:32px; color:var(--strong)}
+.tec > span{font-size:28px; color:var(--muted)}
 .cuatro-n{position:absolute; left:140px; top:770px; margin:0; font-size:44px; color:var(--lead)}
 .cuatro-n b{font:var(--titulo-peso,800) 90px/1 var(--font-display); color:var(--accent); margin-right:16px; vertical-align:-10px}
 .remate{position:absolute; left:140px; right:140px; top:880px; margin:0; font-size:42px; color:var(--strong)}`,
-    notas: '«Salimos de la primera barrera con la que se encuentra el futuro músico, que es la monetaria. Hablemos de la que más nos concierne: la del aprendizaje. ¿A ustedes les parece que es posible aprender a tocar un instrumento de cuatro teclados así?»\n\n(→) «Y cuando finalmente lo aprendiste, hay que reaprender todo, porque la posición y el movimiento no son los correctos.»',
+    notas: '«Salimos de la primera barrera con la que se encuentra el futuro músico, que es la monetaria. Hablemos de la que más nos concierne: la del aprendizaje. ¿A ustedes les parece que es posible aprender a tocar un instrumento de cuatro teclados así?»\n\n(→) «Y cuando finalmente lo aprendiste, hay que reaprender todo, porque la posición y el movimiento no son los correctos.»\n\nEntran los cuatro teclados con sus botones y se iluminan; al final aparece el remate sobre reaprender.',
   },
   {
     tipo: 'portada', mantener: 10, transicion: 'fundido', logo: 'archivo:../proyecto/assets/logo/bandonear-celeste-barrotes-perspectiva.svg',
@@ -189,6 +243,7 @@ window.ESCENAS = [
   },
   {
     tipo: 'vitrina', mantener: 60, transicion: 'fundido', cromo: false, logo: 'archivo:../proyecto/assets/logo/bandonear-celeste-barrotes-perspectiva.svg',
+    ruta: 'Demo', // nombre en la hoja de ruta (la escena repite el título de la portada)
     kicker: 'Les presentamos',
     titulo: 'Bandone*AR*',
     subtitulo: 'Un bandoneón digital, pensado para aprender.',
@@ -205,7 +260,8 @@ window.ESCENAS = [
     tipo: 'libre', mantener: 12, transicion: 'fundido', coreografia: 'editorial', pasos: 'uno',
     kicker: 'Lo que se aprende acá, sirve allá',
     p1: 'Ergonomía', p2: 'Postura', p3: 'Transición natural', p4: 'Evolución',
-    html: `<div class="ev-foto" data-k="hero" data-shape="img" data-m="reveal" data-dur="1.4"><img src="../proyecto/assets/img/abuelo.webp" alt=""></div>
+    imagen: '../proyecto/assets/img/abuelo.webp', // se cambia desde el editor (clic en la foto)
+    html: `<div class="ev-foto" data-f="imagen" data-k="hero" data-shape="img" data-m="reveal" data-dur="1.4"><img src="{{img:imagen}}" alt=""></div>
 <div class="ev-txt">{{kicker}}
   <ol class="ev">
     <li data-f="p1" data-m="up" data-at=".6" data-dim>{{p1}}</li>
@@ -222,12 +278,26 @@ window.ESCENAS = [
     notas: 'Ergonomía, postura, transición natural y evolución: un → por palabra, a medida que se nombran.',
   },
   {
+    tipo: 'collage', mantener: 15, transicion: 'fundido', logo: 'archivo:../proyecto/assets/logo/bandonear-celeste-barrotes-perspectiva.svg',
+    kicker: 'Fin', titulo: '¡Gracias!',
+    cuerpo: 'A los docentes, a nuestras familias y a todos los que nos acompañaron en este proyecto.',
+    equipo: 'Brenda · Maxi · Antonio · Leo · Franco', institucion: 'Universidad Nacional de La Matanza',
+    huecos: 11, // lugares del collage; cada foto es un campo (foto1, foto2…) que se elige desde el editor
+    foto1: '../proyecto/assets/img/taller-protoboards.webp', foto2: '../proyecto/assets/img/taller-soldadura.webp', foto3: '../proyecto/assets/img/cabezal-switches.webp',
+    foto4: '../proyecto/assets/img/cabezal-interior.webp', foto5: '../proyecto/assets/img/taller-placa-switches.webp', foto6: '../proyecto/assets/img/video-grabando.webp',
+    foto7: '../proyecto/assets/img/video-laptop.webp', foto8: '../proyecto/assets/img/video-edicion.webp', foto9: '../proyecto/assets/img/equipo-dormido.webp',
+    foto10: '../proyecto/assets/img/equipo.webp', foto11: '../proyecto/assets/img/certificados.webp',
+    // Las verticales se recortan en el marco: qué parte queda a la vista (la 8 es una captura con un emoji abajo, que así queda afuera)
+    enfoques: '1 | 50% 55%\n2 | 50% 25%\n3 | 50% 28%\n4 | 50% 40%\n7 | 50% 33%\n8 | 50% 19%',
+    notas: 'Agradecer a los docentes y a las familias. El collage entra foto por foto mientras se agradece.',
+  },
+  {
     tipo: 'indice', mantener: 15, ancla: 'indice', transicion: 'fundido', logo: 'archivo:../proyecto/assets/logo/bandonear-celeste-barrotes-perspectiva.svg',
     titulo: '¿Preguntas?',
     autores: 'Brenda · Maxi · Antonio · Leo · Franco', contexto: 'Universidad Nacional de La Matanza',
     rotulo: 'Secciones técnicas',
     indice: 'construccion | Cómo está construido\nmecanismo | Del botón al sonido\ntraduccion | De lo mecánico a lo electrónico\nfuelle | El fuelle\ncomponentes | Componentes en 3D\nsoftware | De la tecla al sonido\ntacto | El tacto: switches\nconexiones | Cómo se conecta todo\nmodos | Solo o conectado\npractica | Software de práctica',
-    notas: 'Cierre y preguntas. Clic en una sección del índice para ir a ella; desde ahí, «↩ Índice» (abajo a la derecha) o la tecla I vuelven acá.',
+    notas: 'Cierre y preguntas. Clic en una sección del índice para ir a ella; desde ahí, ↩ Índice (abajo a la derecha) o la tecla I vuelven acá.',
   },
 
   // ================= Anexo técnico (desde el índice) =================

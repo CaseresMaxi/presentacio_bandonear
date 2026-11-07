@@ -1,0 +1,379 @@
+{
+  "rev": 1794004976417,
+  "v": {
+    "escenas": [
+      {
+        "tipo": "portada",
+        "mantener": 10,
+        "transicion": "fundido",
+        "logo": "archivo:../proyecto/assets/logo/bandonear-celeste-barrotes-perspectiva.svg",
+        "kicker": "Les presentamos",
+        "titulo": "Bandone*AR*",
+        "subtitulo": "Un bandoneón digital, pensado para aprender.",
+        "autores": "Brenda · Maxi · Antonio · Leo · Franco",
+        "contexto": "Universidad Nacional de La Matanza",
+        "imagen": "../proyecto/assets/img/bandonear-mesa.webp",
+        "notas": "«Hoy Franco está practicando así, pero eso está a punto de cambiar gracias a nuestro proyecto. Les presentamos BandoneAR.»\n\nEntra el bandoneón con el estuche. Franco lo saca y prepara todo para tocar."
+      },
+      {
+        "tipo": "guia",
+        "mantener": 14,
+        "cromo": false,
+        "kicker": "Hoy",
+        "titulo": "Así se practica *hoy*.",
+        "cuerpo": "Con una hoja impresa: la disposición de las teclas, junto con sus notas.",
+        "puntos": "Cada círculo es un botón, con su número.\nY cada botón da *dos notas*: una al abrir el fuelle y otra al cerrarlo.",
+        "botones": "15 | b‴ / a‴ | 300, 95\n16 | g♯‴ | 390, 80\n17 | g‴ / f♯‴ | 485, 92\n18 | f‴ | 572, 112\n4/4 | c♯′ / c′ | 262, 160\n0/0 | a‴ / g‴ | 350, 150\n1/1 | f♯‴ / a♯‴ | 438, 148\n2/2 | e‴ / c‴ | 522, 160\n3/3 | d♯‴ | 612, 178\n* | c′ / d′ | 222, 222\n⌖ | d′ / c♯′ | 312, 214\n0/1 | g′ / g♯′ | 396, 208\n1/2 | a♯″ / a♯′ | 482, 214\n2/3 | c‴ / c″ | 562, 228\n3/4 | d‴ | 650, 246\n6/0 | b | 180, 292\n+ | e′ / f♯′ | 272, 284\n0 | c♯″ / f♯″ | 352, 274\n1 | f♯′ / g′ | 432, 280\n2 | a′ / b′ | 514, 290\n3 | c″ / d″ | 594, 302\n4 | e″ / g″ | 678, 316\n8/0 | a | 126, 372\n4/0 | f′ | 210, 350\n2/0 | a♯′ / e′ | 296, 340\n5 | g♯′ / a′ | 376, 330\n6 | b′ / c♯″ | 458, 338\n7 | d″ / e″ | 538, 350\n8 | g♯″ / a″ | 616, 364\n9 | b″ / c♯‴ | 696, 380\n7/0 | a♯ | 156, 444\n5/0 | d♯′ | 240, 420\n3/0 | f″ | 326, 412\n10 | d♯″ / e″ | 408, 406\n11 | f♯″ / g♯″ | 486, 412\n12 | a″ / b″ | 566, 422\n13 | c♯‴ / e‴ | 642, 436\n14 | g″ / d♯″ | 720, 456",
+        "nota": "Botonera del lado derecho, redibujada de una guía de estudio.",
+        "notas": "Franco está sentado practicando escalas con la hoja impresa.\n\n«Acá podemos ver a un estudiante que aspira a ser un gran bandoneonista, practicando de la manera más común que hay hoy en día: con una hoja de papel que tiene impresa la disposición de las teclas junto con sus notas.»\n\n(→ en «junto con sus notas»: se marca un botón y sus dos notas.)"
+      },
+      {
+        "tipo": "libre",
+        "mantener": 8,
+        "transicion": "fundido",
+        "kicker": "La primera barrera",
+        "titulo": "El bandoneón usado *más barato*.",
+        "desde": "desde, para empezar a estudiar",
+        "html": "<div class=\"pad\">{{kicker}}{{titulo}}</div>\n<div class=\"precio\" data-r=\"dato\" data-m=\"pop\" data-at=\".6\" data-dur=\"1\"><span data-m=\"count\" data-at=\".7\" data-dur=\"1.8\" data-to=\"2.500\">0</span><small>dólares</small></div>\n<p class=\"precio-sub\" data-f=\"desde\" data-m=\"up\" data-at=\"1.6\">{{desde}}</p>",
+        "css": ".precio{position:absolute; left:140px; top:380px; font:var(--titulo-peso,800) 320px/1 var(--font-display); font-variant-numeric:lining-nums; color:var(--accent); letter-spacing:-.03em}\n.precio small{font-size:110px; color:var(--muted); margin-left:36px; letter-spacing:0}\n.precio-sub{position:absolute; left:140px; top:760px; font-size:44px; color:var(--lead)}",
+        "notas": "«Esto sucede principalmente porque el bandoneón es un instrumento carísimo: el bandoneón usado más barato que podés encontrar arranca en 2.500 dólares.»",
+        "correcciones": [
+          {
+            "x": 472,
+            "y": 602,
+            "paso": 1,
+            "texto": "tenes que poner 2.500 dolares",
+            "hecho": true,
+            "elemento": "",
+            "cita": "",
+            "fecha": "6/11/2026, 12:13:59"
+          }
+        ]
+      },
+      {
+        "tipo": "libre",
+        "mantener": 10,
+        "transicion": "corte",
+        "kicker": "La segunda barrera",
+        "titulo": "¿Se puede aprender *así*?",
+        "remate": "Y cuando lo aprendiste, hay que *reaprender* la postura y el movimiento.",
+        "html": "<div class=\"pad\">{{kicker}}{{titulo}}</div>\n<div class=\"cuatro\">\n  <div class=\"tec\" data-m=\"up\" data-dim data-at=\"0.60\">\n    <div class=\"tabw\" style=\"height:231px\"><div class=\"tab\" style=\"width:365px;height:231px\"><b class=\"bt\" style=\"left:106px;top:20px\" data-m=\"pop\" data-at=\"1.00\" data-dur=\".45\">Si</b><b class=\"bt\" style=\"left:150px;top:19px\" data-m=\"pop\" data-at=\"1.02\" data-dur=\".45\">Sol<sup>♯</sup></b><b class=\"bt\" style=\"left:193px;top:19px\" data-m=\"pop\" data-at=\"1.05\" data-dur=\".45\">Sol</b><b class=\"bt\" style=\"left:237px;top:20px\" data-m=\"pop\" data-at=\"1.07\" data-dur=\".45\">Fa</b><b class=\"bt\" style=\"left:84px;top:56px\" data-m=\"pop\" data-at=\"1.09\" data-dur=\".45\">Do<sup>♯</sup></b><b class=\"bt\" style=\"left:128px;top:53px\" data-m=\"pop\" data-at=\"1.11\" data-dur=\".45\">La<span class=\"luz\" data-m=\"pop\" data-at=\"3.80\" data-dur=\".5\">La</span></b><b class=\"bt\" style=\"left:171px;top:52px\" data-m=\"pop\" data-at=\"1.14\" data-dur=\".45\">Fa<sup>♯</sup></b><b class=\"bt\" style=\"left:215px;top:53px\" data-m=\"pop\" data-at=\"1.17\" data-dur=\".45\">Mi</b><b class=\"bt\" style=\"left:259px;top:55px\" data-m=\"pop\" data-at=\"1.19\" data-dur=\".45\">Re<sup>♯</sup></b><b class=\"bt\" style=\"left:62px;top:92px\" data-m=\"pop\" data-at=\"1.15\" data-dur=\".45\">Do</b><b class=\"bt\" style=\"left:106px;top:88px\" data-m=\"pop\" data-at=\"1.18\" data-dur=\".45\">Re</b><b class=\"bt\" style=\"left:150px;top:85px\" data-m=\"pop\" data-at=\"1.20\" data-dur=\".45\">Sol</b><b class=\"bt\" style=\"left:193px;top:85px\" data-m=\"pop\" data-at=\"1.23\" data-dur=\".45\">La<sup>♯</sup><span class=\"luz\" data-m=\"pop\" data-at=\"3.10\" data-dur=\".5\">La<sup>♯</sup></span></b><b class=\"bt\" style=\"left:237px;top:88px\" data-m=\"pop\" data-at=\"1.25\" data-dur=\".45\">Do</b><b class=\"bt\" style=\"left:281px;top:92px\" data-m=\"pop\" data-at=\"1.28\" data-dur=\".45\">Re</b><b class=\"bt\" style=\"left:40px;top:131px\" data-m=\"pop\" data-at=\"1.24\" data-dur=\".45\">Si</b><b class=\"bt\" style=\"left:84px;top:124px\" data-m=\"pop\" data-at=\"1.27\" data-dur=\".45\">Mi<span class=\"luz\" data-m=\"pop\" data-at=\"2.75\" data-dur=\".5\">Mi</span></b><b class=\"bt\" style=\"left:128px;top:120px\" data-m=\"pop\" data-at=\"1.29\" data-dur=\".45\">Do<sup>♯</sup></b><b class=\"bt\" style=\"left:171px;top:118px\" data-m=\"pop\" data-at=\"1.32\" data-dur=\".45\">Fa<sup>♯</sup></b><b class=\"bt\" style=\"left:215px;top:120px\" data-m=\"pop\" data-at=\"1.34\" data-dur=\".45\">La</b><b class=\"bt\" style=\"left:259px;top:124px\" data-m=\"pop\" data-at=\"1.37\" data-dur=\".45\">Do</b><b class=\"bt\" style=\"left:302px;top:130px\" data-m=\"pop\" data-at=\"1.40\" data-dur=\".45\">Mi</b><b class=\"bt\" style=\"left:19px;top:171px\" data-m=\"pop\" data-at=\"1.31\" data-dur=\".45\">La</b><b class=\"bt\" style=\"left:62px;top:162px\" data-m=\"pop\" data-at=\"1.33\" data-dur=\".45\">Fa</b><b class=\"bt\" style=\"left:106px;top:156px\" data-m=\"pop\" data-at=\"1.36\" data-dur=\".45\">La<sup>♯</sup></b><b class=\"bt\" style=\"left:150px;top:152px\" data-m=\"pop\" data-at=\"1.39\" data-dur=\".45\">Sol<sup>♯</sup></b><b class=\"bt\" style=\"left:193px;top:152px\" data-m=\"pop\" data-at=\"1.41\" data-dur=\".45\">Si</b><b class=\"bt\" style=\"left:237px;top:155px\" data-m=\"pop\" data-at=\"1.44\" data-dur=\".45\">Re<span class=\"luz\" data-m=\"pop\" data-at=\"3.45\" data-dur=\".5\">Re</span></b><b class=\"bt\" style=\"left:281px;top:162px\" data-m=\"pop\" data-at=\"1.46\" data-dur=\".45\">Sol<sup>♯</sup></b><b class=\"bt\" style=\"left:324px;top:170px\" data-m=\"pop\" data-at=\"1.49\" data-dur=\".45\">Si</b><b class=\"bt\" style=\"left:40px;top:203px\" data-m=\"pop\" data-at=\"1.42\" data-dur=\".45\">La<sup>♯</sup></b><b class=\"bt\" style=\"left:84px;top:193px\" data-m=\"pop\" data-at=\"1.45\" data-dur=\".45\">Re<sup>♯</sup></b><b class=\"bt\" style=\"left:128px;top:187px\" data-m=\"pop\" data-at=\"1.47\" data-dur=\".45\">Fa</b><b class=\"bt\" style=\"left:171px;top:184px\" data-m=\"pop\" data-at=\"1.50\" data-dur=\".45\">Re<sup>♯</sup></b><b class=\"bt\" style=\"left:215px;top:186px\" data-m=\"pop\" data-at=\"1.52\" data-dur=\".45\">Fa<sup>♯</sup></b><b class=\"bt\" style=\"left:259px;top:192px\" data-m=\"pop\" data-at=\"1.55\" data-dur=\".45\">La</b><b class=\"bt\" style=\"left:302px;top:201px\" data-m=\"pop\" data-at=\"1.57\" data-dur=\".45\">Do<sup>♯</sup></b><b class=\"bt\" style=\"left:346px;top:212px\" data-m=\"pop\" data-at=\"1.60\" data-dur=\".45\">Sol</b></div></div>\n    <b>Derecha</b><span>abriendo</span></div>\n  <div class=\"tec\" data-m=\"up\" data-dim data-at=\"0.78\">\n    <div class=\"tabw\" style=\"height:231px\"><div class=\"tab\" style=\"width:365px;height:231px\"><b class=\"bt\" style=\"left:106px;top:20px\" data-m=\"pop\" data-at=\"1.18\" data-dur=\".45\">La</b><b class=\"bt\" style=\"left:150px;top:19px\" data-m=\"pop\" data-at=\"1.20\" data-dur=\".45\">Sol<sup>♯</sup></b><b class=\"bt\" style=\"left:193px;top:19px\" data-m=\"pop\" data-at=\"1.23\" data-dur=\".45\">Fa<sup>♯</sup></b><b class=\"bt\" style=\"left:237px;top:20px\" data-m=\"pop\" data-at=\"1.25\" data-dur=\".45\">Fa</b><b class=\"bt\" style=\"left:84px;top:56px\" data-m=\"pop\" data-at=\"1.27\" data-dur=\".45\">Do</b><b class=\"bt\" style=\"left:128px;top:53px\" data-m=\"pop\" data-at=\"1.29\" data-dur=\".45\">Sol<span class=\"luz\" data-m=\"pop\" data-at=\"3.80\" data-dur=\".5\">Sol</span></b><b class=\"bt\" style=\"left:171px;top:52px\" data-m=\"pop\" data-at=\"1.32\" data-dur=\".45\">La<sup>♯</sup></b><b class=\"bt\" style=\"left:215px;top:53px\" data-m=\"pop\" data-at=\"1.34\" data-dur=\".45\">Do</b><b class=\"bt\" style=\"left:259px;top:55px\" data-m=\"pop\" data-at=\"1.37\" data-dur=\".45\">Re<sup>♯</sup></b><b class=\"bt\" style=\"left:62px;top:92px\" data-m=\"pop\" data-at=\"1.33\" data-dur=\".45\">Re</b><b class=\"bt\" style=\"left:106px;top:88px\" data-m=\"pop\" data-at=\"1.36\" data-dur=\".45\">Do<sup>♯</sup></b><b class=\"bt\" style=\"left:150px;top:85px\" data-m=\"pop\" data-at=\"1.38\" data-dur=\".45\">Sol<sup>♯</sup></b><b class=\"bt\" style=\"left:193px;top:85px\" data-m=\"pop\" data-at=\"1.41\" data-dur=\".45\">La<sup>♯</sup><span class=\"luz\" data-m=\"pop\" data-at=\"3.10\" data-dur=\".5\">La<sup>♯</sup></span></b><b class=\"bt\" style=\"left:237px;top:88px\" data-m=\"pop\" data-at=\"1.43\" data-dur=\".45\">Do</b><b class=\"bt\" style=\"left:281px;top:92px\" data-m=\"pop\" data-at=\"1.46\" data-dur=\".45\">Re</b><b class=\"bt\" style=\"left:40px;top:131px\" data-m=\"pop\" data-at=\"1.42\" data-dur=\".45\">Si</b><b class=\"bt\" style=\"left:84px;top:124px\" data-m=\"pop\" data-at=\"1.45\" data-dur=\".45\">Fa<sup>♯</sup><span class=\"luz\" data-m=\"pop\" data-at=\"2.75\" data-dur=\".5\">Fa<sup>♯</sup></span></b><b class=\"bt\" style=\"left:128px;top:120px\" data-m=\"pop\" data-at=\"1.47\" data-dur=\".45\">Fa<sup>♯</sup></b><b class=\"bt\" style=\"left:171px;top:118px\" data-m=\"pop\" data-at=\"1.50\" data-dur=\".45\">Sol</b><b class=\"bt\" style=\"left:215px;top:120px\" data-m=\"pop\" data-at=\"1.52\" data-dur=\".45\">Si</b><b class=\"bt\" style=\"left:259px;top:124px\" data-m=\"pop\" data-at=\"1.55\" data-dur=\".45\">Re</b><b class=\"bt\" style=\"left:302px;top:130px\" data-m=\"pop\" data-at=\"1.57\" data-dur=\".45\">Sol</b><b class=\"bt\" style=\"left:19px;top:171px\" data-m=\"pop\" data-at=\"1.49\" data-dur=\".45\">La</b><b class=\"bt\" style=\"left:62px;top:162px\" data-m=\"pop\" data-at=\"1.51\" data-dur=\".45\">Fa</b><b class=\"bt\" style=\"left:106px;top:156px\" data-m=\"pop\" data-at=\"1.54\" data-dur=\".45\">Mi</b><b class=\"bt\" style=\"left:150px;top:152px\" data-m=\"pop\" data-at=\"1.56\" data-dur=\".45\">La</b><b class=\"bt\" style=\"left:193px;top:152px\" data-m=\"pop\" data-at=\"1.59\" data-dur=\".45\">Do<sup>♯</sup></b><b class=\"bt\" style=\"left:237px;top:155px\" data-m=\"pop\" data-at=\"1.61\" data-dur=\".45\">Mi<span class=\"luz\" data-m=\"pop\" data-at=\"3.45\" data-dur=\".5\">Mi</span></b><b class=\"bt\" style=\"left:281px;top:162px\" data-m=\"pop\" data-at=\"1.64\" data-dur=\".45\">La</b><b class=\"bt\" style=\"left:324px;top:170px\" data-m=\"pop\" data-at=\"1.66\" data-dur=\".45\">Do<sup>♯</sup></b><b class=\"bt\" style=\"left:40px;top:203px\" data-m=\"pop\" data-at=\"1.60\" data-dur=\".45\">La<sup>♯</sup></b><b class=\"bt\" style=\"left:84px;top:193px\" data-m=\"pop\" data-at=\"1.63\" data-dur=\".45\">Re<sup>♯</sup></b><b class=\"bt\" style=\"left:128px;top:187px\" data-m=\"pop\" data-at=\"1.65\" data-dur=\".45\">Fa</b><b class=\"bt\" style=\"left:171px;top:184px\" data-m=\"pop\" data-at=\"1.68\" data-dur=\".45\">Mi</b><b class=\"bt\" style=\"left:215px;top:186px\" data-m=\"pop\" data-at=\"1.70\" data-dur=\".45\">Sol<sup>♯</sup></b><b class=\"bt\" style=\"left:259px;top:192px\" data-m=\"pop\" data-at=\"1.73\" data-dur=\".45\">Si</b><b class=\"bt\" style=\"left:302px;top:201px\" data-m=\"pop\" data-at=\"1.75\" data-dur=\".45\">Mi</b><b class=\"bt\" style=\"left:346px;top:212px\" data-m=\"pop\" data-at=\"1.78\" data-dur=\".45\">Re<sup>♯</sup></b></div></div>\n    <b>Derecha</b><span>cerrando</span></div>\n  <div class=\"tec\" data-m=\"up\" data-dim data-at=\"0.96\">\n    <div class=\"tabw\" style=\"height:231px\"><div class=\"tab\" style=\"width:343px;height:194px\"><b class=\"bt\" style=\"left:106px;top:21px\" data-m=\"pop\" data-at=\"1.45\" data-dur=\".45\">Sol<sup>♯</sup></b><b class=\"bt\" style=\"left:150px;top:19px\" data-m=\"pop\" data-at=\"1.48\" data-dur=\".45\">La<sup>♯</sup></b><b class=\"bt\" style=\"left:193px;top:19px\" data-m=\"pop\" data-at=\"1.50\" data-dur=\".45\">Do<sup>♯</sup></b><b class=\"bt\" style=\"left:237px;top:21px\" data-m=\"pop\" data-at=\"1.53\" data-dur=\".45\">Fa</b><b class=\"bt\" style=\"left:281px;top:24px\" data-m=\"pop\" data-at=\"1.55\" data-dur=\".45\">Sol<sup>♯</sup></b><b class=\"bt\" style=\"left:41px;top:62px\" data-m=\"pop\" data-at=\"1.49\" data-dur=\".45\">Mi</b><b class=\"bt\" style=\"left:85px;top:57px\" data-m=\"pop\" data-at=\"1.51\" data-dur=\".45\">La<span class=\"luz\" data-m=\"pop\" data-at=\"2.92\" data-dur=\".5\">La</span></b><b class=\"bt\" style=\"left:128px;top:53px\" data-m=\"pop\" data-at=\"1.54\" data-dur=\".45\">Sol</b><b class=\"bt\" style=\"left:172px;top:52px\" data-m=\"pop\" data-at=\"1.56\" data-dur=\".45\">Re<sup>♯</sup></b><b class=\"bt\" style=\"left:216px;top:53px\" data-m=\"pop\" data-at=\"1.59\" data-dur=\".45\">Fa</b><b class=\"bt\" style=\"left:259px;top:56px\" data-m=\"pop\" data-at=\"1.61\" data-dur=\".45\">La<sup>♯</sup></b><b class=\"bt\" style=\"left:303px;top:61px\" data-m=\"pop\" data-at=\"1.64\" data-dur=\".45\">Fa</b><b class=\"bt\" style=\"left:62px;top:94px\" data-m=\"pop\" data-at=\"1.60\" data-dur=\".45\">Re</b><b class=\"bt\" style=\"left:106px;top:89px\" data-m=\"pop\" data-at=\"1.63\" data-dur=\".45\">La</b><b class=\"bt\" style=\"left:150px;top:85px\" data-m=\"pop\" data-at=\"1.66\" data-dur=\".45\">Do<span class=\"luz\" data-m=\"pop\" data-at=\"3.27\" data-dur=\".5\">Do</span></b><b class=\"bt\" style=\"left:193px;top:85px\" data-m=\"pop\" data-at=\"1.68\" data-dur=\".45\">Mi</b><b class=\"bt\" style=\"left:237px;top:88px\" data-m=\"pop\" data-at=\"1.71\" data-dur=\".45\">Do</b><b class=\"bt\" style=\"left:281px;top:94px\" data-m=\"pop\" data-at=\"1.73\" data-dur=\".45\">Sol</b><b class=\"bt\" style=\"left:41px;top:134px\" data-m=\"pop\" data-at=\"1.67\" data-dur=\".45\">Mi</b><b class=\"bt\" style=\"left:85px;top:126px\" data-m=\"pop\" data-at=\"1.69\" data-dur=\".45\">Sol<sup>♯</sup></b><b class=\"bt\" style=\"left:128px;top:120px\" data-m=\"pop\" data-at=\"1.72\" data-dur=\".45\">Si<span class=\"luz\" data-m=\"pop\" data-at=\"3.62\" data-dur=\".5\">Si</span></b><b class=\"bt\" style=\"left:172px;top:118px\" data-m=\"pop\" data-at=\"1.74\" data-dur=\".45\">Re</b><b class=\"bt\" style=\"left:216px;top:120px\" data-m=\"pop\" data-at=\"1.77\" data-dur=\".45\">Fa<sup>♯</sup></b><b class=\"bt\" style=\"left:259px;top:125px\" data-m=\"pop\" data-at=\"1.79\" data-dur=\".45\">Do<sup>♯</sup></b><b class=\"bt\" style=\"left:303px;top:133px\" data-m=\"pop\" data-at=\"1.82\" data-dur=\".45\">Fa<sup>♯</sup></b><b class=\"bt\" style=\"left:19px;top:175px\" data-m=\"pop\" data-at=\"1.76\" data-dur=\".45\">Re</b><b class=\"bt\" style=\"left:62px;top:164px\" data-m=\"pop\" data-at=\"1.78\" data-dur=\".45\">Si</b><b class=\"bt\" style=\"left:106px;top:156px\" data-m=\"pop\" data-at=\"1.81\" data-dur=\".45\">Sol</b><b class=\"bt\" style=\"left:150px;top:152px\" data-m=\"pop\" data-at=\"1.83\" data-dur=\".45\">La</b><b class=\"bt\" style=\"left:193px;top:152px\" data-m=\"pop\" data-at=\"1.86\" data-dur=\".45\">Re<sup>♯</sup><span class=\"luz\" data-m=\"pop\" data-at=\"3.97\" data-dur=\".5\">Re<sup>♯</sup></span></b><b class=\"bt\" style=\"left:237px;top:156px\" data-m=\"pop\" data-at=\"1.89\" data-dur=\".45\">Fa<sup>♯</sup></b><b class=\"bt\" style=\"left:281px;top:163px\" data-m=\"pop\" data-at=\"1.91\" data-dur=\".45\">Re<sup>♯</sup></b><b class=\"bt\" style=\"left:324px;top:173px\" data-m=\"pop\" data-at=\"1.94\" data-dur=\".45\">Do</b></div></div>\n    <b>Izquierda</b><span>abriendo</span></div>\n  <div class=\"tec\" data-m=\"up\" data-dim data-at=\"1.14\">\n    <div class=\"tabw\" style=\"height:231px\"><div class=\"tab\" style=\"width:343px;height:194px\"><b class=\"bt\" style=\"left:106px;top:21px\" data-m=\"pop\" data-at=\"1.63\" data-dur=\".45\">Sol<sup>♯</sup></b><b class=\"bt\" style=\"left:150px;top:19px\" data-m=\"pop\" data-at=\"1.66\" data-dur=\".45\">La<sup>♯</sup></b><b class=\"bt\" style=\"left:193px;top:19px\" data-m=\"pop\" data-at=\"1.68\" data-dur=\".45\">Re<sup>♯</sup></b><b class=\"bt\" style=\"left:237px;top:21px\" data-m=\"pop\" data-at=\"1.71\" data-dur=\".45\">Re<sup>♯</sup></b><b class=\"bt\" style=\"left:281px;top:24px\" data-m=\"pop\" data-at=\"1.73\" data-dur=\".45\">Sol</b><b class=\"bt\" style=\"left:41px;top:62px\" data-m=\"pop\" data-at=\"1.67\" data-dur=\".45\">Re</b><b class=\"bt\" style=\"left:85px;top:57px\" data-m=\"pop\" data-at=\"1.69\" data-dur=\".45\">Re<span class=\"luz\" data-m=\"pop\" data-at=\"2.92\" data-dur=\".5\">Re</span></b><b class=\"bt\" style=\"left:128px;top:53px\" data-m=\"pop\" data-at=\"1.72\" data-dur=\".45\">La<sup>♯</sup></b><b class=\"bt\" style=\"left:172px;top:52px\" data-m=\"pop\" data-at=\"1.74\" data-dur=\".45\">Do</b><b class=\"bt\" style=\"left:216px;top:53px\" data-m=\"pop\" data-at=\"1.77\" data-dur=\".45\">Do<sup>♯</sup></b><b class=\"bt\" style=\"left:259px;top:56px\" data-m=\"pop\" data-at=\"1.79\" data-dur=\".45\">Do</b><b class=\"bt\" style=\"left:303px;top:61px\" data-m=\"pop\" data-at=\"1.82\" data-dur=\".45\">Fa<sup>♯</sup></b><b class=\"bt\" style=\"left:62px;top:94px\" data-m=\"pop\" data-at=\"1.78\" data-dur=\".45\">Sol</b><b class=\"bt\" style=\"left:106px;top:89px\" data-m=\"pop\" data-at=\"1.81\" data-dur=\".45\">Sol</b><b class=\"bt\" style=\"left:150px;top:85px\" data-m=\"pop\" data-at=\"1.83\" data-dur=\".45\">Si<span class=\"luz\" data-m=\"pop\" data-at=\"3.27\" data-dur=\".5\">Si</span></b><b class=\"bt\" style=\"left:193px;top:85px\" data-m=\"pop\" data-at=\"1.86\" data-dur=\".45\">Re</b><b class=\"bt\" style=\"left:237px;top:88px\" data-m=\"pop\" data-at=\"1.89\" data-dur=\".45\">Fa</b><b class=\"bt\" style=\"left:281px;top:94px\" data-m=\"pop\" data-at=\"1.91\" data-dur=\".45\">Fa<sup>♯</sup></b><b class=\"bt\" style=\"left:41px;top:134px\" data-m=\"pop\" data-at=\"1.85\" data-dur=\".45\">La</b><b class=\"bt\" style=\"left:85px;top:126px\" data-m=\"pop\" data-at=\"1.88\" data-dur=\".45\">Mi</b><b class=\"bt\" style=\"left:128px;top:120px\" data-m=\"pop\" data-at=\"1.90\" data-dur=\".45\">La<span class=\"luz\" data-m=\"pop\" data-at=\"3.62\" data-dur=\".5\">La</span></b><b class=\"bt\" style=\"left:172px;top:118px\" data-m=\"pop\" data-at=\"1.93\" data-dur=\".45\">Do<sup>♯</sup></b><b class=\"bt\" style=\"left:216px;top:120px\" data-m=\"pop\" data-at=\"1.95\" data-dur=\".45\">Mi</b><b class=\"bt\" style=\"left:259px;top:125px\" data-m=\"pop\" data-at=\"1.98\" data-dur=\".45\">Sol<sup>♯</sup></b><b class=\"bt\" style=\"left:303px;top:133px\" data-m=\"pop\" data-at=\"2.00\" data-dur=\".45\">Si</b><b class=\"bt\" style=\"left:19px;top:175px\" data-m=\"pop\" data-at=\"1.94\" data-dur=\".45\">Mi</b><b class=\"bt\" style=\"left:62px;top:164px\" data-m=\"pop\" data-at=\"1.96\" data-dur=\".45\">Mi</b><b class=\"bt\" style=\"left:106px;top:156px\" data-m=\"pop\" data-at=\"1.99\" data-dur=\".45\">Fa<sup>♯</sup></b><b class=\"bt\" style=\"left:150px;top:152px\" data-m=\"pop\" data-at=\"2.02\" data-dur=\".45\">Sol<sup>♯</sup></b><b class=\"bt\" style=\"left:193px;top:152px\" data-m=\"pop\" data-at=\"2.04\" data-dur=\".45\">Si<span class=\"luz\" data-m=\"pop\" data-at=\"3.97\" data-dur=\".5\">Si</span></b><b class=\"bt\" style=\"left:237px;top:156px\" data-m=\"pop\" data-at=\"2.06\" data-dur=\".45\">Fa</b><b class=\"bt\" style=\"left:281px;top:163px\" data-m=\"pop\" data-at=\"2.09\" data-dur=\".45\">Do<sup>♯</sup></b><b class=\"bt\" style=\"left:324px;top:173px\" data-m=\"pop\" data-at=\"2.11\" data-dur=\".45\">Fa</b></div></div>\n    <b>Izquierda</b><span>cerrando</span></div>\n</div>\n<p class=\"cuatro-n\" data-r=\"dato\" data-m=\"caer\" data-at=\"4.3\"><b>4</b> teclados para memorizar</p>\n<p class=\"remate\" data-f=\"remate\" data-m=\"renglones\" data-s=\"1\" data-at=\".1\">{{remate}}</p>",
+        "css": ".cuatro{position:absolute; left:140px; right:140px; top:320px; display:grid; grid-template-columns:660fr 660fr 621fr 621fr; gap:24px}\n.tec{border:1px solid var(--line); background:var(--panel); border-radius:22px; padding:34px 18px 26px; display:flex; flex-direction:column; align-items:center; perspective:1100px}\n.tec .tabw{display:flex; align-items:center; justify-content:center; margin-bottom:30px}\n.tec .tab{position:relative; transform:rotateX(22deg)}\n.tec .tab::before{content:\"\"; position:absolute; inset:-14px; border-radius:20px; background:linear-gradient(165deg,var(--panel-2),var(--bg)); border:1px solid var(--line); box-shadow:0 9px 0 rgba(0,0,0,.4), 0 26px 30px rgba(0,0,0,.5)}\n.tec .bt{position:absolute; width:31px; height:31px; margin:-15px 0 0 -15px; border-radius:50%; background:radial-gradient(circle at 34% 28%, color-mix(in srgb,var(--text) 26%,var(--panel-2)), var(--panel-2) 64%); border:1px solid var(--line); box-shadow:0 4px 0 rgba(0,0,0,.55), 0 7px 7px rgba(0,0,0,.4); font:700 12px/31px var(--font-body); text-align:center; color:var(--lead); letter-spacing:-.02em; font-style:normal}\n.tec .bt sup{font-size:.72em; line-height:0; vertical-align:.35em; margin-left:1px}\n.tec .luz{position:absolute; inset:-1px; border-radius:50%; background:radial-gradient(circle at 34% 28%, color-mix(in srgb,#fff 42%,var(--accent)), var(--accent) 68%); color:var(--bg); box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 38%,transparent), 0 0 20px var(--accent)}\n.tec > b{display:block; font-size:32px; color:var(--strong)}\n.tec > span{font-size:28px; color:var(--muted)}\n.cuatro-n{position:absolute; left:140px; top:770px; margin:0; font-size:44px; color:var(--lead)}\n.cuatro-n b{font:var(--titulo-peso,800) 90px/1 var(--font-display); color:var(--accent); margin-right:16px; vertical-align:-10px}\n.remate{position:absolute; left:140px; right:140px; top:880px; margin:0; font-size:42px; color:var(--strong)}",
+        "notas": "«Salimos de la primera barrera con la que se encuentra el futuro músico, que es la monetaria. Hablemos de la que más nos concierne: la del aprendizaje. ¿A ustedes les parece que es posible aprender a tocar un instrumento de cuatro teclados así?»\n\n(→) «Y cuando finalmente lo aprendiste, hay que reaprender todo, porque la posición y el movimiento no son los correctos.»",
+        "correcciones": [
+          {
+            "x": 941,
+            "y": 539,
+            "paso": 2,
+            "texto": "revisa las dispociones para que sean files a un teclado, ademas podiras crear algo en 3d que quede mas vistoso, como lo veas mejor",
+            "hecho": true,
+            "elemento": "",
+            "cita": "",
+            "fecha": "6/11/2026, 07:32:04"
+          }
+        ]
+      },
+      {
+        "tipo": "libre",
+        "mantener": 9,
+        "kicker": "La botonera",
+        "titulo": "Todos los botones, *en su lugar*.",
+        "izq": "izquierda · graves",
+        "der": "derecha · agudas e intermedias",
+        "nota": "Misma distribución, altura y distancia que el original.",
+        "html": "<div class=\"pad\">{{kicker}}{{titulo}}</div>\n<div class=\"n71\" data-r=\"dato\" data-m=\"pop\" data-at=\".5\" data-dur=\"1\"><span data-m=\"count\" data-at=\".6\" data-dur=\"1.6\" data-to=\"71\">0</span><small>botones</small></div>\n<div class=\"lados\">\n  <div class=\"lado\" data-m=\"left\" data-s=\"1\" data-at=\".1\"><b>33</b><span data-f=\"izq\">{{izq}}</span></div>\n  <div class=\"lado\" data-m=\"right\" data-s=\"1\" data-at=\".35\"><b>38</b><span data-f=\"der\">{{der}}</span></div>\n</div>\n<p class=\"nota71\" data-f=\"nota\" data-m=\"up\" data-s=\"2\" data-at=\".1\">{{nota}}</p>",
+        "css": ".n71{position:absolute; left:140px; top:390px; font:var(--titulo-peso,800) 300px/1 var(--font-display); color:var(--accent); letter-spacing:-.03em; font-variant-numeric:lining-nums}\n.n71 small{display:block; margin-top:24px; font:500 44px/1 var(--font-body); color:var(--muted); letter-spacing:.02em}\n.lados{position:absolute; left:820px; right:140px; top:430px; display:grid; grid-template-columns:1fr 1fr; gap:60px}\n.lado{border-top:4px solid var(--line); padding-top:28px}\n.lado b{display:block; font:var(--titulo-peso,800) 150px/1 var(--font-display); font-variant-numeric:lining-nums; color:var(--strong)}\n.lado span{display:block; margin-top:16px; font-size:36px; line-height:1.3; color:var(--lead)}\n.nota71{position:absolute; left:820px; right:140px; top:820px; font-size:38px; line-height:1.35; color:var(--text)}",
+        "notas": "«Con mis compañeros logramos crear una alternativa al bandoneón tradicional. Presenta la misma cantidad de teclas y disposición…» 71 botones, como el original: 33 en el cabezal izquierdo, para las graves, y 38 en el derecho, para las agudas e intermedias. Los cabezales están impresos en 3D y replican la ergonomía, la distancia y la distribución física de los botones."
+      },
+      {
+        "tipo": "libre",
+        "mantener": 10,
+        "transicion": "fundido",
+        "kicker": "Bisonoro",
+        "titulo": "Un botón, *dos notas*.",
+        "abre": "Mi",
+        "cierra": "Fa♯",
+        "html": "<div class=\"pad\">{{kicker}}{{titulo}}</div>\n<div class=\"bot-wrap\"><svg class=\"botonera\" viewBox=\"0 0 800 460\" data-m=\"fade\" data-at=\".7\" data-dur=\"1\"><circle class=\"b\" cx=\"249\" cy=\"44\" r=\"30\"/><circle class=\"b\" cx=\"331\" cy=\"44\" r=\"30\"/><circle class=\"b\" cx=\"413\" cy=\"44\" r=\"30\"/><circle class=\"b\" cx=\"495\" cy=\"44\" r=\"30\"/><circle class=\"b\" cx=\"208\" cy=\"118\" r=\"30\"/><circle class=\"b\" cx=\"290\" cy=\"118\" r=\"30\"/><circle class=\"b\" cx=\"372\" cy=\"118\" r=\"30\"/><circle class=\"b\" cx=\"454\" cy=\"118\" r=\"30\"/><circle class=\"b\" cx=\"536\" cy=\"118\" r=\"30\"/><circle class=\"b\" cx=\"167\" cy=\"192\" r=\"30\"/><circle class=\"b\" cx=\"249\" cy=\"192\" r=\"30\"/><circle class=\"b\" cx=\"331\" cy=\"192\" r=\"30\"/><circle class=\"b\" cx=\"413\" cy=\"192\" r=\"30\"/><circle class=\"b\" cx=\"495\" cy=\"192\" r=\"30\"/><circle class=\"b\" cx=\"577\" cy=\"192\" r=\"30\"/><circle class=\"b\" cx=\"126\" cy=\"266\" r=\"30\"/><circle class=\"b on\" cx=\"208\" cy=\"266\" r=\"30\" data-m=\"pop\" data-at=\"1.3\" data-dur=\".7\"/><circle class=\"b\" cx=\"290\" cy=\"266\" r=\"30\"/><circle class=\"b\" cx=\"372\" cy=\"266\" r=\"30\"/><circle class=\"b\" cx=\"454\" cy=\"266\" r=\"30\"/><circle class=\"b\" cx=\"536\" cy=\"266\" r=\"30\"/><circle class=\"b\" cx=\"618\" cy=\"266\" r=\"30\"/><circle class=\"b\" cx=\"85\" cy=\"340\" r=\"30\"/><circle class=\"b\" cx=\"167\" cy=\"340\" r=\"30\"/><circle class=\"b\" cx=\"249\" cy=\"340\" r=\"30\"/><circle class=\"b\" cx=\"331\" cy=\"340\" r=\"30\"/><circle class=\"b\" cx=\"413\" cy=\"340\" r=\"30\"/><circle class=\"b\" cx=\"495\" cy=\"340\" r=\"30\"/><circle class=\"b\" cx=\"577\" cy=\"340\" r=\"30\"/><circle class=\"b\" cx=\"659\" cy=\"340\" r=\"30\"/><circle class=\"b\" cx=\"126\" cy=\"414\" r=\"30\"/><circle class=\"b\" cx=\"208\" cy=\"414\" r=\"30\"/><circle class=\"b\" cx=\"290\" cy=\"414\" r=\"30\"/><circle class=\"b\" cx=\"372\" cy=\"414\" r=\"30\"/><circle class=\"b\" cx=\"454\" cy=\"414\" r=\"30\"/><circle class=\"b\" cx=\"536\" cy=\"414\" r=\"30\"/><circle class=\"b\" cx=\"618\" cy=\"414\" r=\"30\"/><circle class=\"b\" cx=\"700\" cy=\"414\" r=\"30\"/></svg><p class=\"bot-lbl\" data-m=\"fade\" data-at=\"1.1\">Mano derecha · 38 botones</p></div>\n<div class=\"sentidos\">\n  <div class=\"sent\" data-m=\"right\" data-s=\"1\" data-at=\".1\" data-dim><small>Abriendo el fuelle →</small><b data-f=\"abre\">{{abre}}</b></div>\n  <div class=\"sent\" data-m=\"left\" data-s=\"2\" data-at=\".1\"><small>← Cerrando el fuelle</small><b data-f=\"cierra\">{{cierra}}</b></div>\n</div>",
+        "css": ".bot-wrap{position:absolute; left:140px; top:400px; width:800px}\n.botonera{width:800px; height:460px; overflow:visible}\n.botonera .b{fill:var(--panel-2); stroke:var(--line); stroke-width:3}\n.botonera .b.on{fill:var(--accent); stroke:var(--accent-2); stroke-width:6}\n.bot-lbl{margin:18px 0 0; font-size:28px; color:var(--muted)}\n.sentidos{position:absolute; left:1080px; right:140px; top:420px; display:grid; gap:44px}\n.sent{border-left:6px solid var(--accent); padding:10px 0 10px 40px}\n.sent small{display:block; font-size:34px; color:var(--muted)}\n.sent b{display:block; margin-top:6px; font:var(--titulo-peso,800) 150px/1 var(--font-display); font-variant-numeric:lining-nums; color:var(--strong)}",
+        "notas": "«…replica las notas e imita la bisonoridad, que es una característica particular del instrumento, la que lo hace único.» El bandoneón es bisonoro: el mismo botón da una nota al abrir el fuelle y otra distinta al cerrarlo. Este, en la mano derecha, da Mi abriendo y Fa sostenido cerrando. BandoneAR lo reproduce igual.",
+        "activa": false
+      },
+      {
+        "tipo": "cifra",
+        "mantener": 9,
+        "transicion": "morph",
+        "kicker": "Fiel al original",
+        "titulo": "Por menos de *un cuarto* del precio.",
+        "prefijo": "<",
+        "numero": "25",
+        "unidad": "%",
+        "texto": "de lo que cuesta un bandoneón tradicional.",
+        "barras": "Bandoneón tradicional | 100\nBandoneAR | 25",
+        "unidadBarras": "%",
+        "notas": "«Todo este conjunto de features hace que el estudiante pueda practicar desde el primer momento con un instrumento cien por ciento fiel al original, pagando menos de un cuarto del precio que pagaría si comprara uno tradicional.»",
+        "activa": false
+      },
+      {
+        "mantener": 60,
+        "transicion": "fundido",
+        "notas": "Franco ya tiene todo listo y se pone a tocar escalas. Esta escena queda de fondo mientras toca.",
+        "correcciones": [
+          {
+            "x": 885,
+            "y": 525,
+            "paso": 1,
+            "texto": "en esta dia positiva presnetamos a bandoner, no hace falta lo tecnico,  ni lo que pone en vido, solo hace que se vea facha",
+            "hecho": true,
+            "elemento": "",
+            "cita": "",
+            "fecha": "6/11/2026, 12:17:45"
+          },
+          {
+            "x": 219,
+            "y": 335,
+            "paso": 1,
+            "texto": "revisa el icono queno es el mimso que usamo en la presentaicon inical",
+            "hecho": true,
+            "elemento": "",
+            "cita": "",
+            "fecha": "6/11/2026, 12:24:44"
+          }
+        ],
+        "tipo": "vitrina",
+        "cromo": false,
+        "kicker": "Les presentamos",
+        "titulo": "Bandone*AR*",
+        "subtitulo": "Un bandoneón digital, pensado para aprender.",
+        "logo": "archivo:../proyecto/assets/logo/bandonear-celeste-barrotes-perspectiva.svg"
+      },
+      {
+        "tipo": "tarjetas",
+        "mantener": 10,
+        "coreografia": "sobria",
+        "kicker": "El sonido",
+        "titulo": "Suena *donde lo necesites*.",
+        "items": "Un parlante en cada carcasa | Graves a la izquierda, agudos a la derecha, como en el bandoneón.\nSalida jack | A un parlante, para que suene todavía más fuerte.\nAuriculares | Para practicar sin molestar a nadie.",
+        "notas": "«Como pueden ver y escuchar, el instrumento tiene amplificadores en cada carcasa. Además cuenta con una salida jack por si quiere conectarlo a un parlante para que suene aún más fuerte, y si no quiere molestar a nadie puede conectar sus auriculares y escucharlo él solo.»\n\nFranco muestra la entrada de auriculares, después lo conecta al parlante y lo hace sonar."
+      },
+      {
+        "tipo": "libre",
+        "mantener": 12,
+        "transicion": "fundido",
+        "coreografia": "editorial",
+        "pasos": "uno",
+        "kicker": "Lo que se aprende acá, sirve allá",
+        "p1": "Ergonomía",
+        "p2": "Postura",
+        "p3": "Transición natural",
+        "p4": "Evolución",
+        "html": "<div class=\"ev-foto\" data-f=\"imagen\" data-k=\"hero\" data-shape=\"img\" data-m=\"reveal\" data-dur=\"1.4\"><img src=\"{{img:imagen}}\" alt=\"\"></div>\n<div class=\"ev-txt\">{{kicker}}\n  <ol class=\"ev\">\n    <li data-f=\"p1\" data-m=\"up\" data-at=\".6\" data-dim>{{p1}}</li>\n    <li data-f=\"p2\" data-m=\"up\" data-s=\"1\" data-at=\".1\" data-dim>{{p2}}</li>\n    <li data-f=\"p3\" data-m=\"up\" data-s=\"2\" data-at=\".1\" data-dim>{{p3}}</li>\n    <li data-f=\"p4\" data-m=\"up\" data-s=\"3\" data-at=\".1\">{{p4}}</li>\n  </ol>\n</div>",
+        "css": ".ev-foto{position:absolute; left:0; top:0; bottom:0; width:820px; overflow:hidden}\n.ev-foto img{width:100%; height:100%; object-fit:cover}\n.ev-txt{position:absolute; left:960px; right:140px; top:250px}\n.ev{list-style:none; margin:50px 0 0; padding:0}\n.ev li{font:var(--titulo-peso,800) 104px/1.15 var(--font-display); color:var(--strong); letter-spacing:-.02em}",
+        "notas": "Ergonomía, postura, transición natural y evolución: un → por palabra, a medida que se nombran.",
+        "correcciones": [
+          {
+            "x": 528,
+            "y": 564,
+            "paso": 2,
+            "texto": "no me permite cambiar la imagen de esa escena\n",
+            "hecho": true,
+            "elemento": "",
+            "cita": "",
+            "fecha": "6/11/2026, 07:39:31"
+          }
+        ],
+        "imagen": "../proyecto/assets/img/abuelo.webp"
+      },
+      {
+        "tipo": "indice",
+        "mantener": 15,
+        "ancla": "indice",
+        "transicion": "fundido",
+        "logo": "archivo:../proyecto/assets/logo/bandonear-celeste-barrotes-perspectiva.svg",
+        "titulo": "¿Preguntas?",
+        "autores": "Brenda · Maxi · Antonio · Leo · Franco",
+        "contexto": "Universidad Nacional de La Matanza",
+        "rotulo": "Secciones técnicas",
+        "indice": "construccion | Cómo está construido\nmecanismo | Del botón al sonido\ntraduccion | De lo mecánico a lo electrónico\nfuelle | El fuelle\ncomponentes | Componentes en 3D\nsoftware | De la tecla al sonido\ntacto | El tacto: switches\nconexiones | Cómo se conecta todo\nmodos | Solo o conectado\npractica | Software de práctica",
+        "notas": "Cierre y preguntas. Clic en una sección del índice para ir a ella; desde ahí, «↩ Índice» (abajo a la derecha) o la tecla I vuelven acá.",
+        "correcciones": [
+          {
+            "x": 898,
+            "y": 594,
+            "paso": 1,
+            "texto": "cambia lo de expo proyecto en todos lados no debe ir",
+            "hecho": true,
+            "elemento": "Contexto",
+            "cita": "Expo Proyecto 2026 · UNLaM",
+            "fecha": "6/11/2026, 12:30:47"
+          },
+          {
+            "x": 992,
+            "y": 221,
+            "paso": 1,
+            "texto": "revisa que aqui tampoco respetamos el mismo icono ",
+            "hecho": true,
+            "elemento": "",
+            "cita": "",
+            "fecha": "6/11/2026, 12:33:16"
+          }
+        ]
+      },
+      {
+        "tipo": "anatomia",
+        "mantener": 12,
+        "anexo": true,
+        "ancla": "construccion",
+        "transicion": "corte",
+        "kicker": "Entender el instrumento",
+        "titulo": "Cómo está construido un *bandoneón*.",
+        "partes": "Cabezal izquierdo | 33 botones · las notas graves\nFuelle | Actúa como un pulmón: aspira al abrir, sopla al cerrar\nCabezal derecho | 38 botones · las notas agudas e intermedias\nLa máquina | Brazos, zapatas y voces de acero dentro de cada cabezal",
+        "nota": "Bisonoro: cada botón da una nota al abrir el fuelle y otra al cerrarlo.",
+        "notas": "Dos cabezales con distinta cantidad de botones, el fuelle que mueve el aire y la máquina adentro de cada cabezal."
+      },
+      {
+        "tipo": "mecanismo",
+        "mantener": 12,
+        "anexo": true,
+        "ancla": "mecanismo",
+        "transicion": "corte",
+        "kicker": "La máquina por dentro",
+        "titulo": "Del botón *al sonido*.",
+        "puntos": "Al apretar el botón, el brazo levanta la zapata y destapa la ranura.\nEl fuelle hace pasar el aire: abriendo vibra una voz de acero…\n…y cerrando, la otra. Por eso cada botón tiene dos notas.",
+        "partes": "Botón de nácar\nBrazo\nZapata\nRanura\nVoz al abrir\nVoz al cerrar",
+        "notas": "El botón acciona un brazo que levanta una zapata. Con la ranura abierta, el aire hace vibrar una lengüeta de acero; hay una voz para cada sentido del fuelle."
+      },
+      {
+        "tipo": "traduccion",
+        "mantener": 11,
+        "anexo": true,
+        "ancla": "traduccion",
+        "transicion": "corte",
+        "kicker": "Replicarlo en electrónica",
+        "titulo": "De lo mecánico a *lo electrónico*.",
+        "izqTitulo": "En el bandoneón",
+        "derTitulo": "En BandoneAR",
+        "pares": "Botones y brazos | Switches mecánicos lineales\nLa máquina de cada cabezal | Una Raspberry Pi Pico por teclado: teclados MIDI\nVoces de acero y aire | FluidSynth: síntesis por software\nPresión de aire del fuelle | Un encoder con hilo que lee el gesto\nCaja de madera | Cabezales impresos en 3D",
+        "notas": "Cada parte del bandoneón y su equivalente electrónico."
+      },
+      {
+        "tipo": "fuelle-desafio",
+        "mantener": 11,
+        "anexo": true,
+        "ancla": "fuelle",
+        "transicion": "corte",
+        "kicker": "El fuelle",
+        "titulo": "Que el fuelle se *sienta* como el real.",
+        "cuerpo": "El instrumento tiene que acompañar el movimiento, la postura y el agarre.",
+        "puntos": "Sin aire: un encoder adentro del cabezal, con un hilo atado al otro, lee la apertura, el cierre y la velocidad.\nEl gesto define la dirección y la dinámica de cada nota.\nAsí la evolución hacia el bandoneón tradicional es natural.",
+        "notas": "Encoder en un cabezal, hilo atado al centro del otro: al abrir se desenrolla y gira, al cerrar se enrolla. Sentido = nota; velocidad = intensidad."
+      },
+      {
+        "tipo": "componentes",
+        "mantener": 14,
+        "anexo": true,
+        "ancla": "componentes",
+        "transicion": "corte",
+        "kicker": "Componentes principales",
+        "titulo": "Cada pieza cumple *una función del bandoneón*.",
+        "items": "Cabezales impresos en 3D | La caja de madera de cada lado\n71 switches, un diodo cada uno | Los botones: 38 a la derecha, 33 a la izquierda\nTeclas impresas a medida | Misma altura, distancia y distribución\nUna Raspberry Pi Pico por cabezal | La máquina: escanea la botonera y el fuelle\nEncoder con hilo | El aire: un hilo atado al cabezal derecho lo hace girar\nFuelle | El gesto, la postura y el agarre\nRaspberry Pi Zero con FluidSynth | Las voces: genera el sonido de cada nota\nDos MAX98357A y parlantes | Estéreo: graves a la izquierda, agudos a la derecha\nBatería integrada | Se toca en cualquier lugar\nUSB-MIDI y jack 3,5 mm | Computadora, auriculares o amplificación",
+        "notas": "Los números siguen a cada parte en el modelo 3D, en corte."
+      },
+      {
+        "tipo": "software",
+        "mantener": 14,
+        "anexo": true,
+        "ancla": "software",
+        "transicion": "corte",
+        "kicker": "El software",
+        "titulo": "De la tecla al sonido, *con FluidSynth*.",
+        "etapas": "Matrices de botones | Filas y columnas, con un diodo por switch\nDos Raspberry Pi Pico | Escanean cada lado; la izquierda lee además el fuelle, el volumen y la llave\nRaspberry Pi Zero | Recibe todo por UART y arma cada nota: botón + sentido del fuelle\nFluidSynth | Sintetizador por software: hace sonar la nota con un SoundFont de bandoneón\nAudio estéreo | Dos MAX98357A por I2S, uno por parlante",
+        "enlaces": "escaneo\nUART\nnotas MIDI\nI2S",
+        "consola": "pico-der   botón 23 ↓\npico-izq   fuelle +0,38 · abre\npi-zero    note_on  ch1 69 vel 91\nfluidsynth noteon 0 69 91\npico-izq   fuelle −0,21 · cierra\npi-zero    note_off ch1 69 · note_on ch1 71\nfluidsynth noteoff 0 69 · noteon 0 71 74\npico-der   botón 23 ↑\nfluidsynth noteoff 0 71",
+        "nota": "FluidSynth · SoundFont (.sf2)",
+        "notas": "Las Pico leen las matrices (la izquierda también el fuelle, el volumen y la llave, y recibe la derecha por UART). La Pi Zero arma la nota con botón + sentido del fuelle y FluidSynth la hace sonar. Sale por I2S a dos MAX98357A."
+      },
+      {
+        "tipo": "switch",
+        "mantener": 10,
+        "anexo": true,
+        "ancla": "tacto",
+        "transicion": "corte",
+        "kicker": "El tacto",
+        "titulo": "Un switch mecánico *lineal* bajo cada botón.",
+        "cuerpo": "Recorrido parejo, sin escalón: lo más parecido a la pulsación de un bandoneón.",
+        "puntos": "Respuesta rápida y precisa.\nTeclas impresas a medida encima de cada switch.\nLa memoria muscular se transfiere al instrumento real.",
+        "partes": "Vástago\nResorte\nCarcasa\nContactos",
+        "notas": "Baja parejo, sin el clic de un switch táctil."
+      },
+      {
+        "tipo": "flujo",
+        "mantener": 12,
+        "anexo": true,
+        "ancla": "conexiones",
+        "transicion": "corte",
+        "coreografia": "tecnica",
+        "kicker": "Cómo se conecta todo",
+        "titulo": "Entradas, procesamiento *y salidas*.",
+        "bloques": "Entradas | Botonera | 71 switches · 38 der. / 33 izq.\nEntradas | Fuelle | Encoder con hilo: apertura y cierre\nProcesamiento | 2 Pico + Pi Zero | Mapeo bisonoro\nProcesamiento | Síntesis | FluidSynth en la Pi Zero\nSalidas | Amplificador | 2 MAX98357A · parlantes estéreo\nSalidas | Salida auxiliar | Jack 3,5 mm\nSalidas | USB-MIDI | A la computadora (DAW)",
+        "nota": "El sonido es cien por ciento digital: el fuelle no mueve aire, controla el gesto.",
+        "notas": "Dos entradas físicas, un núcleo de procesamiento y dos caminos de salida: autónomo y MIDI."
+      },
+      {
+        "tipo": "columnas",
+        "mantener": 11,
+        "anexo": true,
+        "ancla": "modos",
+        "transicion": "corte",
+        "kicker": "Dos formas de tocarlo",
+        "titulo": "Solo, o *conectado*.",
+        "izqTitulo": "Modo autónomo",
+        "izq": "Batería integrada.\nSintetizador y amplificador internos.\nParlantes estéreo: graves a la izquierda, agudos a la derecha.\nSalida de auriculares de 3,5 mm.",
+        "derTitulo": "Controlador USB-MIDI",
+        "der": "Se conecta por USB a cualquier computadora.\nFunciona con cualquier programa de música.\nToca con librerías de sonido propias.",
+        "monitorTitulo": "USB-MIDI · mensajes",
+        "monitor": "note_on   Mi4   vel 72   abre\nnote_off  Mi4\nnote_on   Fa♯4  vel 64   cierra\nnote_on   La3   vel 80   cierra\nnote_off  Fa♯4\nnote_off  La3\nnote_on   Do5   vel 90   abre\nnote_off  Do5",
+        "notas": "Modo autónomo: batería, sintetizador y amplificador internos, parlantes estéreo que respetan la espacialidad del bandoneón, y jack de 3,5 mm. Modo controlador: por USB a cualquier computadora, para usarlo con programas de producción musical y librerías propias."
+      },
+      {
+        "tipo": "tarjetas",
+        "mantener": 11,
+        "anexo": true,
+        "ancla": "practica",
+        "transicion": "corte",
+        "kicker": "Software de práctica",
+        "titulo": "Una app que *te guía*.",
+        "items": "Tocar libre | Cada botón se ilumina con su nota, abriendo o cerrando.\nEscalas | Se enciende el botón que sigue: elegís mano y sentido del fuelle.\nCanciones | Las notas suben hasta la línea: escuchala o tocala con espera.\nTus canciones | Importá un .mid o escribila con notas; se ajusta a la botonera.",
+        "notas": "Además del instrumento, hicimos una app de práctica que se conecta por MIDI desde el navegador. Muestra cada botón con su nota en Do Re Mi o en cifrado americano, guía escalas iluminando el botón que sigue y tiene un modo canción: escuchar, o tocar y que espere a que aciertes."
+      }
+    ],
+    "estilo": {
+      "tema": "noche",
+      "logo": "archivo:../proyecto/assets/logo/bandonear-celeste-barrotes-perspectiva.svg",
+      "transicion": "franjas",
+      "desenfoque": true,
+      "velocidad": 1,
+      "grano": true,
+      "cromo": true,
+      "pie": "BandoneAR · UNLaM",
+      "duracion": 1.5,
+      "recorrido": 1,
+      "entrada": "expo",
+      "ritmo": 1,
+      "distancia": 1,
+      "coreografia": "tipo",
+      "variar": true,
+      "coreografias": [
+        "tipo",
+        "editorial",
+        "cinetica"
+      ],
+      "franjas": {
+        "n": 4,
+        "color": "mixto",
+        "grosor": 1
+      },
+      "estiloBase": "noche-dorada",
+      "logoElegido": true
+    }
+  }
+}

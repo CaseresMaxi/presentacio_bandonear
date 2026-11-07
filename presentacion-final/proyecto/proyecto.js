@@ -24,6 +24,13 @@ window.PROYECTO = {
     foto: '../proyecto/assets/img/bandonear-mesa.webp',
   },
 
+  // Hoja de ruta (poster/ruta.html): la presentación momento a momento, sacada de las escenas y sus notas
+  ruta: {
+    leyenda: '→ avanza · ← vuelve · N muestra las notas del presentador · I vuelve al índice',
+    anexoTitulo: 'Para las preguntas',
+    anexoNota: 'Desde ¿Preguntas?, un clic en el índice salta a cada una. ↩ Índice o la tecla I vuelven.',
+  },
+
   reel: {
     partes: [
       { tipo: 'barras', pulsos: 4 },

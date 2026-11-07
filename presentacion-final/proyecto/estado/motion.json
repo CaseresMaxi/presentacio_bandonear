@@ -1,5 +1,5 @@
 {
-  "rev": 1793936033817,
+  "rev": 1794015579323,
   "v": {
     "escenas": [
       {
@@ -36,7 +36,7 @@
         "desde": "desde, para empezar a estudiar",
         "html": "<div class=\"pad\">{{kicker}}{{titulo}}</div>\n<div class=\"precio\" data-r=\"dato\" data-m=\"pop\" data-at=\".6\" data-dur=\"1\"><span data-m=\"count\" data-at=\".7\" data-dur=\"1.8\" data-to=\"2.500\">0</span><small>dólares</small></div>\n<p class=\"precio-sub\" data-f=\"desde\" data-m=\"up\" data-at=\"1.6\">{{desde}}</p>",
         "css": ".precio{position:absolute; left:140px; top:380px; font:var(--titulo-peso,800) 320px/1 var(--font-display); font-variant-numeric:lining-nums; color:var(--accent); letter-spacing:-.03em}\n.precio small{font-size:110px; color:var(--muted); margin-left:36px; letter-spacing:0}\n.precio-sub{position:absolute; left:140px; top:760px; font-size:44px; color:var(--lead)}",
-        "notas": "«Esto sucede principalmente porque el bandoneón es un instrumento carísimo: el bandoneón usado más barato que podés encontrar arranca en 2.500 dólares.»",
+        "notas": "«Esto sucede principalmente porque el bandoneón es un instrumento carísimo: el bandoneón usado más barato que podés encontrar arranca en 2.500 dólares.»\n\nEl precio sube hasta 2.500 dólares.",
         "correcciones": [
           {
             "x": 472,
@@ -57,9 +57,55 @@
         "kicker": "La segunda barrera",
         "titulo": "¿Se puede aprender *así*?",
         "remate": "Y cuando lo aprendiste, hay que *reaprender* la postura y el movimiento.",
-        "html": "<div class=\"pad\">{{kicker}}{{titulo}}</div>\n<div class=\"cuatro\">\n  <div class=\"tec\" data-r=\"item\" data-m=\"up\" data-at=\"0.60\">\n    <div class=\"pts\"><i class=\"on\"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class=\"on\"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class=\"on\"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>\n    <b>Derecha</b><span>abriendo</span></div>\n  <div class=\"tec\" data-r=\"item\" data-m=\"up\" data-at=\"0.78\">\n    <div class=\"pts\"><i></i><i></i><i></i><i></i><i class=\"on\"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class=\"on\"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class=\"on\"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>\n    <b>Derecha</b><span>cerrando</span></div>\n  <div class=\"tec\" data-r=\"item\" data-m=\"up\" data-at=\"0.96\">\n    <div class=\"pts\"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class=\"on\"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class=\"on\"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>\n    <b>Izquierda</b><span>abriendo</span></div>\n  <div class=\"tec\" data-r=\"item\" data-m=\"up\" data-at=\"1.14\">\n    <div class=\"pts\"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class=\"on\"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class=\"on\"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>\n    <b>Izquierda</b><span>cerrando</span></div>\n</div>\n<p class=\"cuatro-n\" data-r=\"dato\" data-m=\"caer\" data-at=\"1.6\"><b>4</b> teclados para memorizar</p>\n<p class=\"remate\" data-f=\"remate\" data-m=\"renglones\" data-s=\"1\" data-at=\".1\">{{remate}}</p>",
-        "css": ".cuatro{position:absolute; left:140px; right:140px; top:330px; display:grid; grid-template-columns:repeat(4,1fr); gap:36px}\n.tec{border:1px solid var(--line); background:var(--panel); border-radius:22px; padding:30px}\n.tec .pts{display:grid; grid-template-columns:repeat(8,1fr); gap:10px; margin-bottom:24px}\n.tec .pts i{display:block; aspect-ratio:1; border-radius:50%; background:var(--panel-2); border:2px solid var(--line)}\n.tec .pts i.on{background:var(--accent); border-color:var(--accent)}\n.tec b{display:block; font-size:32px; color:var(--strong)}\n.tec span{font-size:28px; color:var(--muted)}\n.cuatro-n{position:absolute; left:140px; top:770px; margin:0; font-size:44px; color:var(--lead)}\n.cuatro-n b{font:var(--titulo-peso,800) 90px/1 var(--font-display); color:var(--accent); margin-right:16px; vertical-align:-10px}\n.remate{position:absolute; left:140px; right:140px; top:880px; margin:0; font-size:42px; color:var(--strong)}",
-        "notas": "«Salimos de la primera barrera con la que se encuentra el futuro músico, que es la monetaria. Hablemos de la que más nos concierne: la del aprendizaje. ¿A ustedes les parece que es posible aprender a tocar un instrumento de cuatro teclados así?»\n\n(→) «Y cuando finalmente lo aprendiste, hay que reaprender todo, porque la posición y el movimiento no son los correctos.»"
+        "html": "<div class=\"pad\">{{kicker}}{{titulo}}</div>\n<div class=\"cuatro\">\n  <div class=\"tec\" data-m=\"up\" data-dim data-at=\"0.60\">\n    <div class=\"tabw\" style=\"height:231px\"><div class=\"tab\" style=\"width:365px;height:231px\"><b class=\"bt\" style=\"left:106px;top:20px\" data-m=\"pop\" data-at=\"1.00\" data-dur=\".45\">Si</b><b class=\"bt\" style=\"left:150px;top:19px\" data-m=\"pop\" data-at=\"1.02\" data-dur=\".45\">Sol<sup>♯</sup></b><b class=\"bt\" style=\"left:193px;top:19px\" data-m=\"pop\" data-at=\"1.05\" data-dur=\".45\">Sol</b><b class=\"bt\" style=\"left:237px;top:20px\" data-m=\"pop\" data-at=\"1.07\" data-dur=\".45\">Fa</b><b class=\"bt\" style=\"left:84px;top:56px\" data-m=\"pop\" data-at=\"1.09\" data-dur=\".45\">Do<sup>♯</sup></b><b class=\"bt\" style=\"left:128px;top:53px\" data-m=\"pop\" data-at=\"1.11\" data-dur=\".45\">La<span class=\"luz\" data-m=\"pop\" data-at=\"3.80\" data-dur=\".5\">La</span></b><b class=\"bt\" style=\"left:171px;top:52px\" data-m=\"pop\" data-at=\"1.14\" data-dur=\".45\">Fa<sup>♯</sup></b><b class=\"bt\" style=\"left:215px;top:53px\" data-m=\"pop\" data-at=\"1.17\" data-dur=\".45\">Mi</b><b class=\"bt\" style=\"left:259px;top:55px\" data-m=\"pop\" data-at=\"1.19\" data-dur=\".45\">Re<sup>♯</sup></b><b class=\"bt\" style=\"left:62px;top:92px\" data-m=\"pop\" data-at=\"1.15\" data-dur=\".45\">Do</b><b class=\"bt\" style=\"left:106px;top:88px\" data-m=\"pop\" data-at=\"1.18\" data-dur=\".45\">Re</b><b class=\"bt\" style=\"left:150px;top:85px\" data-m=\"pop\" data-at=\"1.20\" data-dur=\".45\">Sol</b><b class=\"bt\" style=\"left:193px;top:85px\" data-m=\"pop\" data-at=\"1.23\" data-dur=\".45\">La<sup>♯</sup><span class=\"luz\" data-m=\"pop\" data-at=\"3.10\" data-dur=\".5\">La<sup>♯</sup></span></b><b class=\"bt\" style=\"left:237px;top:88px\" data-m=\"pop\" data-at=\"1.25\" data-dur=\".45\">Do</b><b class=\"bt\" style=\"left:281px;top:92px\" data-m=\"pop\" data-at=\"1.28\" data-dur=\".45\">Re</b><b class=\"bt\" style=\"left:40px;top:131px\" data-m=\"pop\" data-at=\"1.24\" data-dur=\".45\">Si</b><b class=\"bt\" style=\"left:84px;top:124px\" data-m=\"pop\" data-at=\"1.27\" data-dur=\".45\">Mi<span class=\"luz\" data-m=\"pop\" data-at=\"2.75\" data-dur=\".5\">Mi</span></b><b class=\"bt\" style=\"left:128px;top:120px\" data-m=\"pop\" data-at=\"1.29\" data-dur=\".45\">Do<sup>♯</sup></b><b class=\"bt\" style=\"left:171px;top:118px\" data-m=\"pop\" data-at=\"1.32\" data-dur=\".45\">Fa<sup>♯</sup></b><b class=\"bt\" style=\"left:215px;top:120px\" data-m=\"pop\" data-at=\"1.34\" data-dur=\".45\">La</b><b class=\"bt\" style=\"left:259px;top:124px\" data-m=\"pop\" data-at=\"1.37\" data-dur=\".45\">Do</b><b class=\"bt\" style=\"left:302px;top:130px\" data-m=\"pop\" data-at=\"1.40\" data-dur=\".45\">Mi</b><b class=\"bt\" style=\"left:19px;top:171px\" data-m=\"pop\" data-at=\"1.31\" data-dur=\".45\">La</b><b class=\"bt\" style=\"left:62px;top:162px\" data-m=\"pop\" data-at=\"1.33\" data-dur=\".45\">Fa</b><b class=\"bt\" style=\"left:106px;top:156px\" data-m=\"pop\" data-at=\"1.36\" data-dur=\".45\">La<sup>♯</sup></b><b class=\"bt\" style=\"left:150px;top:152px\" data-m=\"pop\" data-at=\"1.39\" data-dur=\".45\">Sol<sup>♯</sup></b><b class=\"bt\" style=\"left:193px;top:152px\" data-m=\"pop\" data-at=\"1.41\" data-dur=\".45\">Si</b><b class=\"bt\" style=\"left:237px;top:155px\" data-m=\"pop\" data-at=\"1.44\" data-dur=\".45\">Re<span class=\"luz\" data-m=\"pop\" data-at=\"3.45\" data-dur=\".5\">Re</span></b><b class=\"bt\" style=\"left:281px;top:162px\" data-m=\"pop\" data-at=\"1.46\" data-dur=\".45\">Sol<sup>♯</sup></b><b class=\"bt\" style=\"left:324px;top:170px\" data-m=\"pop\" data-at=\"1.49\" data-dur=\".45\">Si</b><b class=\"bt\" style=\"left:40px;top:203px\" data-m=\"pop\" data-at=\"1.42\" data-dur=\".45\">La<sup>♯</sup></b><b class=\"bt\" style=\"left:84px;top:193px\" data-m=\"pop\" data-at=\"1.45\" data-dur=\".45\">Re<sup>♯</sup></b><b class=\"bt\" style=\"left:128px;top:187px\" data-m=\"pop\" data-at=\"1.47\" data-dur=\".45\">Fa</b><b class=\"bt\" style=\"left:171px;top:184px\" data-m=\"pop\" data-at=\"1.50\" data-dur=\".45\">Re<sup>♯</sup></b><b class=\"bt\" style=\"left:215px;top:186px\" data-m=\"pop\" data-at=\"1.52\" data-dur=\".45\">Fa<sup>♯</sup></b><b class=\"bt\" style=\"left:259px;top:192px\" data-m=\"pop\" data-at=\"1.55\" data-dur=\".45\">La</b><b class=\"bt\" style=\"left:302px;top:201px\" data-m=\"pop\" data-at=\"1.57\" data-dur=\".45\">Do<sup>♯</sup></b><b class=\"bt\" style=\"left:346px;top:212px\" data-m=\"pop\" data-at=\"1.60\" data-dur=\".45\">Sol</b></div></div>\n    <b>Derecha</b><span>abriendo</span></div>\n  <div class=\"tec\" data-m=\"up\" data-dim data-at=\"0.78\">\n    <div class=\"tabw\" style=\"height:231px\"><div class=\"tab\" style=\"width:365px;height:231px\"><b class=\"bt\" style=\"left:106px;top:20px\" data-m=\"pop\" data-at=\"1.18\" data-dur=\".45\">La</b><b class=\"bt\" style=\"left:150px;top:19px\" data-m=\"pop\" data-at=\"1.20\" data-dur=\".45\">Sol<sup>♯</sup></b><b class=\"bt\" style=\"left:193px;top:19px\" data-m=\"pop\" data-at=\"1.23\" data-dur=\".45\">Fa<sup>♯</sup></b><b class=\"bt\" style=\"left:237px;top:20px\" data-m=\"pop\" data-at=\"1.25\" data-dur=\".45\">Fa</b><b class=\"bt\" style=\"left:84px;top:56px\" data-m=\"pop\" data-at=\"1.27\" data-dur=\".45\">Do</b><b class=\"bt\" style=\"left:128px;top:53px\" data-m=\"pop\" data-at=\"1.29\" data-dur=\".45\">Sol<span class=\"luz\" data-m=\"pop\" data-at=\"3.80\" data-dur=\".5\">Sol</span></b><b class=\"bt\" style=\"left:171px;top:52px\" data-m=\"pop\" data-at=\"1.32\" data-dur=\".45\">La<sup>♯</sup></b><b class=\"bt\" style=\"left:215px;top:53px\" data-m=\"pop\" data-at=\"1.34\" data-dur=\".45\">Do</b><b class=\"bt\" style=\"left:259px;top:55px\" data-m=\"pop\" data-at=\"1.37\" data-dur=\".45\">Re<sup>♯</sup></b><b class=\"bt\" style=\"left:62px;top:92px\" data-m=\"pop\" data-at=\"1.33\" data-dur=\".45\">Re</b><b class=\"bt\" style=\"left:106px;top:88px\" data-m=\"pop\" data-at=\"1.36\" data-dur=\".45\">Do<sup>♯</sup></b><b class=\"bt\" style=\"left:150px;top:85px\" data-m=\"pop\" data-at=\"1.38\" data-dur=\".45\">Sol<sup>♯</sup></b><b class=\"bt\" style=\"left:193px;top:85px\" data-m=\"pop\" data-at=\"1.41\" data-dur=\".45\">La<sup>♯</sup><span class=\"luz\" data-m=\"pop\" data-at=\"3.10\" data-dur=\".5\">La<sup>♯</sup></span></b><b class=\"bt\" style=\"left:237px;top:88px\" data-m=\"pop\" data-at=\"1.43\" data-dur=\".45\">Do</b><b class=\"bt\" style=\"left:281px;top:92px\" data-m=\"pop\" data-at=\"1.46\" data-dur=\".45\">Re</b><b class=\"bt\" style=\"left:40px;top:131px\" data-m=\"pop\" data-at=\"1.42\" data-dur=\".45\">Si</b><b class=\"bt\" style=\"left:84px;top:124px\" data-m=\"pop\" data-at=\"1.45\" data-dur=\".45\">Fa<sup>♯</sup><span class=\"luz\" data-m=\"pop\" data-at=\"2.75\" data-dur=\".5\">Fa<sup>♯</sup></span></b><b class=\"bt\" style=\"left:128px;top:120px\" data-m=\"pop\" data-at=\"1.47\" data-dur=\".45\">Fa<sup>♯</sup></b><b class=\"bt\" style=\"left:171px;top:118px\" data-m=\"pop\" data-at=\"1.50\" data-dur=\".45\">Sol</b><b class=\"bt\" style=\"left:215px;top:120px\" data-m=\"pop\" data-at=\"1.52\" data-dur=\".45\">Si</b><b class=\"bt\" style=\"left:259px;top:124px\" data-m=\"pop\" data-at=\"1.55\" data-dur=\".45\">Re</b><b class=\"bt\" style=\"left:302px;top:130px\" data-m=\"pop\" data-at=\"1.57\" data-dur=\".45\">Sol</b><b class=\"bt\" style=\"left:19px;top:171px\" data-m=\"pop\" data-at=\"1.49\" data-dur=\".45\">La</b><b class=\"bt\" style=\"left:62px;top:162px\" data-m=\"pop\" data-at=\"1.51\" data-dur=\".45\">Fa</b><b class=\"bt\" style=\"left:106px;top:156px\" data-m=\"pop\" data-at=\"1.54\" data-dur=\".45\">Mi</b><b class=\"bt\" style=\"left:150px;top:152px\" data-m=\"pop\" data-at=\"1.56\" data-dur=\".45\">La</b><b class=\"bt\" style=\"left:193px;top:152px\" data-m=\"pop\" data-at=\"1.59\" data-dur=\".45\">Do<sup>♯</sup></b><b class=\"bt\" style=\"left:237px;top:155px\" data-m=\"pop\" data-at=\"1.61\" data-dur=\".45\">Mi<span class=\"luz\" data-m=\"pop\" data-at=\"3.45\" data-dur=\".5\">Mi</span></b><b class=\"bt\" style=\"left:281px;top:162px\" data-m=\"pop\" data-at=\"1.64\" data-dur=\".45\">La</b><b class=\"bt\" style=\"left:324px;top:170px\" data-m=\"pop\" data-at=\"1.66\" data-dur=\".45\">Do<sup>♯</sup></b><b class=\"bt\" style=\"left:40px;top:203px\" data-m=\"pop\" data-at=\"1.60\" data-dur=\".45\">La<sup>♯</sup></b><b class=\"bt\" style=\"left:84px;top:193px\" data-m=\"pop\" data-at=\"1.63\" data-dur=\".45\">Re<sup>♯</sup></b><b class=\"bt\" style=\"left:128px;top:187px\" data-m=\"pop\" data-at=\"1.65\" data-dur=\".45\">Fa</b><b class=\"bt\" style=\"left:171px;top:184px\" data-m=\"pop\" data-at=\"1.68\" data-dur=\".45\">Mi</b><b class=\"bt\" style=\"left:215px;top:186px\" data-m=\"pop\" data-at=\"1.70\" data-dur=\".45\">Sol<sup>♯</sup></b><b class=\"bt\" style=\"left:259px;top:192px\" data-m=\"pop\" data-at=\"1.73\" data-dur=\".45\">Si</b><b class=\"bt\" style=\"left:302px;top:201px\" data-m=\"pop\" data-at=\"1.75\" data-dur=\".45\">Mi</b><b class=\"bt\" style=\"left:346px;top:212px\" data-m=\"pop\" data-at=\"1.78\" data-dur=\".45\">Re<sup>♯</sup></b></div></div>\n    <b>Derecha</b><span>cerrando</span></div>\n  <div class=\"tec\" data-m=\"up\" data-dim data-at=\"0.96\">\n    <div class=\"tabw\" style=\"height:231px\"><div class=\"tab\" style=\"width:343px;height:194px\"><b class=\"bt\" style=\"left:106px;top:21px\" data-m=\"pop\" data-at=\"1.45\" data-dur=\".45\">Sol<sup>♯</sup></b><b class=\"bt\" style=\"left:150px;top:19px\" data-m=\"pop\" data-at=\"1.48\" data-dur=\".45\">La<sup>♯</sup></b><b class=\"bt\" style=\"left:193px;top:19px\" data-m=\"pop\" data-at=\"1.50\" data-dur=\".45\">Do<sup>♯</sup></b><b class=\"bt\" style=\"left:237px;top:21px\" data-m=\"pop\" data-at=\"1.53\" data-dur=\".45\">Fa</b><b class=\"bt\" style=\"left:281px;top:24px\" data-m=\"pop\" data-at=\"1.55\" data-dur=\".45\">Sol<sup>♯</sup></b><b class=\"bt\" style=\"left:41px;top:62px\" data-m=\"pop\" data-at=\"1.49\" data-dur=\".45\">Mi</b><b class=\"bt\" style=\"left:85px;top:57px\" data-m=\"pop\" data-at=\"1.51\" data-dur=\".45\">La<span class=\"luz\" data-m=\"pop\" data-at=\"2.92\" data-dur=\".5\">La</span></b><b class=\"bt\" style=\"left:128px;top:53px\" data-m=\"pop\" data-at=\"1.54\" data-dur=\".45\">Sol</b><b class=\"bt\" style=\"left:172px;top:52px\" data-m=\"pop\" data-at=\"1.56\" data-dur=\".45\">Re<sup>♯</sup></b><b class=\"bt\" style=\"left:216px;top:53px\" data-m=\"pop\" data-at=\"1.59\" data-dur=\".45\">Fa</b><b class=\"bt\" style=\"left:259px;top:56px\" data-m=\"pop\" data-at=\"1.61\" data-dur=\".45\">La<sup>♯</sup></b><b class=\"bt\" style=\"left:303px;top:61px\" data-m=\"pop\" data-at=\"1.64\" data-dur=\".45\">Fa</b><b class=\"bt\" style=\"left:62px;top:94px\" data-m=\"pop\" data-at=\"1.60\" data-dur=\".45\">Re</b><b class=\"bt\" style=\"left:106px;top:89px\" data-m=\"pop\" data-at=\"1.63\" data-dur=\".45\">La</b><b class=\"bt\" style=\"left:150px;top:85px\" data-m=\"pop\" data-at=\"1.66\" data-dur=\".45\">Do<span class=\"luz\" data-m=\"pop\" data-at=\"3.27\" data-dur=\".5\">Do</span></b><b class=\"bt\" style=\"left:193px;top:85px\" data-m=\"pop\" data-at=\"1.68\" data-dur=\".45\">Mi</b><b class=\"bt\" style=\"left:237px;top:88px\" data-m=\"pop\" data-at=\"1.71\" data-dur=\".45\">Do</b><b class=\"bt\" style=\"left:281px;top:94px\" data-m=\"pop\" data-at=\"1.73\" data-dur=\".45\">Sol</b><b class=\"bt\" style=\"left:41px;top:134px\" data-m=\"pop\" data-at=\"1.67\" data-dur=\".45\">Mi</b><b class=\"bt\" style=\"left:85px;top:126px\" data-m=\"pop\" data-at=\"1.69\" data-dur=\".45\">Sol<sup>♯</sup></b><b class=\"bt\" style=\"left:128px;top:120px\" data-m=\"pop\" data-at=\"1.72\" data-dur=\".45\">Si<span class=\"luz\" data-m=\"pop\" data-at=\"3.62\" data-dur=\".5\">Si</span></b><b class=\"bt\" style=\"left:172px;top:118px\" data-m=\"pop\" data-at=\"1.74\" data-dur=\".45\">Re</b><b class=\"bt\" style=\"left:216px;top:120px\" data-m=\"pop\" data-at=\"1.77\" data-dur=\".45\">Fa<sup>♯</sup></b><b class=\"bt\" style=\"left:259px;top:125px\" data-m=\"pop\" data-at=\"1.79\" data-dur=\".45\">Do<sup>♯</sup></b><b class=\"bt\" style=\"left:303px;top:133px\" data-m=\"pop\" data-at=\"1.82\" data-dur=\".45\">Fa<sup>♯</sup></b><b class=\"bt\" style=\"left:19px;top:175px\" data-m=\"pop\" data-at=\"1.76\" data-dur=\".45\">Re</b><b class=\"bt\" style=\"left:62px;top:164px\" data-m=\"pop\" data-at=\"1.78\" data-dur=\".45\">Si</b><b class=\"bt\" style=\"left:106px;top:156px\" data-m=\"pop\" data-at=\"1.81\" data-dur=\".45\">Sol</b><b class=\"bt\" style=\"left:150px;top:152px\" data-m=\"pop\" data-at=\"1.83\" data-dur=\".45\">La</b><b class=\"bt\" style=\"left:193px;top:152px\" data-m=\"pop\" data-at=\"1.86\" data-dur=\".45\">Re<sup>♯</sup><span class=\"luz\" data-m=\"pop\" data-at=\"3.97\" data-dur=\".5\">Re<sup>♯</sup></span></b><b class=\"bt\" style=\"left:237px;top:156px\" data-m=\"pop\" data-at=\"1.89\" data-dur=\".45\">Fa<sup>♯</sup></b><b class=\"bt\" style=\"left:281px;top:163px\" data-m=\"pop\" data-at=\"1.91\" data-dur=\".45\">Re<sup>♯</sup></b><b class=\"bt\" style=\"left:324px;top:173px\" data-m=\"pop\" data-at=\"1.94\" data-dur=\".45\">Do</b></div></div>\n    <b>Izquierda</b><span>abriendo</span></div>\n  <div class=\"tec\" data-m=\"up\" data-dim data-at=\"1.14\">\n    <div class=\"tabw\" style=\"height:231px\"><div class=\"tab\" style=\"width:343px;height:194px\"><b class=\"bt\" style=\"left:106px;top:21px\" data-m=\"pop\" data-at=\"1.63\" data-dur=\".45\">Sol<sup>♯</sup></b><b class=\"bt\" style=\"left:150px;top:19px\" data-m=\"pop\" data-at=\"1.66\" data-dur=\".45\">La<sup>♯</sup></b><b class=\"bt\" style=\"left:193px;top:19px\" data-m=\"pop\" data-at=\"1.68\" data-dur=\".45\">Re<sup>♯</sup></b><b class=\"bt\" style=\"left:237px;top:21px\" data-m=\"pop\" data-at=\"1.71\" data-dur=\".45\">Re<sup>♯</sup></b><b class=\"bt\" style=\"left:281px;top:24px\" data-m=\"pop\" data-at=\"1.73\" data-dur=\".45\">Sol</b><b class=\"bt\" style=\"left:41px;top:62px\" data-m=\"pop\" data-at=\"1.67\" data-dur=\".45\">Re</b><b class=\"bt\" style=\"left:85px;top:57px\" data-m=\"pop\" data-at=\"1.69\" data-dur=\".45\">Re<span class=\"luz\" data-m=\"pop\" data-at=\"2.92\" data-dur=\".5\">Re</span></b><b class=\"bt\" style=\"left:128px;top:53px\" data-m=\"pop\" data-at=\"1.72\" data-dur=\".45\">La<sup>♯</sup></b><b class=\"bt\" style=\"left:172px;top:52px\" data-m=\"pop\" data-at=\"1.74\" data-dur=\".45\">Do</b><b class=\"bt\" style=\"left:216px;top:53px\" data-m=\"pop\" data-at=\"1.77\" data-dur=\".45\">Do<sup>♯</sup></b><b class=\"bt\" style=\"left:259px;top:56px\" data-m=\"pop\" data-at=\"1.79\" data-dur=\".45\">Do</b><b class=\"bt\" style=\"left:303px;top:61px\" data-m=\"pop\" data-at=\"1.82\" data-dur=\".45\">Fa<sup>♯</sup></b><b class=\"bt\" style=\"left:62px;top:94px\" data-m=\"pop\" data-at=\"1.78\" data-dur=\".45\">Sol</b><b class=\"bt\" style=\"left:106px;top:89px\" data-m=\"pop\" data-at=\"1.81\" data-dur=\".45\">Sol</b><b class=\"bt\" style=\"left:150px;top:85px\" data-m=\"pop\" data-at=\"1.83\" data-dur=\".45\">Si<span class=\"luz\" data-m=\"pop\" data-at=\"3.27\" data-dur=\".5\">Si</span></b><b class=\"bt\" style=\"left:193px;top:85px\" data-m=\"pop\" data-at=\"1.86\" data-dur=\".45\">Re</b><b class=\"bt\" style=\"left:237px;top:88px\" data-m=\"pop\" data-at=\"1.89\" data-dur=\".45\">Fa</b><b class=\"bt\" style=\"left:281px;top:94px\" data-m=\"pop\" data-at=\"1.91\" data-dur=\".45\">Fa<sup>♯</sup></b><b class=\"bt\" style=\"left:41px;top:134px\" data-m=\"pop\" data-at=\"1.85\" data-dur=\".45\">La</b><b class=\"bt\" style=\"left:85px;top:126px\" data-m=\"pop\" data-at=\"1.88\" data-dur=\".45\">Mi</b><b class=\"bt\" style=\"left:128px;top:120px\" data-m=\"pop\" data-at=\"1.90\" data-dur=\".45\">La<span class=\"luz\" data-m=\"pop\" data-at=\"3.62\" data-dur=\".5\">La</span></b><b class=\"bt\" style=\"left:172px;top:118px\" data-m=\"pop\" data-at=\"1.93\" data-dur=\".45\">Do<sup>♯</sup></b><b class=\"bt\" style=\"left:216px;top:120px\" data-m=\"pop\" data-at=\"1.95\" data-dur=\".45\">Mi</b><b class=\"bt\" style=\"left:259px;top:125px\" data-m=\"pop\" data-at=\"1.98\" data-dur=\".45\">Sol<sup>♯</sup></b><b class=\"bt\" style=\"left:303px;top:133px\" data-m=\"pop\" data-at=\"2.00\" data-dur=\".45\">Si</b><b class=\"bt\" style=\"left:19px;top:175px\" data-m=\"pop\" data-at=\"1.94\" data-dur=\".45\">Mi</b><b class=\"bt\" style=\"left:62px;top:164px\" data-m=\"pop\" data-at=\"1.96\" data-dur=\".45\">Mi</b><b class=\"bt\" style=\"left:106px;top:156px\" data-m=\"pop\" data-at=\"1.99\" data-dur=\".45\">Fa<sup>♯</sup></b><b class=\"bt\" style=\"left:150px;top:152px\" data-m=\"pop\" data-at=\"2.02\" data-dur=\".45\">Sol<sup>♯</sup></b><b class=\"bt\" style=\"left:193px;top:152px\" data-m=\"pop\" data-at=\"2.04\" data-dur=\".45\">Si<span class=\"luz\" data-m=\"pop\" data-at=\"3.97\" data-dur=\".5\">Si</span></b><b class=\"bt\" style=\"left:237px;top:156px\" data-m=\"pop\" data-at=\"2.06\" data-dur=\".45\">Fa</b><b class=\"bt\" style=\"left:281px;top:163px\" data-m=\"pop\" data-at=\"2.09\" data-dur=\".45\">Do<sup>♯</sup></b><b class=\"bt\" style=\"left:324px;top:173px\" data-m=\"pop\" data-at=\"2.11\" data-dur=\".45\">Fa</b></div></div>\n    <b>Izquierda</b><span>cerrando</span></div>\n</div>\n<p class=\"cuatro-n\" data-r=\"dato\" data-m=\"caer\" data-at=\"4.3\"><b>4</b> teclados para memorizar</p>\n<p class=\"remate\" data-f=\"remate\" data-m=\"renglones\" data-s=\"1\" data-at=\".1\">{{remate}}</p>",
+        "css": ".cuatro{position:absolute; left:140px; right:140px; top:320px; display:grid; grid-template-columns:660fr 660fr 621fr 621fr; gap:24px}\n.tec{border:1px solid var(--line); background:var(--panel); border-radius:22px; padding:34px 18px 26px; display:flex; flex-direction:column; align-items:center; perspective:1100px}\n.tec .tabw{display:flex; align-items:center; justify-content:center; margin-bottom:30px}\n.tec .tab{position:relative; transform:rotateX(22deg)}\n.tec .tab::before{content:\"\"; position:absolute; inset:-14px; border-radius:20px; background:linear-gradient(165deg,var(--panel-2),var(--bg)); border:1px solid var(--line); box-shadow:0 9px 0 rgba(0,0,0,.4), 0 26px 30px rgba(0,0,0,.5)}\n.tec .bt{position:absolute; width:31px; height:31px; margin:-15px 0 0 -15px; border-radius:50%; background:radial-gradient(circle at 34% 28%, color-mix(in srgb,var(--text) 26%,var(--panel-2)), var(--panel-2) 64%); border:1px solid var(--line); box-shadow:0 4px 0 rgba(0,0,0,.55), 0 7px 7px rgba(0,0,0,.4); font:700 12px/31px var(--font-body); text-align:center; color:var(--lead); letter-spacing:-.02em; font-style:normal}\n.tec .bt sup{font-size:.72em; line-height:0; vertical-align:.35em; margin-left:1px}\n.tec .luz{position:absolute; inset:-1px; border-radius:50%; background:radial-gradient(circle at 34% 28%, color-mix(in srgb,#fff 42%,var(--accent)), var(--accent) 68%); color:var(--bg); box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 38%,transparent), 0 0 20px var(--accent)}\n.tec > b{display:block; font-size:32px; color:var(--strong)}\n.tec > span{font-size:28px; color:var(--muted)}\n.cuatro-n{position:absolute; left:140px; top:770px; margin:0; font-size:44px; color:var(--lead)}\n.cuatro-n b{font:var(--titulo-peso,800) 90px/1 var(--font-display); color:var(--accent); margin-right:16px; vertical-align:-10px}\n.remate{position:absolute; left:140px; right:140px; top:880px; margin:0; font-size:42px; color:var(--strong)}",
+        "notas": "«Salimos de la primera barrera con la que se encuentra el futuro músico, que es la monetaria. Hablemos de la que más nos concierne: la del aprendizaje. ¿A ustedes les parece que es posible aprender a tocar un instrumento de cuatro teclados así?»\n\n(→) «Y cuando finalmente lo aprendiste, hay que reaprender todo, porque la posición y el movimiento no son los correctos.»\n\nEntran los cuatro teclados con sus botones y se iluminan; al final aparece el remate sobre reaprender.",
+        "correcciones": [
+          {
+            "x": 941,
+            "y": 539,
+            "paso": 2,
+            "texto": "revisa las dispociones para que sean files a un teclado, ademas podiras crear algo en 3d que quede mas vistoso, como lo veas mejor",
+            "hecho": true,
+            "elemento": "",
+            "cita": "",
+            "fecha": "6/11/2026, 07:32:04"
+          }
+        ]
+      },
+      {
+        "mantener": 60,
+        "transicion": "fundido",
+        "notas": "Franco ya tiene todo listo y se pone a tocar escalas. Esta escena queda de fondo mientras toca.",
+        "correcciones": [
+          {
+            "x": 885,
+            "y": 525,
+            "paso": 1,
+            "texto": "en esta dia positiva presnetamos a bandoner, no hace falta lo tecnico,  ni lo que pone en vido, solo hace que se vea facha",
+            "hecho": true,
+            "elemento": "",
+            "cita": "",
+            "fecha": "6/11/2026, 12:17:45"
+          },
+          {
+            "x": 219,
+            "y": 335,
+            "paso": 1,
+            "texto": "revisa el icono queno es el mimso que usamo en la presentaicon inical",
+            "hecho": true,
+            "elemento": "",
+            "cita": "",
+            "fecha": "6/11/2026, 12:24:44"
+          }
+        ],
+        "tipo": "vitrina",
+        "cromo": false,
+        "kicker": "Les presentamos",
+        "titulo": "Bandone*AR*",
+        "subtitulo": "Un bandoneón digital, pensado para aprender.",
+        "logo": "archivo:../proyecto/assets/logo/bandonear-celeste-barrotes-perspectiva.svg",
+        "ruta": "Demo"
       },
       {
         "tipo": "libre",
@@ -102,39 +148,6 @@
         "activa": false
       },
       {
-        "mantener": 60,
-        "transicion": "fundido",
-        "notas": "Franco ya tiene todo listo y se pone a tocar escalas. Esta escena queda de fondo mientras toca.",
-        "correcciones": [
-          {
-            "x": 885,
-            "y": 525,
-            "paso": 1,
-            "texto": "en esta dia positiva presnetamos a bandoner, no hace falta lo tecnico,  ni lo que pone en vido, solo hace que se vea facha",
-            "hecho": true,
-            "elemento": "",
-            "cita": "",
-            "fecha": "6/11/2026, 12:17:45"
-          },
-          {
-            "x": 219,
-            "y": 335,
-            "paso": 1,
-            "texto": "revisa el icono queno es el mimso que usamo en la presentaicon inical",
-            "hecho": true,
-            "elemento": "",
-            "cita": "",
-            "fecha": "6/11/2026, 12:24:44"
-          }
-        ],
-        "tipo": "vitrina",
-        "cromo": false,
-        "kicker": "Les presentamos",
-        "titulo": "Bandone*AR*",
-        "subtitulo": "Un bandoneón digital, pensado para aprender.",
-        "logo": "archivo:../proyecto/assets/logo/bandonear-celeste-barrotes-perspectiva.svg"
-      },
-      {
         "tipo": "tarjetas",
         "mantener": 10,
         "coreografia": "sobria",
@@ -154,9 +167,47 @@
         "p2": "Postura",
         "p3": "Transición natural",
         "p4": "Evolución",
-        "html": "<div class=\"ev-foto\" data-k=\"hero\" data-shape=\"img\" data-m=\"reveal\" data-dur=\"1.4\"><img src=\"../proyecto/assets/img/abuelo.webp\" alt=\"\"></div>\n<div class=\"ev-txt\">{{kicker}}\n  <ol class=\"ev\">\n    <li data-f=\"p1\" data-m=\"up\" data-at=\".6\" data-dim>{{p1}}</li>\n    <li data-f=\"p2\" data-m=\"up\" data-s=\"1\" data-at=\".1\" data-dim>{{p2}}</li>\n    <li data-f=\"p3\" data-m=\"up\" data-s=\"2\" data-at=\".1\" data-dim>{{p3}}</li>\n    <li data-f=\"p4\" data-m=\"up\" data-s=\"3\" data-at=\".1\">{{p4}}</li>\n  </ol>\n</div>",
+        "html": "<div class=\"ev-foto\" data-f=\"imagen\" data-k=\"hero\" data-shape=\"img\" data-m=\"reveal\" data-dur=\"1.4\"><img src=\"{{img:imagen}}\" alt=\"\"></div>\n<div class=\"ev-txt\">{{kicker}}\n  <ol class=\"ev\">\n    <li data-f=\"p1\" data-m=\"up\" data-at=\".6\" data-dim>{{p1}}</li>\n    <li data-f=\"p2\" data-m=\"up\" data-s=\"1\" data-at=\".1\" data-dim>{{p2}}</li>\n    <li data-f=\"p3\" data-m=\"up\" data-s=\"2\" data-at=\".1\" data-dim>{{p3}}</li>\n    <li data-f=\"p4\" data-m=\"up\" data-s=\"3\" data-at=\".1\">{{p4}}</li>\n  </ol>\n</div>",
         "css": ".ev-foto{position:absolute; left:0; top:0; bottom:0; width:820px; overflow:hidden}\n.ev-foto img{width:100%; height:100%; object-fit:cover}\n.ev-txt{position:absolute; left:960px; right:140px; top:250px}\n.ev{list-style:none; margin:50px 0 0; padding:0}\n.ev li{font:var(--titulo-peso,800) 104px/1.15 var(--font-display); color:var(--strong); letter-spacing:-.02em}",
-        "notas": "Ergonomía, postura, transición natural y evolución: un → por palabra, a medida que se nombran."
+        "notas": "Ergonomía, postura, transición natural y evolución: un → por palabra, a medida que se nombran.",
+        "correcciones": [
+          {
+            "x": 528,
+            "y": 564,
+            "paso": 2,
+            "texto": "no me permite cambiar la imagen de esa escena\n",
+            "hecho": true,
+            "elemento": "",
+            "cita": "",
+            "fecha": "6/11/2026, 07:39:31"
+          }
+        ],
+        "imagen": "../proyecto/assets/img/nenesaprendiendo.webp"
+      },
+      {
+        "tipo": "collage",
+        "mantener": 15,
+        "transicion": "fundido",
+        "logo": "archivo:../proyecto/assets/logo/bandonear-celeste-barrotes-perspectiva.svg",
+        "kicker": "Fin",
+        "titulo": "¡Gracias!",
+        "cuerpo": "A los docentes, a nuestras familias y a todos los que nos acompañaron en este proyecto.",
+        "equipo": "Brenda · Maxi · Antonio · Leo · Franco",
+        "institucion": "Universidad Nacional de La Matanza",
+        "huecos": 11,
+        "foto1": "../proyecto/assets/img/taller-protoboards.webp",
+        "foto2": "../proyecto/assets/img/taller-soldadura.webp",
+        "foto3": "../proyecto/assets/img/cabezal-switches.webp",
+        "foto4": "../proyecto/assets/img/cabezal-interior.webp",
+        "foto5": "../proyecto/assets/img/taller-placa-switches.webp",
+        "foto6": "../proyecto/assets/img/video-grabando.webp",
+        "foto7": "../proyecto/assets/img/video-laptop.webp",
+        "foto8": "../proyecto/assets/img/video-edicion.webp",
+        "foto9": "../proyecto/assets/img/equipo-dormido.webp",
+        "foto10": "../proyecto/assets/img/equipo.webp",
+        "foto11": "../proyecto/assets/img/certificados.webp",
+        "enfoques": "1 | 50% 55%\n2 | 50% 25%\n3 | 50% 28%\n4 | 50% 40%\n7 | 50% 33%\n8 | 50% 19%",
+        "notas": "Agradecer a los docentes y a las familias. El collage entra foto por foto mientras se agradece."
       },
       {
         "tipo": "indice",
@@ -169,7 +220,7 @@
         "contexto": "Universidad Nacional de La Matanza",
         "rotulo": "Secciones técnicas",
         "indice": "construccion | Cómo está construido\nmecanismo | Del botón al sonido\ntraduccion | De lo mecánico a lo electrónico\nfuelle | El fuelle\ncomponentes | Componentes en 3D\nsoftware | De la tecla al sonido\ntacto | El tacto: switches\nconexiones | Cómo se conecta todo\nmodos | Solo o conectado\npractica | Software de práctica",
-        "notas": "Cierre y preguntas. Clic en una sección del índice para ir a ella; desde ahí, «↩ Índice» (abajo a la derecha) o la tecla I vuelven acá.",
+        "notas": "Cierre y preguntas. Clic en una sección del índice para ir a ella; desde ahí, ↩ Índice (abajo a la derecha) o la tecla I vuelven acá.",
         "correcciones": [
           {
             "x": 898,
